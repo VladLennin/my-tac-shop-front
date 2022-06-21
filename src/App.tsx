@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import './styles/main-blocks.css'
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import MainPage from "./pages/MainPage";
+import ProfilePage from "./pages/ProfilePage";
+import BasketPage from "./pages/BasketPage";
+import CatalogPage from "./pages/CatalogPage";
+import AdminPage from "./pages/AdminPage";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const [menuFlag, setMenuFlag] = useState<boolean>(false);
+
+    return (
+        <div className="App bg-[#495057]">
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={
+                        <MainPage/>
+                    }/>
+                    <Route path="/profile" element={
+                        <ProfilePage/>
+                    }/>
+                    <Route path="/basket" element={
+                        <BasketPage/>
+                    }/>
+                    <Route path="/catalog" element={
+                        <CatalogPage/>
+                    }/>
+                    <Route path="/admin" element={
+                        <AdminPage/>
+                    }/>
+                </Routes>
+            </BrowserRouter>
+        </div>
+    );
 }
 
 export default App;
