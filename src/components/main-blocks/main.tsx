@@ -53,7 +53,7 @@ const Main: FC<MainProps> = ({children, links}) => {
                         )}
 
                     </aside>
-                    <button className={"xl:block hidden"} onClick={() => setMenuFlag(!menuFlag)}>
+                    <button className={" xl:block hidden"} onClick={() => setMenuFlag(!menuFlag)}>
                         <div className={"bg-stone-50 rounded-md shadow-2xl hover:bg-gray-500 hover:text-white"}>
                             {menuFlag
                                 ?
@@ -65,7 +65,7 @@ const Main: FC<MainProps> = ({children, links}) => {
                     </button>
                 </div>
                 <div
-                    className={"absolute bg-gray-400 p-5 rounded-lg duration-200 left-[5px] border-gray" + (menuFlag2 ? " none" : " h-0 p-0")}>
+                    className={" absolute bg-gray-400 p-5 rounded-lg duration-200 left-[5px] border-gray z-20" + (menuFlag2 ? " none" : " h-0 p-0")}>
                     {menuFlag2 ?
                         links.map(link =>
                             <Link to={link.href}>
@@ -80,7 +80,7 @@ const Main: FC<MainProps> = ({children, links}) => {
                 </div>
 
                 <div
-                    className={"border h-screen  border-gray-600 px-[3vw] py-[3vh] w-[95vw] mx-[1vw] mb-[2vh] bg-stone-50 shadow-2xl rounded-lg"}>
+                    className={(menuFlag ? "xl:w-[81vw]" : "xl:w-[91vw]") + " w-[95vw] duration-300 border   border-gray-600 px-[3vw] py-[3vh] mx-[1vw] mb-[2vh] bg-stone-50 shadow-2xl rounded-lg"}>
 
                     {children}
                 </div>

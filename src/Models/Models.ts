@@ -10,9 +10,9 @@ export class ILink {
     }
 }
 
-export class IContact{
-    name:string;
-    number:string;
+export class IContact {
+    name: string;
+    number: string;
 
     constructor(name: string, number: string) {
         this.name = name;
@@ -69,22 +69,37 @@ export class IProduct {
 
 export class ICharacteristic {
     name: string;
-    value: string | number;
+    value?: string | number;
+    valueArray?: string[];
 
-    constructor(name: string, value: string | number) {
+    constructor(name: string, value: string | number | string[]) {
         this.name = name;
-        this.value = value;
+        if (typeof value === "object") {
+            this.valueArray = value;
+        } else {
+            this.value = value;
+        }
     }
+
+
 }
+
+// get valueArray():string[] {
+//     return (this.value);
+// }
+
+
+
 
 export class IFeedback {
     author: IUser;
     content: string;
     mark: number;
     data: string;
-    likes: number[];
+    likes: number;
+    dislikes: number;
 
-    constructor(author: IUser, content: string, mark: number, data: string, likes: number[], dislikes: number[]) {
+    constructor(author: IUser, content: string, mark: number, data: string, likes: number, dislikes: number) {
         this.author = author;
         this.content = content;
         this.mark = mark;
@@ -93,6 +108,5 @@ export class IFeedback {
         this.dislikes = dislikes;
     }
 
-    dislikes: number[];
 }
 

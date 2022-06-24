@@ -1,5 +1,6 @@
 import React from 'react';
 import Wrapper from "../components/Wrapper";
+import {Link} from "react-router-dom";
 
 const CatalogPage = () => {
     return (
@@ -7,6 +8,7 @@ const CatalogPage = () => {
             <Wrapper>
                 <div>
                     CatalogPage
+                    <Link to={"/product"}>Product</Link>
                 </div>
             </Wrapper>
         </div>

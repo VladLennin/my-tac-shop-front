@@ -10,7 +10,7 @@ interface FooterProps {
 
 const Footer: FC<FooterProps> = ({contacts, infoLinks, socialLinks}) => {
     return (
-        <div className={"footer text-custom text-[2vh]  bg-white"}>
+        <div className={"text-custom text-[2vh]  bg-white "}>
 
             <div className={" flex xl:flex-row flex-col w-full xl:justify-around justify-center align-middle p-[1vw]"}>
                 <div className={"flex flex-col px-2 pt-2"}>
