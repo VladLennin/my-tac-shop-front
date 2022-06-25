@@ -1,10 +1,10 @@
 import React, {FC} from 'react';
-import Wrapper from "../components/Wrapper";
+import Wrapper from "../components/main-blocks/Wrapper";
 
 interface BasketPageProps {
 }
 
-const BasketPage:FC<BasketPageProps> = ({}) => {
+const BasketPage:FC<BasketPageProps> = () => {
     return (
         <div>
             <Wrapper >

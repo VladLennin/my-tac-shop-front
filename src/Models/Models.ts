@@ -23,40 +23,80 @@ export class IContact {
 export class IUser {
     name: string;
     surname: string;
-    defaultAddress: string;
-    number: string;
+    address: string;
+    phoneNumber: string;
     mail: string;
+    image:Picture;
 
-    constructor(name: string, surname: string, defaultAddress: string, number: string, mail: string) {
+    constructor(image:Picture, name: string, surname: string, defaultAddress: string, number: string, mail: string) {
         this.name = name;
         this.surname = surname;
-        this.defaultAddress = defaultAddress;
-        this.number = number;
+        this.address = defaultAddress;
+        this.phoneNumber = number;
         this.mail = mail;
+        this.image = image;
     }
+}
+
+export class ICategory {
+    name: string;
+    subcategories: ISubcategory[];
+    image: Picture;
+    id:number;
+
+    constructor(id:number,name: string, subcategories: ISubcategory[], img: Picture) {
+        this.name = name;
+        this.id = id;
+        this.subcategories = subcategories;
+        this.image = img;
+    }
+}
+
+export class ISubcategory {
+    name: string;
+    image: Picture;
+    id: number;
+
+    constructor(id: number, name: string, img: Picture) {
+        this.name = name;
+        this.image = img;
+        this.id = id;
+    }
+
+}
+
+export class Picture {
+    content: string;
+
+    constructor(content: string) {
+        this.content = content;
+    }
+
 }
 
 export class IProduct {
     name: string;
     cost: number;
     characteristics: ICharacteristic[];
-    dataAdd: string;
+    created: string;
     discount: number;
     feedbacks: IFeedback[];
-    images: string[];
+    images: Picture[];
     linkYoutube: string;
     description: string;
     currentCount: number;
     saleCount: number;
+    id: number;
+    subcategoryId:number
 
-    constructor(name: string, cost: number, characteristics: ICharacteristic[],
+    constructor(id: number,subcategoryId:number, name: string, cost: number, characteristics: ICharacteristic[],
                 dataAdd: string, discount: number, feedbacks: IFeedback[],
-                images: string[], linkYoutube: string, description: string,
+                images: Picture[], linkYoutube: string, description: string,
                 currentCount: number, saleCount: number) {
         this.name = name;
         this.cost = cost;
         this.characteristics = characteristics;
-        this.dataAdd = dataAdd;
+        this.created = dataAdd;
         this.discount = discount;
         this.feedbacks = feedbacks;
         this.images = images;
@@ -64,38 +104,28 @@ export class IProduct {
         this.description = description;
         this.currentCount = currentCount;
         this.saleCount = saleCount;
+        this.id = id;
+        this.subcategoryId = subcategoryId;
     }
+
+
 }
 
 export class ICharacteristic {
     name: string;
-    value?: string | number;
-    valueArray?: string[];
+    values: string[]
 
-    constructor(name: string, value: string | number | string[]) {
+    constructor(name: string, value: string[]) {
         this.name = name;
-        if (typeof value === "object") {
-            this.valueArray = value;
-        } else {
-            this.value = value;
-        }
+        this.values = value;
     }
-
-
 }
-
-// get valueArray():string[] {
-//     return (this.value);
-// }
-
-
-
 
 export class IFeedback {
     author: IUser;
     content: string;
     mark: number;
-    data: string;
+    created: string;
     likes: number;
     dislikes: number;
 
@@ -103,7 +133,7 @@ export class IFeedback {
         this.author = author;
         this.content = content;
         this.mark = mark;
-        this.data = data;
+        this.created = data;
         this.likes = likes;
         this.dislikes = dislikes;
     }

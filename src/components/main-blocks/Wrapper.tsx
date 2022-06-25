@@ -1,8 +1,8 @@
 import React, {FC} from 'react';
-import Header from "./main-blocks/header";
-import Main from "./main-blocks/main";
-import Footer from "./main-blocks/footer";
-import {IContact, ILink} from "../Models/Models";
+import Header from "./header";
+import Main from "./main";
+import Footer from "./footer";
+import {IContact, ILink} from "../../Models/Models";
 
 interface WrapperProps {
     children: React.ReactNode;

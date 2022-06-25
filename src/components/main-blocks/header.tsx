@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 interface HeaderProps {
 }
 
-const Header: FC<HeaderProps> = ({}) => {
+const Header: FC<HeaderProps> = () => {
 
     const [searchFlag, setSearchFlag] = useState<boolean>(false);
 
@@ -19,18 +19,18 @@ const Header: FC<HeaderProps> = ({}) => {
                 </div>
 
                 <div className={"flex align-middle"}>
-                    <div
-                        className={"hidden xl:block mr-[1vw] text-[2vh] bg-opacity-50 bg-gray-700 p-3 rounded-[0.5vw] h-[5.5vh]"}>
-                        <div className={"flex align-middle"}>
-                            <input className={(searchFlag ? 'xl:w-[25vw]' : 'xl:w-0') + " h-[3vh] rounded-lg duration-500"}
-                                   type="text"/>
-                            <button onClick={() => setSearchFlag(!searchFlag)}
-                                    className={'search-btn-' + (searchFlag ? 'active' : 'disable') + " text-gray-900 hover:text-gray-50 duration-300 "}>
-                                <i className="bi bi-search"></i>
-                                Пошук
-                            </button>
-                        </div>
-                    </div>
+                    {/*<div*/}
+                    {/*    className={"hidden xl:block mr-[1vw] text-[2vh] bg-opacity-50 bg-gray-700 p-3 rounded-[0.5vw] h-[5.5vh]"}>*/}
+                    {/*    <div className={"flex align-middle"}>*/}
+                    {/*        <input className={(searchFlag ? 'xl:w-[25vw]' : 'opacity-0 xl:w-0') + " h-[3vh] rounded-lg duration-500"}*/}
+                    {/*               type="text"/>*/}
+                    {/*        <button onClick={() => setSearchFlag(!searchFlag)}*/}
+                    {/*                className={'search-btn-' + (searchFlag ? 'active' : 'disable') + " text-gray-900 hover:text-gray-50 duration-300 "}>*/}
+                    {/*            <i className="bi bi-search"></i>*/}
+                    {/*            Пошук*/}
+                    {/*        </button>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
 
                     <div className={"mr-[1vw]  bg-opacity-50 bg-gray-700 p-3  rounded-lg h-[8vh] "}>
 

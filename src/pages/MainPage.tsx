@@ -1,11 +1,11 @@
 import React, {FC} from 'react';
-import Wrapper from "../components/Wrapper";
+import Wrapper from "../components/main-blocks/Wrapper";
 
 interface MainPageProps {
 
 }
 
-const MainPage: FC<MainPageProps> = ({ }) => {
+const MainPage: FC<MainPageProps> = () => {
     return (
         <div>
             <Wrapper >

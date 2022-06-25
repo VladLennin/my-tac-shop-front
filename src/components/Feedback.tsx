@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {IFeedback, IUser} from "../Models/Models";
+import {IFeedback} from "../Models/Models";
 
 interface FeedbackProps {
     feedback: IFeedback;
@@ -12,7 +12,7 @@ const Feedback: FC<FeedbackProps> = ({feedback}) => {
 
                 <div className={"flex flex-col justify-between m-1 mr-3"}>
                     <h5 className={"text-custom text-[2.5vh]"}>{feedback.author.name}</h5>
-                    <h5 className={"text-custom"}>{feedback.data}</h5>
+                    <h5 className={"text-custom"}>{feedback.created}</h5>
                 </div>
                 <div className={"m-1"}>
                     {feedback.content}

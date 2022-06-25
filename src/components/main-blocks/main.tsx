@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useState} from 'react';
 import {ILink} from "../../Models/Models";
 import {Link} from "react-router-dom";
 
@@ -19,12 +19,12 @@ const Main: FC<MainProps> = ({children, links}) => {
                 className={"block xl:hidden  text-[2vh] bg-opacity-50  p-3  h-[5vh] pb-[4.5vh] "}>
                 <div className={"flex justify-between  pb-5"}>
                     <button onClick={() => setMenuFlag2(!menuFlag2)}
-                            className={"text-[5vh] hover:text-white duration-300"}>
+                            className={"mt-2 text-[5vh] hover:text-white duration-300"}>
                         <i className="bi bi-list"></i>
                     </button>
                     <div className={"mt-4"}>
                         <input
-                            className={(searchFlag ? 'w-[60vw] xl:[25vw] ' : 'w-0 xl:w-0') + " h-[3vh] duration-500 rounded-lg"}
+                            className={(searchFlag ? 'w-[60vw] xl:[25vw] ' : 'opacity-0 xl:w-0') + " h-[3vh] duration-500 rounded-lg"}
                             type="text"/>
                         <button onClick={() => setSearchFlag(!searchFlag)}
                                 className={(searchFlag ? 'text-white ml-[3vw]' : 'text-gray-900') + " hover:text-gray-50 duration-300 text-custom text-[2.5vh]"}>
@@ -42,7 +42,7 @@ const Main: FC<MainProps> = ({children, links}) => {
                         className={(menuFlag ? "xl:w-[14vw] min-w-[225px]" : "xl:w-[5vw] min-w-[85px]") + "  hidden xl:block align-middle rounded-lg text-[2vh]   duration-500  border border-2   border-gray-600 bg-stone-50 shadow-2xl  aside-font w-[18vw] pl-[1.25vw] px-[1vw] "}>
 
                         {links.map(link =>
-                            <Link to={link.href}>
+                            <Link key={link.href} to={link.href}>
                                 <div
                                     className={(menuFlag ? " justify-between" : "justify-center") + " hover:bg-gray-500 hover:text-white  duration-300 flex  align-middle  p-[1vh] rounded-lg mt-[1vh] mb-[1vh] "}>
                                     {menuFlag ? <h4>{link.name}</h4> : ""}
@@ -53,7 +53,7 @@ const Main: FC<MainProps> = ({children, links}) => {
                         )}
 
                     </aside>
-                    <button className={" xl:block hidden"} onClick={() => setMenuFlag(!menuFlag)}>
+                    <button className={" xl:block hidden "} onClick={() => setMenuFlag(!menuFlag)}>
                         <div className={"bg-stone-50 rounded-md shadow-2xl hover:bg-gray-500 hover:text-white"}>
                             {menuFlag
                                 ?
@@ -65,10 +65,10 @@ const Main: FC<MainProps> = ({children, links}) => {
                     </button>
                 </div>
                 <div
-                    className={" absolute bg-gray-400 p-5 rounded-lg duration-200 left-[5px] border-gray z-20" + (menuFlag2 ? " none" : " h-0 p-0")}>
+                    className={" absolute bg-gray-400 p-5 rounded-lg duration-200 left-[5px] border-gray z-20" + (menuFlag2 ? " " : " hidden ")}>
                     {menuFlag2 ?
                         links.map(link =>
-                            <Link to={link.href}>
+                            <Link key={link.href} to={link.href}>
                                 <div
                                     className={"bg-gray-500 text-white scale-110 duration-300 flex justify-between p-[1vh]  rounded-lg mt-2"}>
                                     <h4>{link.name}</h4>
@@ -76,7 +76,6 @@ const Main: FC<MainProps> = ({children, links}) => {
                                 </div>
                             </Link>) : ""
                     }
-
                 </div>
 
                 <div
