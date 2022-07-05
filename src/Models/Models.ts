@@ -20,21 +20,30 @@ export class IContact {
     }
 }
 
+export enum Roles {
+    "ADMIN", "USER"
+}
+
 export class IUser {
     name: string;
     surname: string;
     address: string;
     phoneNumber: string;
     mail: string;
-    image:Picture;
+    role: Roles;
 
-    constructor(image:Picture, name: string, surname: string, defaultAddress: string, number: string, mail: string) {
+    constructor(name: string, role: Roles, surname: string, defaultAddress: string, number: string, mail: string) {
         this.name = name;
         this.surname = surname;
         this.address = defaultAddress;
         this.phoneNumber = number;
         this.mail = mail;
-        this.image = image;
+        this.role = role;
+    }
+
+
+    get isAdmin(): boolean {
+        return this.role === Roles.ADMIN;
     }
 }
 
@@ -42,9 +51,9 @@ export class ICategory {
     name: string;
     subcategories: ISubcategory[];
     image: Picture;
-    id:number;
+    id: number;
 
-    constructor(id:number,name: string, subcategories: ISubcategory[], img: Picture) {
+    constructor(id: number, name: string, subcategories: ISubcategory[], img: Picture) {
         this.name = name;
         this.id = id;
         this.subcategories = subcategories;
@@ -78,7 +87,7 @@ export class IProduct {
     name: string;
     cost: number;
     characteristics: ICharacteristic[];
-    created: string;
+    created?: string;
     discount: number;
     feedbacks: IFeedback[];
     images: Picture[];
@@ -86,17 +95,16 @@ export class IProduct {
     description: string;
     currentCount: number;
     saleCount: number;
-    id: number;
-    subcategoryId:number
+    id?: number;
+    subcategoryId: number
 
-    constructor(id: number,subcategoryId:number, name: string, cost: number, characteristics: ICharacteristic[],
-                dataAdd: string, discount: number, feedbacks: IFeedback[],
+    constructor(subcategoryId: number, name: string, cost: number, characteristics: ICharacteristic[],
+                 discount: number, feedbacks: IFeedback[],
                 images: Picture[], linkYoutube: string, description: string,
                 currentCount: number, saleCount: number) {
         this.name = name;
         this.cost = cost;
         this.characteristics = characteristics;
-        this.created = dataAdd;
         this.discount = discount;
         this.feedbacks = feedbacks;
         this.images = images;
@@ -104,7 +112,6 @@ export class IProduct {
         this.description = description;
         this.currentCount = currentCount;
         this.saleCount = saleCount;
-        this.id = id;
         this.subcategoryId = subcategoryId;
     }
 
@@ -138,5 +145,25 @@ export class IFeedback {
         this.dislikes = dislikes;
     }
 
+}
+
+export class IFlag {
+    value: boolean;
+    name: string;
+
+    constructor(value: boolean, name: string) {
+        this.value = value;
+        this.name = name;
+    }
+}
+
+export class IBase64file{
+    file?:File;
+    base64URL:string;
+
+    constructor(file: File, base64URL: string) {
+        this.file = file;
+        this.base64URL = base64URL;
+    }
 }
 

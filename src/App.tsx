@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import './styles/main-blocks.css'
 import './styles/modal.css'
@@ -9,25 +9,30 @@ import ProfilePage from "./pages/ProfilePage";
 import BasketPage from "./pages/BasketPage";
 import CategoriesPage from "./pages/CategoriesPage";
 import AdminPage from "./pages/AdminPage";
-import { IUser, Picture} from "./Models/Models";
+import {IUser, Picture, Roles} from "./Models/Models";
 import ProductPageV2 from "./pages/ProductPageV2";
 import CatalogPage from "./pages/CatalogPage";
 
 function App() {
 
-    const user: IUser = new IUser(
-        new Picture("default"), "Vladlen", "Marchenko", "Pr.Peremogy,20",
-        "380985165190", "markelovwtf7@gmail.com",
+    const [user, setUser] = useState<IUser>(new IUser(
+            "Vladlen", Roles.ADMIN, "Marchenko", "Pr.Peremogy,20",
+            "380985165190", "markelovwtf7@gmail.com",
+        )
     )
+
+    const changeUser = (user: IUser) => {
+        setUser(user);
+    }
 
     function GetCategoryId() {
         let {id} = useParams();
-        return <CatalogPage subcategoryId={id}/>;
+        return <CatalogPage user={user} subcategoryId={id}/>;
     }
 
     function GetProductId() {
         let {id} = useParams();
-        return <ProductPageV2 productId={Number(id)}/>
+        return <ProductPageV2 user={user} productId={Number(id)}/>
     }
 
     return (
@@ -35,22 +40,22 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={
-                        <MainPage/>
+                        <MainPage user={user}/>
                     }/>
                     <Route path="/profile" element={
-                        <ProfilePage user={user}/>
+                        <ProfilePage user={user} setUser={changeUser}/>
                     }/>
                     <Route path="/basket" element={
-                        <BasketPage/>
+                        <BasketPage user={user} />
                     }/>
                     <Route path="/catalog" element={
-                        <CategoriesPage/>
+                        <CategoriesPage user={user} />
                     }/>
                     <Route path="/catalog/:id" element={
                         <GetCategoryId/>
                     }/>
                     <Route path="/admin" element={
-                        <AdminPage/>
+                        <AdminPage user={user} />
                     }/>
                     <Route path="/catalog/product/:id" element={
                         <GetProductId/>

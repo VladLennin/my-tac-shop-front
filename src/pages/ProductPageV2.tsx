@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState} from 'react';
-import {IProduct} from "../Models/Models";
+import {IProduct, IUser} from "../Models/Models";
 import CharacteristicsBlock from "../components/ProductPageBlocks/CharacteristicsBlock";
 import DescriptionBlock from "../components/ProductPageBlocks/DescriptionBlock";
 import FeedbacksBlock from "../components/ProductPageBlocks/FeedbacksBlock";
@@ -10,9 +10,10 @@ import ProductSlider from "../components/ProductPageBlocks/ProductSlider";
 
 interface ProductPageProps {
     productId: number;
+    user: IUser;
 }
 
-const ProductPageV2: FC<ProductPageProps> = ({productId}) => {
+const ProductPageV2: FC<ProductPageProps> = ({productId, user}) => {
 
     const [product, setProduct] = useState<IProduct>(
     );
@@ -28,7 +29,7 @@ const ProductPageV2: FC<ProductPageProps> = ({productId}) => {
     }, [productId])
 
     return (
-        <Wrapper>
+        <Wrapper user={user}>
             <div className="grid xl:grid-cols-2 grid-cols-1 gap-10">
                 {product !== undefined ? <ProductSlider isCatalog={false} product={product} indicators={true}/> : ""}
                 <CharacteristicsBlock product={product}/>

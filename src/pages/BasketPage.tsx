@@ -1,13 +1,15 @@
 import React, {FC} from 'react';
 import Wrapper from "../components/main-blocks/Wrapper";
+import {IUser} from "../Models/Models";
 
 interface BasketPageProps {
+    user:IUser;
 }
 
-const BasketPage:FC<BasketPageProps> = () => {
+const BasketPage:FC<BasketPageProps> = ({user}) => {
     return (
         <div>
-            <Wrapper >
+            <Wrapper user={user}>
                 <div>
                     BasketPage
                 </div>

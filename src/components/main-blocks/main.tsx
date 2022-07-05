@@ -1,13 +1,15 @@
 import React, {FC, useState} from 'react';
-import {ILink} from "../../Models/Models";
+import {ILink, IUser} from "../../Models/Models";
 import {Link} from "react-router-dom";
 
 interface MainProps {
     children: React.ReactNode;
     links: ILink[];
+    user: IUser;
 }
 
-const Main: FC<MainProps> = ({children, links}) => {
+const Main: FC<MainProps> = ({children, links, user}) => {
+
 
     const [menuFlag, setMenuFlag] = useState<boolean>(false);
     const [menuFlag2, setMenuFlag2] = useState<boolean>(false);
@@ -41,7 +43,7 @@ const Main: FC<MainProps> = ({children, links}) => {
                     <aside
                         className={(menuFlag ? "xl:w-[14vw] min-w-[225px]" : "xl:w-[5vw] min-w-[85px]") + "  hidden xl:block align-middle rounded-lg text-[2vh]   duration-500  border border-2   border-gray-600 bg-stone-50 shadow-2xl  aside-font w-[18vw] pl-[1.25vw] px-[1vw] "}>
 
-                        {links.map(link =>
+                        {links.slice(0, links.length - 1).map(link =>
                             <Link key={link.href} to={link.href}>
                                 <div
                                     className={(menuFlag ? " justify-between" : "justify-center") + " hover:bg-gray-500 hover:text-white  duration-300 flex  align-middle  p-[1vh] rounded-lg mt-[1vh] mb-[1vh] "}>
@@ -51,6 +53,17 @@ const Main: FC<MainProps> = ({children, links}) => {
 
                             </Link>
                         )}
+                        {user.isAdmin ?
+                            <Link key={links[links.length - 1].href} to={links[links.length - 1].href}>
+                                <div
+                                    className={(menuFlag ? " justify-between" : "justify-center") + " hover:bg-gray-500 hover:text-white  duration-300 flex  align-middle  p-[1vh] rounded-lg mt-[1vh] mb-[1vh] "}>
+                                    {menuFlag ? <h4>{links[links.length - 1].name}</h4> : ""}
+                                    <i className={links[links.length - 1].icon + (menuFlag ? " ml-[0.5vw]" : " text-[2.5vh]")}></i>
+                                </div>
+
+                            </Link> : ""
+                        }
+
 
                     </aside>
                     <button className={" xl:block hidden "} onClick={() => setMenuFlag(!menuFlag)}>

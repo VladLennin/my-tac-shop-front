@@ -2,13 +2,14 @@ import React, {FC} from 'react';
 import Header from "./header";
 import Main from "./main";
 import Footer from "./footer";
-import {IContact, ILink} from "../../Models/Models";
+import {IContact, ILink, IUser} from "../../Models/Models";
 
 interface WrapperProps {
     children: React.ReactNode;
+    user:IUser;
 }
 
-const Wrapper: FC<WrapperProps> = ({children}) => {
+const Wrapper: FC<WrapperProps> = ({children,user}) => {
 
     const linksAside: ILink[] = [
         new ILink("/", "bi bi-house-fill", "Головна"),
@@ -39,7 +40,7 @@ const Wrapper: FC<WrapperProps> = ({children}) => {
         <div >
 
             <Header/>
-            <Main links={linksAside}>
+            <Main user={user} links={linksAside}>
                 {children}
             </Main>
             <Footer contacts={contacts} infoLinks={infoLinks} socialLinks={socialLinks}/>

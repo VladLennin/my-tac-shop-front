@@ -1,14 +1,15 @@
 import React, {FC} from 'react';
 import Wrapper from "../components/main-blocks/Wrapper";
+import {IUser} from "../Models/Models";
 
 interface MainPageProps {
-
+    user: IUser;
 }
 
-const MainPage: FC<MainPageProps> = () => {
+const MainPage: FC<MainPageProps> = ({user}) => {
     return (
         <div>
-            <Wrapper >
+            <Wrapper user={user}>
                 <div>
                     MainPage
                 </div>

@@ -1,16 +1,17 @@
 import React, {FC, useEffect, useState} from 'react';
 import Wrapper from "../components/main-blocks/Wrapper";
 import {Link} from "react-router-dom";
-import {IProduct} from "../Models/Models";
+import {IProduct, IUser} from "../Models/Models";
 import CostBuyBtn from "../components/ProductPageBlocks/CostBuyBtn";
 import API from "../api";
 import ProductSlider from "../components/ProductPageBlocks/ProductSlider";
 
 interface SubcategoryPageProps {
     subcategoryId?: string;
+    user:IUser;
 }
 
-const CatalogPage: FC<SubcategoryPageProps> = ({subcategoryId}) => {
+const CatalogPage: FC<SubcategoryPageProps> = ({subcategoryId,user}) => {
 
     const [products, setProducts] = useState<IProduct[]>();
 
@@ -24,7 +25,7 @@ const CatalogPage: FC<SubcategoryPageProps> = ({subcategoryId}) => {
             })
     }, [])
     return (
-        <Wrapper>
+        <Wrapper user={user}>
             <div className={"w-full border-2 border-gray-700 rounded-lg mb-4 grid grid-cols-2 gap-12"}>
                 <div className={"grid grid-cols-3 gap-2 p-2"}>
 

@@ -1,14 +1,14 @@
 import React, {FC, useEffect, useState} from 'react';
 import Wrapper from "../components/main-blocks/Wrapper";
 import {Link} from "react-router-dom";
-import {ICategory} from "../Models/Models";
+import {ICategory, IUser} from "../Models/Models";
 import API from "../api"
 
 interface CatalogProps {
-
+    user: IUser;
 }
 
-const CategoriesPage: FC<CatalogProps> = () => {
+const CategoriesPage: FC<CatalogProps> = ({user}) => {
 
     const [currentCategory, setCurrentCategory] = useState<ICategory>();
     const [categories, setCategories] = useState<ICategory[]>()
@@ -25,7 +25,7 @@ const CategoriesPage: FC<CatalogProps> = () => {
 
     return (
 
-        <Wrapper>
+        <Wrapper user={user}>
             <div className={"text-center"}>
                 <h3 className={" text-custom text-3xl xl:text-5xl xl:mb-5 mb-3"}>Каталог</h3>
                 <div className={"grid grid-col-1 xl:grid-cols-2 gap-4 "}>
@@ -51,15 +51,15 @@ const CategoriesPage: FC<CatalogProps> = () => {
                                 <div className={"text-custom text-xl text-gray-400 "}>Виберіть категорію</div>
                                 :
                                 (currentCategory?.subcategories.map(subcategory =>
+                                    <Link
+                                        to={"/catalog/" + subcategory.id}>
+                                        <div key={subcategory.id}
+                                             className={"grid justify-items-center text-center hover:scale-110 hover:border-gray-700 rounded border p-2 hover:shadow-lg duration-300"}>
 
-                                    <div key={subcategory.id}
-                                         className={"grid justify-items-center text-center hover:scale-110 hover:border-gray-700 rounded border p-2 hover:shadow-lg duration-300"}>
-                                        <Link
-                                            to={"/catalog/" + subcategory.id}>
                                             <img className={""} src={subcategory.image?.content} alt=""/>
                                             <h3>{subcategory.name}</h3>
-                                        </Link>
-                                    </div>
+                                        </div>
+                                    </Link>
                                 ))
                             }
 
