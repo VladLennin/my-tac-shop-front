@@ -99,7 +99,7 @@ export class IProduct {
     subcategoryId: number
 
     constructor(subcategoryId: number, name: string, cost: number, characteristics: ICharacteristic[],
-                 discount: number, feedbacks: IFeedback[],
+                discount: number, feedbacks: IFeedback[],
                 images: Picture[], linkYoutube: string, description: string,
                 currentCount: number, saleCount: number) {
         this.name = name;
@@ -157,13 +157,25 @@ export class IFlag {
     }
 }
 
-export class IBase64file{
-    file?:File;
-    base64URL:string;
+export class IBase64file {
+    file?: File;
+    base64URL: string;
 
     constructor(file: File, base64URL: string) {
         this.file = file;
         this.base64URL = base64URL;
+    }
+}
+
+export class IToast {
+    index: string;
+    content: string;
+    icon: string
+
+    constructor(index: string, content: string, icon: string) {
+        this.index = index;
+        this.content = content;
+        this.icon = icon;
     }
 }
 

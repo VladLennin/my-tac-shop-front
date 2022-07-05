@@ -1,7 +1,7 @@
 import {Button, Modal} from 'flowbite-react';
 import React, {FC, useEffect, useState} from 'react';
-import {IBase64file, ICategory, ICharacteristic, IProduct, ISubcategory, Picture} from "../Models/Models";
-import API from "../api";
+import {IBase64file, ICategory, ICharacteristic, IProduct, ISubcategory, Picture} from "../../Models/Models";
+import API from "../../api";
 
 interface ModalAddProduct {
     modal: boolean;
