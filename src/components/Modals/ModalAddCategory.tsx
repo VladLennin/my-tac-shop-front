@@ -1,8 +1,7 @@
-import {Button, Modal, Toast} from 'flowbite-react';
-import React, {FC, ReactNode, useEffect, useState} from 'react';
+import { Modal} from 'flowbite-react';
+import React, {FC, useState} from 'react';
 import API from "../../api";
-import {IBase64file, ICategory, IToast, Picture} from "../../Models/Models";
-import {constants} from "http2";
+import { ICategory, IToast, Picture} from "../../Models/Models";
 
 
 interface ModalAddPCategory {

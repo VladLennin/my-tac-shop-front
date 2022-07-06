@@ -7,6 +7,7 @@ import Wrapper from "../components/main-blocks/Wrapper";
 import CostBuyBtn from "../components/ProductPageBlocks/CostBuyBtn";
 import API from "../api"
 import ProductSlider from "../components/ProductPageBlocks/ProductSlider";
+import {Spinner} from "flowbite-react";
 
 interface ProductPageProps {
     productId: number;
@@ -30,14 +31,53 @@ const ProductPageV2: FC<ProductPageProps> = ({productId, user}) => {
 
     return (
         <Wrapper user={user}>
-            <div className="grid xl:grid-cols-2 grid-cols-1 gap-10">
-                {product !== undefined ? <ProductSlider isCatalog={false} product={product} indicators={true}/> : ""}
-                <CharacteristicsBlock product={product}/>
-                <div>
-                    <CostBuyBtn product={product} inline={true}/>
-                    <FeedbacksBlock product={product}/>
-                </div>
-                <DescriptionBlock product={product}/>
+            <div className={"grid xl:grid-cols-2 grid-cols-1 gap-10"}>
+                {
+                    product !== undefined
+                        ?
+                        <ProductSlider isCatalog={false} product={product} indicators={true}/>
+                        :
+                        <Spinner className={"m-auto"}
+                                 aria-label="Extra large spinner example"
+                                 size="xl"
+                        />
+                }
+                {
+                    product !== undefined
+                        ?
+                        <CharacteristicsBlock product={product}/>
+                        :
+                        <Spinner className={"m-auto"}
+                                 aria-label="Extra large spinner example"
+                                 size="xl"
+                        />
+                }
+
+                {
+                    product !== undefined
+                        ?
+                        <div>
+                            <CostBuyBtn product={product} inline={true}/>
+                            <FeedbacksBlock product={product}/>
+                        </div>
+                        :
+                        <Spinner className={"m-auto"}
+                                 aria-label="Extra large spinner example"
+                                 size="xl"
+                        />
+                }
+
+                {
+                    product !== undefined
+                        ?
+                        <DescriptionBlock product={product}/>
+                        :
+                        <Spinner className={"m-auto"}
+                                 aria-label="Extra large spinner example"
+                                 size="xl"
+                        />
+                }
+
             </div>
         </Wrapper>
 

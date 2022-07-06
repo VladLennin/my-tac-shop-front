@@ -1,14 +1,17 @@
-import {Button, Modal} from 'flowbite-react';
+import {Button, Modal, Spinner, Toast} from 'flowbite-react';
 import React, {FC, useEffect, useState} from 'react';
-import {IBase64file, ICategory, ICharacteristic, IProduct, ISubcategory, Picture} from "../../Models/Models";
+import {IBase64file, ICategory, ICharacteristic, IProduct, ISubcategory, IToast, Picture} from "../../Models/Models";
 import API from "../../api";
 
 interface ModalAddProduct {
     modal: boolean;
     closeModal: () => void;
+    setToasts: (state: any) => void;
+    toasts: IToast[];
+    categories:ICategory[];
 }
 
-const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal}) => {
+const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal, toasts,setToasts,categories}) => {
 
         const [characteristics, setCharacteristics] = useState<ICharacteristic[]>([])
         const [characteristicName, setCharacteristicName] = useState<string>("");
@@ -21,7 +24,6 @@ const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal}) => {
                 "", 0, 0)
         );
 
-        const [categories, setCategories] = useState<ICategory[]>([])
         const [currentCategory, setCurrentCategory] = useState<ICategory>();
 
 
@@ -38,23 +40,36 @@ const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal}) => {
 
         function createProduct() {
             product.characteristics = characteristics;
+
             images.map(img => {
                 product.images.push(new Picture(img.base64URL))
             })
-            API.post("/product", product)
-            clearForm()
-            console.log(product)
+            if (product.images.length !== 0 &&
+                product.cost !== 0 &&
+                product.currentCount !== 0 &&
+                product.description !== "" &&
+                product.linkYoutube !== "" &&
+                product.name !== "" &&
+                product.characteristics.length !== 0 &&
+                product.subcategoryId !== 0
+            ) {
+                API.post("/product", product).then(res=>{
+                    clearForm()
+                    closeModal();
+                    console.log(product)
+                    setToasts([...toasts,new IToast(String(Date.now()),"Ви успішно додали новий товар!","bi bi-check2")])
+                }).catch(err=>{
+                    setToasts([...toasts,new IToast(String(Date.now()),"Щось пішло не так...","bi bi-x-lg")])
+
+                })
+
+
+            } else {
+                alert("Введіть усі поля!")
+            }
+
         }
 
-        useEffect(() => {
-            getCategories()
-        }, [])
-
-        async function getCategories() {
-            const data = (await API.get("/category")).data
-            setCategories(data);
-            setCurrentCategory(categories[0]);
-        }
 
         function getBase64(file: File) {
             return new Promise(async resolve => {
@@ -198,33 +213,48 @@ const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal}) => {
 
                         <div className={"grid grid-cols-2"}>
                             <h3>Категорія:</h3>
-                            <select defaultValue={categories.length !== 0 ? categories[0].id :0 } className={"rounded"}
-                                    name="" id=""
-                                    onChange={(e) => setCurrentCategory((categories.filter(cat => cat.id === Number(e.target.value)))[0])}>
-                                <option value="-1"></option>
-                                {categories.map(category => (
-                                    <option value={category.id}>{category.name}</option>
-                                ))}
-                            </select>
+                            {
+                                categories.length !== 0 ?
+                                    <select defaultValue={-1}
+                                            className={"rounded"}
+                                            name="" id=""
+                                            onChange={(e) => setCurrentCategory((categories.filter(cat => cat.id === Number(e.target.value)))[0])}>
+                                        <option disabled={true} value={-1}>Виберіть категорію</option>
+                                        {categories.map(category => (
+                                            <option value={category.id}>{category.name}</option>
+                                        ))}
+                                    </select>
+                                    :
+                                    <Spinner className={"m-auto"}
+                                             aria-label="Extra large spinner example"
+                                             size="xl"
+                                    />
+                            }
+
                         </div>
 
-                        {currentCategory === undefined
-                            ?
-                            ""
-                            :
-                            <div className={"grid grid-cols-2 "}>
-                                <h3>Підкатегорія:</h3>
-                                <select defaultValue={categories[0].subcategories[0].id} className={"rounded"} name="" id=""
+
+                        <div className={"grid grid-cols-2 "}>
+                            <h3>Підкатегорія:</h3>
+                            {currentCategory !== undefined && currentCategory?.subcategories.length !== 0
+                                ?
+                                <select defaultValue={-1} className={"rounded"} name=""
+                                        id=""
                                         onChange={(e) => setProduct({
                                             ...product,
                                             "subcategoryId": Number(e.target.value)
                                         })}>
-                                    {currentCategory.subcategories.map(subcategory => (
+                                    <option disabled={true} value={-1}>Виберіть підкатегорію</option>
+                                    {currentCategory?.subcategories.map(subcategory => (
                                         <option value={subcategory.id}>{subcategory.name}</option>
                                     ))}
                                 </select>
-                            </div>
-                        }
+                                :
+                                <h3>У цієї категорії немає підкатегорій...</h3>
+                            }
+
+                        </div>
+
                     </div>
                 </Modal.Body>
 

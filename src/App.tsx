@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import './styles/main-blocks.css'
 import './styles/modal.css'
@@ -9,9 +9,10 @@ import ProfilePage from "./pages/ProfilePage";
 import BasketPage from "./pages/BasketPage";
 import CategoriesPage from "./pages/CategoriesPage";
 import AdminPage from "./pages/AdminPage";
-import {IUser, Picture, Roles} from "./Models/Models";
+import {ICategory, IUser, Picture, Roles} from "./Models/Models";
 import ProductPageV2 from "./pages/ProductPageV2";
 import CatalogPage from "./pages/CatalogPage";
+import API from "./api";
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
         return <ProductPageV2 user={user} productId={Number(id)}/>
     }
 
+
     return (
         <div className="App bg-[#495057]">
             <BrowserRouter>
@@ -46,16 +48,16 @@ function App() {
                         <ProfilePage user={user} setUser={changeUser}/>
                     }/>
                     <Route path="/basket" element={
-                        <BasketPage user={user} />
+                        <BasketPage user={user}/>
                     }/>
                     <Route path="/catalog" element={
-                        <CategoriesPage user={user} />
+                        <CategoriesPage user={user}/>
                     }/>
                     <Route path="/catalog/:id" element={
                         <GetCategoryId/>
                     }/>
                     <Route path="/admin" element={
-                        <AdminPage user={user} />
+                        <AdminPage  user={user}/>
                     }/>
                     <Route path="/catalog/product/:id" element={
                         <GetProductId/>

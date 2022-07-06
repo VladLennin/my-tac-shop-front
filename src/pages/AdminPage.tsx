@@ -1,13 +1,15 @@
-import {Button, Modal, Toast} from 'flowbite-react';
-import React, {FC, useState} from 'react';
+import {Toast} from 'flowbite-react';
+import React, {FC, useEffect, useState} from 'react';
 import Wrapper from "../components/main-blocks/Wrapper";
-import {IProduct, IToast, IUser} from "../Models/Models";
+import {ICategory, IProduct, IToast, IUser} from "../Models/Models";
 import ModalAddProduct from "../components/Modals/ModalAddProduct";
 import ModalAddPCategory from "../components/Modals/ModalAddCategory";
 import ModalAddPSubcategory from "../components/Modals/ModalAddSubcategory";
+import API from "../api"
 
 interface AdminPageProps {
     user: IUser;
+
 }
 
 const AdminPage: FC<AdminPageProps> = ({user}) => {
@@ -45,6 +47,20 @@ const AdminPage: FC<AdminPageProps> = ({user}) => {
 
     const [toasts, setToasts] = useState<IToast[]>([])
 
+    const [categories, setCategories] = useState<ICategory[]>([]);
+
+    function getCategories() {
+        API.get("/category").then(res => {
+            setCategories(res.data)
+        }).catch(err => {
+            console.log(err)
+        })
+    }
+
+    useEffect(() => {
+        getCategories()
+    }, [])
+
     return (
         <div>
             <div className={"absolute right-5 top-5 z-50 duration-300"}>
@@ -64,30 +80,33 @@ const AdminPage: FC<AdminPageProps> = ({user}) => {
                 <div className={"grid xl:grid-cols-2 grid-cols-1 gap-6 "}>
                     <div
                         onClick={openModalProduct}
-                        className={"border-2 border-gray-700  rounded-lg p-4 hover:shadow-2xl hover:scale-105 duration-300"}>
+                        className={"border-2 border-gray-700  rounded-lg p-4 hover:shadow-2xl hover:scale-105 duration-300 text-center cursor-pointer"}>
                         Додати новий товар
                     </div>
-                    <ModalAddProduct modal={modalProduct} closeModal={closeModalProduct}/>
+                    <ModalAddProduct categories={categories} toasts={toasts} setToasts={setToasts} modal={modalProduct}
+                                     closeModal={closeModalProduct}/>
 
                     <div
-                        className={"border-2 border-gray-700  rounded-lg p-4 hover:shadow-2xl hover:scale-105 duration-300"}>
+                        className={"border-2 border-gray-700  rounded-lg p-4 hover:shadow-2xl hover:scale-105 duration-300 text-center cursor-pointer"}>
                         Замовлення
                     </div>
 
                     <div
                         onClick={openModalCategory}
-                        className={"border-2 border-gray-700  rounded-lg p-4 hover:shadow-2xl hover:scale-105 duration-300"}>
-                        Додати нову категорію
+                        className={"border-2 border-gray-700  rounded-lg p-4 hover:shadow-2xl hover:scale-105 duration-300 text-center cursor-pointer"}>
+                        <h3>Додати нову категорію</h3>
                     </div>
                     <ModalAddPCategory modal={modalCategory} closeModal={closeModalCategory} toasts={toasts}
                                        setToasts={setToasts}/>
 
                     <div
                         onClick={openModalSubcategory}
-                        className={"border-2 border-gray-700  rounded-lg p-4 hover:shadow-2xl hover:scale-105 duration-300"}>
+                        className={"border-2 border-gray-700  rounded-lg p-4 hover:shadow-2xl hover:scale-105 duration-300 text-center cursor-pointer"}>
                         Додати нову підкатегорію
                     </div>
-                    <ModalAddPSubcategory modal={modalSubcategory} closeModal={closeModalSubcategory}/>
+                    <ModalAddPSubcategory categories={categories} toasts={toasts} setToasts={setToasts}
+                                          modal={modalSubcategory}
+                                          closeModal={closeModalSubcategory}/>
 
                 </div>
             </Wrapper>
