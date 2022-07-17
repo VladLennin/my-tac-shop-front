@@ -1,6 +1,7 @@
-import React, {FC} from 'react';
-import {IProduct} from "../../Models/Models";
-import {Carousel} from "flowbite-react";
+import React, {FC, useEffect, useState} from 'react';
+import {IProduct, Picture} from "../../Models/Models";
+import {Carousel, Spinner} from "flowbite-react";
+import API from "../../api"
 
 interface ProductSliderProps {
     product?: IProduct;
@@ -10,13 +11,39 @@ interface ProductSliderProps {
 
 const ProductSlider: FC<ProductSliderProps> = ({product, indicators, isCatalog}) => {
 
+    const [pictures, setPictures] = useState<Picture[]>([]);
+
+    function getImages(parentId?: number) {
+        API.get("/product/" + parentId + "/images").then(res => {
+            const tempPictures:Picture[] = res.data;
+            setPictures(tempPictures);
+        }).catch(err => {
+            console.log(err)
+        })
+    }
+
+    useEffect(() => {
+        getImages(product?.id);
+    }, [])
+
     return (
         <div className={(isCatalog ? "h-40" : "h-96 ")}>
             <Carousel slide={false}>
-                <img className={(isCatalog ? "" : "p-10")} src={product?.images[0]?.content} alt="..."/>
-                {product?.images.slice(1).map(img =>
-                    <img className={(isCatalog ? "" : "p-10")} src={img?.content} alt="..."/>
-                )}
+                {
+                    pictures.length === 0
+                        ?
+                        <div className={"flex flex-col"}>
+                            <Spinner className={"m-auto"}
+                                     aria-label="Extra large spinner example"
+                                     size="xl"
+                            />
+                        </div>
+                        :
+                            pictures.map(img =>
+                                <img className={(isCatalog ? "" : "p-10")} src={img.content} alt="..."/>
+                            )
+                }
+
             </Carousel>
         </div>
     );

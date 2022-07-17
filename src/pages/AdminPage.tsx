@@ -3,7 +3,7 @@ import React, {FC, useEffect, useState} from 'react';
 import Wrapper from "../components/main-blocks/Wrapper";
 import {ICategory, IProduct, IToast, IUser} from "../Models/Models";
 import ModalAddProduct from "../components/Modals/ModalAddProduct";
-import ModalAddPCategory from "../components/Modals/ModalAddCategory";
+import ModalAddCategory from "../components/Modals/ModalAddCategory";
 import ModalAddPSubcategory from "../components/Modals/ModalAddSubcategory";
 import API from "../api"
 
@@ -96,15 +96,17 @@ const AdminPage: FC<AdminPageProps> = ({user}) => {
                         className={"border-2 border-gray-700  rounded-lg p-4 hover:shadow-2xl hover:scale-105 duration-300 text-center cursor-pointer"}>
                         <h3>Додати нову категорію</h3>
                     </div>
-                    <ModalAddPCategory modal={modalCategory} closeModal={closeModalCategory} toasts={toasts}
-                                       setToasts={setToasts}/>
+                    <ModalAddCategory getCategories={getCategories} modal={modalCategory}
+                                      closeModal={closeModalCategory} toasts={toasts}
+                                      setToasts={setToasts}/>
 
                     <div
                         onClick={openModalSubcategory}
                         className={"border-2 border-gray-700  rounded-lg p-4 hover:shadow-2xl hover:scale-105 duration-300 text-center cursor-pointer"}>
                         Додати нову підкатегорію
                     </div>
-                    <ModalAddPSubcategory categories={categories} toasts={toasts} setToasts={setToasts}
+                    <ModalAddPSubcategory categories={categories} getCategories={getCategories} toasts={toasts}
+                                          setToasts={setToasts}
                                           modal={modalSubcategory}
                                           closeModal={closeModalSubcategory}/>
 

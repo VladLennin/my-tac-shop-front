@@ -1,7 +1,7 @@
-import { Modal} from 'flowbite-react';
+import {Modal} from 'flowbite-react';
 import React, {FC, useState} from 'react';
 import API from "../../api";
-import { ICategory, IToast, Picture} from "../../Models/Models";
+import {ICategory, IToast, Picture} from "../../Models/Models";
 
 
 interface ModalAddPCategory {
@@ -9,11 +9,12 @@ interface ModalAddPCategory {
     closeModal: () => void;
     setToasts: (state: any) => void;
     toasts: IToast[];
+    getCategories: () => void;
 }
 
-const ModalAddPCategory: FC<ModalAddPCategory> = ({modal, closeModal, setToasts, toasts}) => {
+const ModalAddCategory: FC<ModalAddPCategory> = ({modal, closeModal, setToasts, toasts, getCategories}) => {
 
-        const [newCategory, setNewCategoory] = useState<ICategory>(
+        const [newCategory, setNewCategory] = useState<ICategory>(
             new ICategory(0, "", [], new Picture(""))
         )
         const [image, setImage] = useState<Picture>(new Picture(""))
@@ -42,18 +43,17 @@ const ModalAddPCategory: FC<ModalAddPCategory> = ({modal, closeModal, setToasts,
 
         function createCategory() {
             newCategory.image = image;
-            setNewCategoory(newCategory);
+            setNewCategory(newCategory);
             if (newCategory.name !== "" && image.content !== "") {
                 API.post("/category", newCategory).then(res => {
                     console.log(res)
-                    if (res.status === 200) {
-                        setToasts([...toasts, new IToast(String(Date.now()), "Ви іспішно додали категорію", "bi bi-check2")])
-                    }
+                    setToasts([...toasts, new IToast(String(Date.now()), "Ви іспішно додали категорію", "bi bi-check2")])
+                    getCategories();
                 }).catch(err => {
                     console.log(err)
                     setToasts([...toasts, new IToast(String(Date.now()), "Відбулася помилка!", "bi bi-x-lg")])
                 })
-                setNewCategoory(new ICategory(0, "", [], new Picture("")))
+                setNewCategory(new ICategory(0, "", [], new Picture("")))
                 setImage(new Picture(""))
                 closeModal();
             } else {
@@ -73,7 +73,7 @@ const ModalAddPCategory: FC<ModalAddPCategory> = ({modal, closeModal, setToasts,
                         <div className={"grid grid-cols-2"}>
                             <h3>Назва:</h3>
                             <input value={newCategory.name}
-                                   onChange={(e) => setNewCategoory({...newCategory, "name": e.target.value})}
+                                   onChange={(e) => setNewCategory({...newCategory, "name": e.target.value})}
                                    className={"rounded"} type="text"/>
                         </div>
 
@@ -91,7 +91,6 @@ const ModalAddPCategory: FC<ModalAddPCategory> = ({modal, closeModal, setToasts,
                                         :
                                         ""
                                     }
-
                                 </div>
                             </div>
 
@@ -112,4 +111,4 @@ const ModalAddPCategory: FC<ModalAddPCategory> = ({modal, closeModal, setToasts,
     }
 ;
 
-export default ModalAddPCategory;
+export default ModalAddCategory;

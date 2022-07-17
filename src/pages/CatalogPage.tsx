@@ -8,18 +8,18 @@ import ProductSlider from "../components/ProductPageBlocks/ProductSlider";
 
 interface SubcategoryPageProps {
     subcategoryId?: string;
-    user:IUser;
+    user: IUser;
 }
 
-const CatalogPage: FC<SubcategoryPageProps> = ({subcategoryId,user}) => {
+const CatalogPage: FC<SubcategoryPageProps> = ({subcategoryId, user}) => {
 
-    const [products, setProducts] = useState<IProduct[]>();
+    const [products, setProducts] = useState<IProduct[]>([]);
 
 
     useEffect(() => {
         API.get("/product/subcategory/" + subcategoryId)
             .then((res: any) => {
-                let products: IProduct[] = res.data;
+                let products: IProduct[] = res.data.content;
                 console.log(products)
                 setProducts(products);
             })
@@ -32,24 +32,36 @@ const CatalogPage: FC<SubcategoryPageProps> = ({subcategoryId,user}) => {
                     <select name="" id="" className={"border rounded"}>
                         <option defaultChecked={true}></option>
                         <option value="">
-                            <button className={"hover:scale-110 hover:bg-gray-300 hover:text-gray-700 duration-300  bg-gray-700 rounded border border-white text-white m-1"}>Filter</button>
+                            <button
+                                className={"hover:scale-110 hover:bg-gray-300 hover:text-gray-700 duration-300  bg-gray-700 rounded border border-white text-white m-1"}>Filter
+                            </button>
                         </option>
 
                         <option value="">
-                            <button className={"hover:scale-110 hover:bg-gray-300 hover:text-gray-700 duration-300  bg-gray-700 rounded border border-white text-white m-1"}>Filter</button>
+                            <button
+                                className={"hover:scale-110 hover:bg-gray-300 hover:text-gray-700 duration-300  bg-gray-700 rounded border border-white text-white m-1"}>Filter
+                            </button>
                         </option>
 
                         <option value="">
-                            <button className={"hover:scale-110 hover:bg-gray-300 hover:text-gray-700 duration-300  bg-gray-700 rounded border border-white text-white m-1"}>Filter</button>
+                            <button
+                                className={"hover:scale-110 hover:bg-gray-300 hover:text-gray-700 duration-300  bg-gray-700 rounded border border-white text-white m-1"}>Filter
+                            </button>
                         </option>
                         <option value="">
-                            <button className={"hover:scale-110 hover:bg-gray-300 hover:text-gray-700 duration-300  bg-gray-700 rounded border border-white text-white m-1"}>Filter</button>
+                            <button
+                                className={"hover:scale-110 hover:bg-gray-300 hover:text-gray-700 duration-300  bg-gray-700 rounded border border-white text-white m-1"}>Filter
+                            </button>
                         </option>
                         <option value="">
-                            <button className={"hover:scale-110 hover:bg-gray-300 hover:text-gray-700 duration-300  bg-gray-700 rounded border border-white text-white m-1"}>Filter</button>
+                            <button
+                                className={"hover:scale-110 hover:bg-gray-300 hover:text-gray-700 duration-300  bg-gray-700 rounded border border-white text-white m-1"}>Filter
+                            </button>
                         </option>
                         <option value="">
-                            <button className={"hover:scale-110 hover:bg-gray-300 hover:text-gray-700 duration-300  bg-gray-700 rounded border border-white text-white m-1"}>Filter</button>
+                            <button
+                                className={"hover:scale-110 hover:bg-gray-300 hover:text-gray-700 duration-300  bg-gray-700 rounded border border-white text-white m-1"}>Filter
+                            </button>
                         </option>
                     </select>
 
@@ -60,15 +72,20 @@ const CatalogPage: FC<SubcategoryPageProps> = ({subcategoryId,user}) => {
             </div>
 
             <div className={"grid xl:grid-cols-6 grid-cols-2 gap-4"}>
-                {products?.map(product =>
-                    <div className={"border text-center rounded hover:shadow-xl hover:scale-110 duration-300 "}>
-                        <ProductSlider isCatalog={true} product={product} indicators={false}/>
-                        <Link key={product.id} to={`/catalog/product/${product.id}`}>
-                            <h3 className={"text-custom my-2"}>{product.name}</h3>
-                            <CostBuyBtn product={product} inline={false}/>
-                        </Link>
-                    </div>
-                )}
+                {products?.length !== 0
+                    ?
+                    (products.map(product =>
+                        <div className={"border text-center rounded hover:shadow-xl hover:scale-110 duration-300 "}>
+                            <ProductSlider isCatalog={true} product={product} indicators={false}/>
+                            <Link key={product.id} to={`/catalog/product/${product.id}`}>
+                                <h3 className={"text-custom my-2"}>{product.name}</h3>
+                                <CostBuyBtn product={product} inline={false}/>
+                            </Link>
+                        </div>
+                    ))
+                    :
+                    ""
+                }
             </div>
         </Wrapper>
     );

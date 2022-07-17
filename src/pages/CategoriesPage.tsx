@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
 import Wrapper from "../components/main-blocks/Wrapper";
 import {Link} from "react-router-dom";
-import {ICategory, IUser} from "../Models/Models";
+import {ICategory, IUser, Picture} from "../Models/Models";
 import API from "../api"
 import {Spinner} from "flowbite-react";
 
@@ -15,14 +15,28 @@ const CategoriesPage: FC<CatalogProps> = ({user}) => {
 
     const [categories, setCategories] = useState<ICategory[]>([]);
 
+    function getImage(parentId?: number) : string {
+        API.get("image-parent/" + parentId).then(res => {
+            const img:Picture = res.data[0];
+            console.log(img)
+            return img.content;
+        }).catch(err => {
+            console.log(err)
+        })
+        return " ";
+    }
+
     useEffect(() => {
         getCategories()
     }, [])
 
-    async function getCategories() {
-        const data = (await API.get("/category")).data
-        console.log(data)
-        setCategories(data);
+
+     function getCategories() {
+        API.get("/category").then(res=>{
+            setCategories(res.data);
+        }).catch(err=>{
+            console.log(err)
+        })
     }
 
     return (
@@ -39,7 +53,7 @@ const CategoriesPage: FC<CatalogProps> = ({user}) => {
                                 (categories?.map(category =>
                                     <div key={category.id} onClick={() => setCurrentCategory(category)}
                                          className={(currentCategory === category ? "scale-110   shadow-lg bg-gray-300" : "") + " grid justify-items-center hover:scale-110 hover:border-gray-700 rounded border p-2 hover:shadow-lg duration-300 cursor-pointer"}>
-                                        <img src={category.image?.content} alt=""/>
+                                        <img src={getImage(category.id)} alt=""/>
                                         <h3 className={" text-custom"}>{category.name}</h3>
                                     </div>
                                 ))
@@ -69,7 +83,7 @@ const CategoriesPage: FC<CatalogProps> = ({user}) => {
                                                 <div key={subcategory.id}
                                                      className={"grid justify-items-center text-center hover:scale-110 hover:border-gray-700 rounded border p-2 hover:shadow-lg duration-300"}>
 
-                                                    <img className={""} src={subcategory.image?.content} alt=""/>
+                                                    <img className={""} src={ getImage(subcategory.id)} alt=""/>
                                                     <h3>{subcategory.name}</h3>
                                                 </div>
                                             </Link>

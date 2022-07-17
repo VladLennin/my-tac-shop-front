@@ -8,14 +8,22 @@ interface ModalAddPSubcategory {
     closeModal: () => void;
     setToasts: (state: any) => void;
     toasts: IToast[];
-    categories:ICategory[];
+    categories: ICategory[];
+    getCategories: () => void;
 }
 
-const ModalAddPSubcategory: FC<ModalAddPSubcategory> = ({modal, closeModal, toasts, setToasts,categories}) => {
+const ModalAddPSubcategory: FC<ModalAddPSubcategory> = ({
+                                                            modal,
+                                                            closeModal,
+                                                            toasts,
+                                                            setToasts,
+                                                            categories,
+                                                            getCategories
+                                                        }) => {
 
         const [image, setImage] = useState<Picture>(new Picture(""))
         const [newSubcategory, setNewSubcategory] = useState<ISubcategory>(
-            new ISubcategory(0, "", new Picture(""))
+            new ISubcategory(0, 0, "", new Picture(""))
         );
         const [chosenCategory, setChosenCategory] = useState<ICategory>();
 
@@ -27,19 +35,19 @@ const ModalAddPSubcategory: FC<ModalAddPSubcategory> = ({modal, closeModal, toas
                 API.post("/category/" + chosenCategory?.id + "/subcategory", newSubcategory).then(res => {
                     console.log(res);
                     setToasts([...toasts, new IToast(String(Date.now()), "Ви успішно додали підкатегорію!", "bi bi-check2")])
+                    getCategories();
                 }).catch(err => {
                     console.log(err)
                     setToasts([...toasts, new IToast(String(Date.now()), "Відбулася помилка!", "bi bi-x-lg")])
 
                 })
-                setNewSubcategory( new ISubcategory(0, "", new Picture("")))
+                setNewSubcategory(new ISubcategory(0, 0, "", new Picture("")))
+                setChosenCategory(undefined)
                 setImage(new Picture(""))
                 closeModal();
             } else {
                 alert("Усі поля повинні бути заповнені!")
             }
-
-
         }
 
         function getBase64(file: File) {
@@ -77,10 +85,10 @@ const ModalAddPSubcategory: FC<ModalAddPSubcategory> = ({modal, closeModal, toas
                                 ?
                                 <div className={"grid grid-cols-2"}>
                                     <h3>Виберіть категорію до котрої хочете додати:</h3>
-                                    <select defaultValue={-1}
+                                    <select value={newSubcategory.categoryId}
                                             onChange={(e) => setChosenCategory(categories.filter(x => x.id === Number(e.target.value))[0])}
                                             name="" id="" className={"border border-gray-700 rounded"}>
-                                        <option disabled={true} value={-1}>Виберіть категорію</option>
+                                        <option disabled={true} value={0}>Виберіть категорію</option>
                                         {categories.map(category =>
                                             <option value={category.id}>{category.name}</option>
                                         )}

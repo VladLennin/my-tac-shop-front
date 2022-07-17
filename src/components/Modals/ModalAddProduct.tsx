@@ -8,10 +8,10 @@ interface ModalAddProduct {
     closeModal: () => void;
     setToasts: (state: any) => void;
     toasts: IToast[];
-    categories:ICategory[];
+    categories: ICategory[];
 }
 
-const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal, toasts,setToasts,categories}) => {
+const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal, toasts, setToasts, categories}) => {
 
         const [characteristics, setCharacteristics] = useState<ICharacteristic[]>([])
         const [characteristicName, setCharacteristicName] = useState<string>("");
@@ -19,28 +19,30 @@ const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal, toasts,setToas
         const [images, setImages] = useState<IBase64file[]>([]);
 
         const [product, setProduct] = useState<IProduct>(
-            new IProduct(0, "", 0, [],
-                0, [], [], "",
-                "", 0, 0)
-        );
+            new IProduct(
+                0, 0, "", 0,
+                [], 0, [], [],
+                "", "", 0, 0
+            ));
 
         const [currentCategory, setCurrentCategory] = useState<ICategory>();
-
 
         function clearForm() {
             setCharacteristics([])
             setCharacteristicName("")
             setCharacteristicValue("")
             setImages([])
-            setProduct(new IProduct(0, "", 0, [],
-                0, [], [], "",
-                "", 0, 0))
+            setProduct(new IProduct(
+                0, 0, "", 0,
+                [], 0, [], [],
+                "", "", 0, 0
+            ))
+            setCurrentCategory(undefined)
 
         }
 
         function createProduct() {
             product.characteristics = characteristics;
-
             images.map(img => {
                 product.images.push(new Picture(img.base64URL))
             })
@@ -52,14 +54,16 @@ const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal, toasts,setToas
                 product.name !== "" &&
                 product.characteristics.length !== 0 &&
                 product.subcategoryId !== 0
+
             ) {
-                API.post("/product", product).then(res=>{
+                console.log(product)
+                API.post("/product", product).then(res => {
                     clearForm()
                     closeModal();
-                    console.log(product)
-                    setToasts([...toasts,new IToast(String(Date.now()),"Ви успішно додали новий товар!","bi bi-check2")])
-                }).catch(err=>{
-                    setToasts([...toasts,new IToast(String(Date.now()),"Щось пішло не так...","bi bi-x-lg")])
+                    setToasts([...toasts, new IToast(String(Date.now()), "Ви успішно додали новий товар!", "bi bi-check2")]
+                    )
+                }).catch(err => {
+                    setToasts([...toasts, new IToast(String(Date.now()), "Щось пішло не так...", "bi bi-x-lg")])
 
                 })
 
@@ -87,6 +91,7 @@ const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal, toasts,setToas
             getBase64(e.target.files[0])
                 .then(result => {
                     setImages([...images, new IBase64file(e.target.files[0], String(result))]);
+                    e.target.files = [];
                 })
                 .catch(err => {
                     console.log(err);
@@ -215,11 +220,11 @@ const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal, toasts,setToas
                             <h3>Категорія:</h3>
                             {
                                 categories.length !== 0 ?
-                                    <select defaultValue={-1}
+                                    <select value={product.categoryId}
                                             className={"rounded"}
                                             name="" id=""
                                             onChange={(e) => setCurrentCategory((categories.filter(cat => cat.id === Number(e.target.value)))[0])}>
-                                        <option disabled={true} value={-1}>Виберіть категорію</option>
+                                        <option disabled={true} value={0}>Виберіть категорію</option>
                                         {categories.map(category => (
                                             <option value={category.id}>{category.name}</option>
                                         ))}
@@ -238,13 +243,14 @@ const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal, toasts,setToas
                             <h3>Підкатегорія:</h3>
                             {currentCategory !== undefined && currentCategory?.subcategories.length !== 0
                                 ?
-                                <select defaultValue={-1} className={"rounded"} name=""
+                                <select value={product.subcategoryId}
+                                        className={"rounded"} name=""
                                         id=""
                                         onChange={(e) => setProduct({
                                             ...product,
                                             "subcategoryId": Number(e.target.value)
                                         })}>
-                                    <option disabled={true} value={-1}>Виберіть підкатегорію</option>
+                                    <option disabled={true} value={0}>Виберіть підкатегорію</option>
                                     {currentCategory?.subcategories.map(subcategory => (
                                         <option value={subcategory.id}>{subcategory.name}</option>
                                     ))}

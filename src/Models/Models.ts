@@ -62,20 +62,23 @@ export class ICategory {
 }
 
 export class ISubcategory {
+    categoryId:number;
     name: string;
     image: Picture;
     id: number;
 
-    constructor(id: number, name: string, img: Picture) {
+    constructor(id: number,categoryId:number, name: string, img: Picture) {
         this.name = name;
         this.image = img;
         this.id = id;
+        this.categoryId = categoryId;
     }
 
 }
 
 export class Picture {
     content: string;
+    parentId?: number;
 
     constructor(content: string) {
         this.content = content;
@@ -96,9 +99,10 @@ export class IProduct {
     currentCount: number;
     saleCount: number;
     id?: number;
+    categoryId: number;
     subcategoryId: number
 
-    constructor(subcategoryId: number, name: string, cost: number, characteristics: ICharacteristic[],
+    constructor(subcategoryId: number, categoryId: number, name: string, cost: number, characteristics: ICharacteristic[],
                 discount: number, feedbacks: IFeedback[],
                 images: Picture[], linkYoutube: string, description: string,
                 currentCount: number, saleCount: number) {
@@ -113,6 +117,7 @@ export class IProduct {
         this.currentCount = currentCount;
         this.saleCount = saleCount;
         this.subcategoryId = subcategoryId;
+        this.categoryId = categoryId;
     }
 
 
