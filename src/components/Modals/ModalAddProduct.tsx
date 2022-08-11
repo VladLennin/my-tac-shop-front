@@ -1,6 +1,6 @@
 import {Button, Modal, Spinner, Toast} from 'flowbite-react';
 import React, {FC, useEffect, useState} from 'react';
-import {IBase64file, ICategory, ICharacteristic, IProduct, ISubcategory, IToast, Picture} from "../../Models/Models";
+import {IBase64file, ICategory, ICharacteristic, IProduct, ISubcategory, IToast, Picture} from "../../models/Models";
 import API from "../../api";
 
 interface ModalAddProduct {
@@ -100,6 +100,7 @@ const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal, toasts, setToa
 
         return (
             <Modal size={"4xl"} show={modal} onClose={closeModal}>
+
                 <Modal.Header>
                     Додавання нового товару
                 </Modal.Header>
@@ -108,7 +109,8 @@ const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal, toasts, setToa
                     <div className="space-y-6">
                         <div className={"grid grid-cols-2"}>
                             <h3>Назва:</h3>
-                            <input value={product.name} onChange={(e) => setProduct({...product, "name": e.target.value})}
+                            <input value={product.name}
+                                   onChange={(e) => setProduct({...product, "name": e.target.value})}
                                    className={"rounded"} type="text"/>
                         </div>
                         <div className={"grid grid-cols-2"}>

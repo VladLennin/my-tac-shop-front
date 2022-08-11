@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import './App.css';
+import React, {useState} from 'react';
 import './styles/main-blocks.css'
 import './styles/modal.css'
+import './index.css'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import {BrowserRouter, Route, Routes, useParams} from "react-router-dom";
 import MainPage from "./pages/MainPage";
@@ -9,10 +9,11 @@ import ProfilePage from "./pages/ProfilePage";
 import BasketPage from "./pages/BasketPage";
 import CategoriesPage from "./pages/CategoriesPage";
 import AdminPage from "./pages/AdminPage";
-import {ICategory, IUser, Picture, Roles} from "./Models/Models";
+import {IUser, Roles} from "./models/Models";
 import ProductPageV2 from "./pages/ProductPageV2";
 import CatalogPage from "./pages/CatalogPage";
-import API from "./api";
+import LoginPage from "./pages/LoginPage";
+import RegistrationPage from "./pages/RegistrationPage";
 
 function App() {
 
@@ -57,10 +58,16 @@ function App() {
                         <GetCategoryId/>
                     }/>
                     <Route path="/admin" element={
-                        <AdminPage  user={user}/>
+                        <AdminPage user={user}/>
                     }/>
                     <Route path="/catalog/product/:id" element={
                         <GetProductId/>
+                    }/>
+                    <Route path={"/login"} element={
+                        <LoginPage/>
+                    }/>
+                    <Route path={"/registration"} element={
+                        <RegistrationPage/>
                     }/>
                 </Routes>
 

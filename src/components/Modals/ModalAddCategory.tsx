@@ -1,7 +1,7 @@
 import {Modal} from 'flowbite-react';
 import React, {FC, useState} from 'react';
 import API from "../../api";
-import {ICategory, IToast, Picture} from "../../Models/Models";
+import {ICategory, IToast, Picture} from "../../models/Models";
 
 
 interface ModalAddPCategory {
@@ -34,7 +34,8 @@ const ModalAddCategory: FC<ModalAddPCategory> = ({modal, closeModal, setToasts, 
         function handleFileInputChange(e: any) {
             getBase64(e.target.files[0])
                 .then(result => {
-                    setImage({...image, "content": String(result)});
+                    setImage({...image, content: String(result)});
+                    e.target.files = null;
                 })
                 .catch(err => {
                     console.log(err);
@@ -80,7 +81,10 @@ const ModalAddCategory: FC<ModalAddPCategory> = ({modal, closeModal, setToasts, 
                         <div className={"grid grid-cols-2"}>
                             <h3>Зображення:</h3>
                             <div>
-                                <input onChange={handleFileInputChange}
+                                <input onChange={(e)=>{
+                                    handleFileInputChange(e)
+                                    e.target.value = "";
+                                }}
                                        className={"rounded"} type="file"/>
                                 <div className={"mt-7"}>
                                     {image.content !== ""

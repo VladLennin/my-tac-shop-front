@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
 import Wrapper from "../components/main-blocks/Wrapper";
 import {Link} from "react-router-dom";
-import {IProduct, IUser} from "../Models/Models";
+import {IProduct, IUser} from "../models/Models";
 import CostBuyBtn from "../components/ProductPageBlocks/CostBuyBtn";
 import API from "../api";
 import ProductSlider from "../components/ProductPageBlocks/ProductSlider";

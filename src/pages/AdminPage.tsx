@@ -1,10 +1,10 @@
 import {Toast} from 'flowbite-react';
 import React, {FC, useEffect, useState} from 'react';
 import Wrapper from "../components/main-blocks/Wrapper";
-import {ICategory, IProduct, IToast, IUser} from "../Models/Models";
+import {ICategory, IToast, IUser} from "../models/Models";
 import ModalAddProduct from "../components/Modals/ModalAddProduct";
 import ModalAddCategory from "../components/Modals/ModalAddCategory";
-import ModalAddPSubcategory from "../components/Modals/ModalAddSubcategory";
+import ModalAddSubcategory from "../components/Modals/ModalAddSubcategory";
 import API from "../api"
 
 interface AdminPageProps {
@@ -105,10 +105,10 @@ const AdminPage: FC<AdminPageProps> = ({user}) => {
                         className={"border-2 border-gray-700  rounded-lg p-4 hover:shadow-2xl hover:scale-105 duration-300 text-center cursor-pointer"}>
                         Додати нову підкатегорію
                     </div>
-                    <ModalAddPSubcategory categories={categories} getCategories={getCategories} toasts={toasts}
-                                          setToasts={setToasts}
-                                          modal={modalSubcategory}
-                                          closeModal={closeModalSubcategory}/>
+                    <ModalAddSubcategory categories={categories} getCategories={getCategories} toasts={toasts}
+                                         setToasts={setToasts}
+                                         modal={modalSubcategory}
+                                         closeModal={closeModalSubcategory}/>
 
                 </div>
             </Wrapper>

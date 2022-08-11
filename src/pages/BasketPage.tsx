@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import Wrapper from "../components/main-blocks/Wrapper";
-import {IUser} from "../Models/Models";
+import {IUser} from "../models/Models";
 
 interface BasketPageProps {
     user:IUser;

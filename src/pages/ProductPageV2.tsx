@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState} from 'react';
-import {IProduct, IUser} from "../Models/Models";
+import {IProduct, IUser} from "../models/Models";
 import CharacteristicsBlock from "../components/ProductPageBlocks/CharacteristicsBlock";
 import DescriptionBlock from "../components/ProductPageBlocks/DescriptionBlock";
 import FeedbacksBlock from "../components/ProductPageBlocks/FeedbacksBlock";

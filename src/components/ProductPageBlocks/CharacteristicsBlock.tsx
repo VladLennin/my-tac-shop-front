@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import { IProduct} from "../../Models/Models";
+import { IProduct} from "../../models/Models";
 
 interface CharacteristicProps {
     product?: IProduct;

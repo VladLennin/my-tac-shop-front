@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
-import Feedback from "../Feedback";
-import {IProduct} from "../../Models/Models";
+import Feedback from "../SmallComponents/Feedback";
+import {IProduct} from "../../models/Models";
 
 interface FeedbackProps {
     product?: IProduct;

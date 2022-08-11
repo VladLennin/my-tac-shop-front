@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {IContact, ILink} from "../../Models/Models";
+import {IContact, ILink} from "../../models/Models";
 import {Link} from "react-router-dom";
 
 interface FooterProps {

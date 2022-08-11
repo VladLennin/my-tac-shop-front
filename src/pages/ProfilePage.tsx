@@ -1,8 +1,6 @@
 import React, {FC, useState} from 'react';
 import Wrapper from "../components/main-blocks/Wrapper";
-import {IFlag, IUser, Picture} from "../Models/Models";
-import {log} from "util";
-import {btoa} from "buffer";
+import {IUser} from "../models/Models";
 
 interface ProfilePageProps {
     user: IUser;
@@ -11,12 +9,6 @@ interface ProfilePageProps {
 
 const ProfilePage: FC<ProfilePageProps> = ({user}) => {
 
-    // const addNewUser = (user1:IUser) => {
-    //     const newUser = user1;
-    //     setUser(newUser)
-    // }
-    {/*<button onClick={()=>addNewUser(new IUser("Sergey","Radchenko","POPOPOP","09987123","ansdijnjasdj"))}>try</button>*/
-    }
 
 
     const [flagName, setFlagName] = useState(false);
@@ -35,35 +27,6 @@ const ProfilePage: FC<ProfilePageProps> = ({user}) => {
 
                         <div
                             className={"border-2 border-gray-700  rounded-lg p-4 hover:shadow-2xl hover:scale-105 duration-300"}>
-
-                            {/*{user1.image?.content === "default" ?*/}
-                            {/*    <i className=" block bi bi-person-bounding-box text-[150px] "></i>*/}
-                            {/*    :*/}
-                            {/*    <img src={user1.image?.content} alt=""/>*/}
-                            {/*}*/}
-
-                            {/*<label htmlFor={"userImage"}>*/}
-                            {/*    <div*/}
-                            {/*        className={"hover:scale-110 block hover:bg-gray-300 hover:text-gray-700 xl:mx-40  mx-10 duration-300 cursor-pointer border-2 rounded bg-gray-700 border-gray-700 p-2 text-custom text-white"}>*/}
-                            {/*        Вибрати своє фото*/}
-                            {/*    </div>*/}
-                            {/*</label>*/}
-                            {/*<div>*/}
-                            {/*    <input type="text"/>*/}
-                            {/*    <button onClick={() => {*/}
-
-                            {/*    }}>*/}
-                            {/*        save*/}
-                            {/*    </button>*/}
-                            {/*</div>*/}
-
-                            {/*<div className={"flex gap-2"}>*/}
-                            {/*    <button onClick={() => {*/}
-                            {/*    }}>*/}
-                            {/*        <i className="bi bi-pencil-square"></i>*/}
-                            {/*    </button>*/}
-                            {/*</div>*/}
-
 
                             <div className={"text-custom text-gray-600 text-xl mb-2 flex justify-between px-20"}>
                                 <h4>Імʼя</h4>

@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import {IProduct} from "../../Models/Models";
+import {IProduct} from "../../models/Models";
 
 interface CostBuyProps {
     product?: IProduct;
@@ -13,7 +13,7 @@ const CostBuyBtn: FC<CostBuyProps> = ({product, inline}) => {
             className={(inline ? "xl:grid-cols-3 mb-5 grid-cols-1 text-center " : "grid-cols-1") + " grid justify-items-center align-items-middle"}>
             {inline ? <div className={"mb-5"}>
                 <button className={"mr-3"}
-                        onClick={() => ch != 1 ? setCh(ch - 1) : alert("Не можна додати менше одного товару")}>-
+                        onClick={() => ch !== 1 ? setCh(ch - 1) : alert("Не можна додати менше одного товару")}>-
                 </button>
                 <input type={"text"} value={ch} className={"w-1/4 text-center border-gray-700 rounded-md"}/>
                 <button className={"ml-3"} onClick={() => setCh(ch + 1)}>+</button>

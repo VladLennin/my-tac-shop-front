@@ -1,7 +1,7 @@
-import {Button, Modal, Spinner} from 'flowbite-react';
-import React, {FC, useEffect, useState} from 'react';
+import {Modal, Spinner} from 'flowbite-react';
+import React, {FC, useState} from 'react';
 import API from "../../api";
-import {ICategory, ISubcategory, IToast, Picture} from "../../Models/Models";
+import {ICategory, ISubcategory, IToast, Picture} from "../../models/Models";
 
 interface ModalAddPSubcategory {
     modal: boolean;
@@ -12,14 +12,14 @@ interface ModalAddPSubcategory {
     getCategories: () => void;
 }
 
-const ModalAddPSubcategory: FC<ModalAddPSubcategory> = ({
-                                                            modal,
-                                                            closeModal,
-                                                            toasts,
-                                                            setToasts,
-                                                            categories,
-                                                            getCategories
-                                                        }) => {
+const ModalAddSubcategory: FC<ModalAddPSubcategory> = ({
+                                                           modal,
+                                                           closeModal,
+                                                           toasts,
+                                                           setToasts,
+                                                           categories,
+                                                           getCategories
+                                                       }) => {
 
         const [image, setImage] = useState<Picture>(new Picture(""))
         const [newSubcategory, setNewSubcategory] = useState<ISubcategory>(
@@ -155,4 +155,4 @@ const ModalAddPSubcategory: FC<ModalAddPSubcategory> = ({
     }
 ;
 
-export default ModalAddPSubcategory;
+export default ModalAddSubcategory;

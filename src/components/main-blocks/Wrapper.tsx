@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import Header from "./header";
 import Main from "./main";
 import Footer from "./footer";
-import {IContact, ILink, IUser} from "../../Models/Models";
+import {IContact, ILink, IUser} from "../../models/Models";
 
 interface WrapperProps {
     children: React.ReactNode;

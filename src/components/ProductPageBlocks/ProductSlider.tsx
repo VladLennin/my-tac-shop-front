@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState} from 'react';
-import {IProduct, Picture} from "../../Models/Models";
+import {IProduct, Picture} from "../../models/Models";
 import {Carousel, Spinner} from "flowbite-react";
 import API from "../../api"
 

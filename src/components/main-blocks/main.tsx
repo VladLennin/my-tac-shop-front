@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import {ILink, IUser} from "../../Models/Models";
+import {ILink, IUser} from "../../models/Models";
 import {Link} from "react-router-dom";
 
 interface MainProps {
@@ -18,7 +18,7 @@ const Main: FC<MainProps> = ({children, links, user}) => {
     return (
         <div className={"ml-[1vw]"}>
             <div
-                className={"block xl:hidden  text-[2vh] bg-opacity-50  p-3  h-[5vh] pb-[4.5vh] "}>
+                className={" block xl:hidden  text-[2vh] bg-opacity-50  p-3  h-[5vh] pb-[4.5vh] "}>
                 <div className={"flex justify-between  pb-5"}>
                     <button onClick={() => setMenuFlag2(!menuFlag2)}
                             className={"mt-2 text-[5vh] hover:text-white duration-300"}>

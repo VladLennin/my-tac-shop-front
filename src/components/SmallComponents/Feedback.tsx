@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {IFeedback} from "../Models/Models";
+import {IFeedback} from "../../models/Models";
 
 interface FeedbackProps {
     feedback: IFeedback;

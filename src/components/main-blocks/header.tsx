@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import {Link} from "react-router-dom";
 
 interface HeaderProps {
@@ -6,7 +6,6 @@ interface HeaderProps {
 
 const Header: FC<HeaderProps> = () => {
 
-    const [searchFlag, setSearchFlag] = useState<boolean>(false);
 
     return (
         <div className={"bg-[#495057] pt-[2vh] h-[12vh] "}>
