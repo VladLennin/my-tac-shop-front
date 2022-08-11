@@ -12,8 +12,7 @@ import AdminPage from "./pages/AdminPage";
 import {IUser, Roles} from "./models/Models";
 import ProductPageV2 from "./pages/ProductPageV2";
 import CatalogPage from "./pages/CatalogPage";
-import LoginPage from "./pages/LoginPage";
-import RegistrationPage from "./pages/RegistrationPage";
+import LogRegPage from "./pages/LogRegPage";
 
 function App() {
 
@@ -64,11 +63,9 @@ function App() {
                         <GetProductId/>
                     }/>
                     <Route path={"/login"} element={
-                        <LoginPage/>
+                        <LogRegPage/>
                     }/>
-                    <Route path={"/registration"} element={
-                        <RegistrationPage/>
-                    }/>
+
                 </Routes>
 
             </BrowserRouter>

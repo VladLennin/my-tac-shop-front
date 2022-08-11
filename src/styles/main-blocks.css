@@ -39,28 +39,6 @@
     border-bottom: black 0.5vh solid;
 }
 
-/*.main-menu-active {*/
-/*    width: 18vw;*/
-/*    transition:300ms ;*/
-
-/*}*/
-
-/*.main-menu-disable {*/
-/*    width: 5vw;*/
-/*    transition:300ms ;*/
-/*}*/
-
-
-
-.search-btn-active {
-    color: #ffff;
-    padding: 3px;
-    border-radius: 5px;
-}
-
-.search-btn-disable {
-
-}
 
 .text-custom {
     font-family: 'Cuprum', sans-serif;
