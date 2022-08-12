@@ -20,6 +20,7 @@ const Header: FC<HeaderProps> = () => {
                 <div className={"flex align-middle"}>
                     <div className={"mr-[1vw]  bg-opacity-50 bg-gray-700 p-3  rounded-lg h-[8vh] "}>
 
+
                         <Link to="/profile">
                             <div className={"flex  text-gray-900 hover:text-gray-50 duration-300  pl-5 pr-5 rounded-lg  justify-between mb-[0.25vh]"}>
                                 <h2>Профіль</h2>

@@ -22,7 +22,7 @@ const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal, toasts, setToa
             new IProduct(
                 0, 0, "", 0,
                 [], 0, [], [],
-                "", "", 0, 0
+                "", "", 0, 0, 0
             ));
 
         const [currentCategory, setCurrentCategory] = useState<ICategory>();
@@ -35,7 +35,7 @@ const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal, toasts, setToa
             setProduct(new IProduct(
                 0, 0, "", 0,
                 [], 0, [], [],
-                "", "", 0, 0
+                "", "", 0, 0, 0
             ))
             setCurrentCategory(undefined)
 

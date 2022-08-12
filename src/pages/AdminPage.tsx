@@ -6,6 +6,7 @@ import ModalAddProduct from "../components/Modals/ModalAddProduct";
 import ModalAddCategory from "../components/Modals/ModalAddCategory";
 import ModalAddSubcategory from "../components/Modals/ModalAddSubcategory";
 import API from "../api"
+import {Link} from "react-router-dom";
 
 interface AdminPageProps {
     user: IUser;
@@ -62,7 +63,7 @@ const AdminPage: FC<AdminPageProps> = ({user}) => {
     }, [])
 
     return (
-        <div>
+        <>
             <div className={"absolute right-5 top-5 z-50 duration-300"}>
                 {toasts.map((toast) => (
                     <div key={toast.index} className={"mt-2"}>
@@ -109,10 +110,15 @@ const AdminPage: FC<AdminPageProps> = ({user}) => {
                                          setToasts={setToasts}
                                          modal={modalSubcategory}
                                          closeModal={closeModalSubcategory}/>
-
+                    <Link to={"/edit-products"}>
+                        <div
+                            className={"border-2 border-gray-700  rounded-lg p-4 hover:shadow-2xl hover:scale-105 duration-300 text-center cursor-pointer"}>
+                            <h3>Редагування товарів</h3>
+                        </div>
+                    </Link>
                 </div>
             </Wrapper>
-        </div>
+        </>
     );
 };
 

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import './styles/main-blocks.css'
 import './styles/modal.css'
 import './index.css'
@@ -13,6 +13,8 @@ import {IUser, Roles} from "./models/Models";
 import ProductPageV2 from "./pages/ProductPageV2";
 import CatalogPage from "./pages/CatalogPage";
 import LogRegPage from "./pages/LogRegPage";
+import EditProductPage from "./pages/EditProductPage";
+import AllProductsPage from "./pages/AllProductsPage";
 
 function App() {
 
@@ -34,6 +36,11 @@ function App() {
     function GetProductId() {
         let {id} = useParams();
         return <ProductPageV2 user={user} productId={Number(id)}/>
+    }
+
+    function GetProductEditId(){
+        let {id} = useParams();
+        return <EditProductPage user={user} productId={Number(id)}/>
     }
 
 
@@ -65,6 +72,14 @@ function App() {
                     <Route path={"/login"} element={
                         <LogRegPage/>
                     }/>
+                    <Route path={"/edit-products"} element={
+                        <AllProductsPage user={user}/>
+                    }
+                    />
+                    <Route path={"/edit-products/:id"} element={
+                        <GetProductEditId/>
+                    }
+                    />
 
                 </Routes>
 

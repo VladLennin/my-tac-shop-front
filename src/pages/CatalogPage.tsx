@@ -18,6 +18,8 @@ const CatalogPage: FC<SubcategoryPageProps> = ({subcategoryId, user}) => {
     const [search, setSearch] = useState({searchText: "", searchActive: false});
 
 
+
+
     function getProducts() {
         API.get("/product/subcategory/" + subcategoryId)
             .then((res: any) => {

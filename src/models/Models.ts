@@ -100,14 +100,14 @@ export class IProduct {
     description: string;
     currentCount: number;
     saleCount: number;
-    id?: number;
+    id: number;
     categoryId: number;
     subcategoryId: number
 
     constructor(subcategoryId: number, categoryId: number, name: string, cost: number, characteristics: ICharacteristic[],
                 discount: number, feedbacks: IFeedback[],
                 images: Picture[], linkYoutube: string, description: string,
-                currentCount: number, saleCount: number) {
+                currentCount: number, saleCount: number,id:number) {
         this.name = name;
         this.cost = cost;
         this.characteristics = characteristics;
@@ -120,6 +120,7 @@ export class IProduct {
         this.saleCount = saleCount;
         this.subcategoryId = subcategoryId;
         this.categoryId = categoryId;
+        this.id = id;
     }
 
 
