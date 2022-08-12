@@ -31,14 +31,16 @@ export class IUser {
     phoneNumber: string;
     mail: string;
     role: Roles;
+    password:string;
 
-    constructor(name: string, role: Roles, surname: string, defaultAddress: string, number: string, mail: string) {
+    constructor(name: string, role: Roles, surname: string, defaultAddress: string, number: string, mail: string,password:string) {
         this.name = name;
         this.surname = surname;
         this.address = defaultAddress;
         this.phoneNumber = number;
         this.mail = mail;
         this.role = role;
+        this.password = password;
     }
 
 

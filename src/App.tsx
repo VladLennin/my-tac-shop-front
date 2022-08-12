@@ -18,7 +18,7 @@ function App() {
 
     const [user, setUser] = useState<IUser>(new IUser(
             "Vladlen", Roles.ADMIN, "Marchenko", "Pr.Peremogy,20",
-            "380985165190", "markelovwtf7@gmail.com",
+            "380985165190", "markelovwtf7@gmail.com",""
         )
     )
 
