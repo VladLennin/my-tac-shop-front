@@ -88,7 +88,7 @@ const AdminPage: FC<AdminPageProps> = ({user}) => {
                                      closeModal={closeModalProduct}/>
 
                     <div
-                        className={"border-2 border-gray-700  rounded-lg p-4 hover:shadow-2xl hover:scale-105 duration-300 text-center cursor-pointer"}>
+                        className={"border-2 border-gray-700  rounded-lg p-4 hover:shadow-2xl hover:scale-105 duration-300 text-center cursor-pointer p-4"}>
                         Замовлення
                     </div>
 

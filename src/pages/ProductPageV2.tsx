@@ -57,7 +57,7 @@ const ProductPageV2: FC<ProductPageProps> = ({productId, user}) => {
                     product !== undefined
                         ?
                         <div>
-                            <CostBuyBtn product={product} inline={true}/>
+                            <CostBuyBtn   product={product} inline={true}/>
                             <FeedbacksBlock product={product}/>
                         </div>
                         :

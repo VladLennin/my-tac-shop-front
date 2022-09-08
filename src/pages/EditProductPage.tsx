@@ -31,41 +31,72 @@ const EditProductPage: FC<EditProductPageProps> = ({productId, user}) => {
                 "", "", 0, 0, 0
             ));
 
-        function getProduct() {
-            Api.get("/product/" + productId).then(res => {
-                const prod: IProduct = res.data;
-                setProduct(prod);
-            }).catch(err => {
-                console.log(err)
-            })
-        }
+        // function getProduct() {
+        //     Api.get("/product/" + productId).then(res => {
+        //         const prod: IProduct = res.data;
+        //         setProduct(prod);
+        //     }).catch(err => {
+        //         console.log(err)
+        //     })
+        // }
 
         function getCategories() {
             API.get("/category").then(res => {
-                setCategories(res.data)
-                setCurrentCategory(categories.filter(x => x.id !== product.categoryId)[0])
-
+                const tempCategories: ICategory[] = res.data;
+                setCategories(tempCategories)
+                setCurrentCategory(categories.filter(x => x.id === product.categoryId)[0])
             }).catch(err => {
                 console.log(err)
             })
+            console.log(categories)
         }
 
         function getImages(parentId?: number) {
             API.get("/product/" + parentId + "/images").then(res => {
                 const tempPictures: Picture[] = res.data;
                 setPictures(tempPictures);
-                console.log("Pictures:" + pictures)
             }).catch(err => {
                 console.log(err)
             })
         }
 
+        function saveChanges() {
+            console.log(product)
+            pictures.map(img => {
+                product.images.push(img)
+            })
+            if (product.images.length !== 0 &&
+                product.cost !== 0 &&
+                product.currentCount !== 0 &&
+                product.description !== "" &&
+                product.linkYoutube !== "" &&
+                product.name !== "" &&
+                product.characteristics.length !== 0 &&
+                product.subcategoryId !== 0
+            ) {
+                Api.put("/product", product).then(res => {
+                    pictures.map(img => {
+                        product.images.push(img)
+                    })
+                    console.log(res)
+                }).catch(err => {
+                    console.log(err)
+                })
+            } else {
+                alert("Введіть усі поля!")
+            }
+
+        }
+
         useEffect(() => {
-            getProduct()
-            getImages(productId);
+
             getCategories()
+            getImages(productId);
         }, [])
 
+        useEffect(() => {
+            setCurrentCategory(categories.filter(x => x.id === product.categoryId)[0])
+        }, [categories])
 
         function getBase64(file: File) {
             return new Promise(async resolve => {
@@ -111,11 +142,12 @@ const EditProductPage: FC<EditProductPageProps> = ({productId, user}) => {
                         <div className={"border border-gray-700 rounded p-3 "}>
                             {product.characteristics &&
                                 product.characteristics.map((characteristic, index) =>
-                                    <div className={"flex justify-between mb-3 p-3 border rounded border-b-gray-500"}>
+                                    <div key={index}
+                                         className={"flex justify-between mb-3 p-3 border rounded border-b-gray-500"}>
                                         <h3>{index + 1}.{characteristic.name}</h3>
                                         <div>
-                                            {characteristic.values.map(value =>
-                                                <div className={"text-end"}>{value}</div>
+                                            {characteristic.values.map((value, index) =>
+                                                <div key={index} className={"text-end"}>{value}</div>
                                             )}
                                         </div>
                                         <button className={"hover:scale-150 duration-200  hover:text-red-700"}
@@ -170,7 +202,7 @@ const EditProductPage: FC<EditProductPageProps> = ({productId, user}) => {
                                    className={"rounded"} type="file"/>
                             <div className={"grid grid-cols-2 mt-3"}>
                                 {pictures?.map((img, index) => (
-                                    <div className={"border rounded ml-2 border-gray-700 mb-2 "}>
+                                    <div key={index} className={"border rounded ml-2 border-gray-700 mb-2 "}>
                                         <div className={"flex justify-end mb-3"}>
                                             <button
                                                 className={"absolute hover:text-2xl text-xl hover:text-red-700 duration-300 m-2"}
@@ -219,15 +251,18 @@ const EditProductPage: FC<EditProductPageProps> = ({productId, user}) => {
                             categories.length !== 0 ?
                                 <select value={product.categoryId}
                                         className={"rounded"}
-                                        name="" id=""
                                         onChange={(e) => {
                                             setCurrentCategory((categories.filter(cat => cat.id === Number(e.target.value)))[0]);
                                             setProduct({...product, categoryId: Number(e.target.value)})
+                                            setProduct({
+                                                ...product,
+                                                subcategoryId: 0
+                                            })
                                         }
                                         }>
                                     <option disabled={true} value={0}>Виберіть категорію</option>
-                                    {categories.map(category => (
-                                        <option value={category.id}>{category.name}</option>
+                                    {categories.map((category, index) => (
+                                        <option key={category.id} value={category.id}>{category.name}</option>
                                     ))}
                                 </select>
                                 :
@@ -241,43 +276,23 @@ const EditProductPage: FC<EditProductPageProps> = ({productId, user}) => {
 
 
                     <div className={"grid grid-cols-2 "}>
-                        {/*<h3>Підкатегорія:</h3>*/}
-                        {/*/!*{currentCategory !== undefined && currentCategory?.subcategories.length !== 0*!/*/}
-                        {/*/!*    ?*!/*/}
-                        {/*<select value={product.subcategoryId}*/}
-                        {/*        className={"rounded"} name=""*/}
-                        {/*        id=""*/}
-                        {/*        onChange={(e) => setProduct({*/}
-                        {/*            ...product,*/}
-                        {/*            subcategoryId: Number(e.target.value)*/}
-                        {/*        })}>*/}
-                        {/*    /!*<option disabled={true} value={0}>Виберіть підкатегорію</option>*!/*/}
-                        {/*    {currentCategory?.subcategories.map(subcategory => (*/}
-                        {/*        <option value={subcategory.id}>{subcategory.name}</option>*/}
-                        {/*    ))}*/}
-                        {/*</select>*/}
-                        {/*/!*    :*!/*/}
-                        {/*/!*    <h3>У цієї категорії немає підкатегорій...</h3>*!/*/}
-                        {/*/!*}*!/*/}
-                        {
-                            currentCategory?.subcategories.length !== 0 ?
-                                <select value={product?.subcategoryId}
-                                        className={"rounded"}
-                                        name="" id=""
-                                        onChange={(e) => {
-                                            setProduct({...product, subcategoryId: Number(e.target.value)})
-                                        }
-                                        }>
-                                    <option disabled={true} value={0}>Виберіть виберіть підкатегорію</option>
-                                    {currentCategory?.subcategories.map(subcat => (
-                                        <option value={subcat.id}>{subcat.name}</option>
-                                    ))}
-                                </select>
-                                :
-                                <Spinner className={"m-auto"}
-                                         aria-label="Extra large spinner example"
-                                         size="xl"
-                                />
+                        <h3>Підкатегорія:</h3>
+                        {currentCategory?.subcategories.length !== 0 && product.subcategoryId !== 0 ?
+                            <select value={product.subcategoryId}
+                                    className={"rounded"}
+                                    name="" id=""
+                                    onChange={(e) => {
+                                        setProduct({...product, subcategoryId: Number(e.target.value)})
+                                        alert(JSON.stringify(product.categoryId + " " + product.subcategoryId))
+                                    }
+                                    }>
+                                <option disabled={true} value={0}>Виберіть виберіть підкатегорію</option>
+                                {currentCategory?.subcategories.map(subcat => (
+                                    <option key={subcat.id} value={subcat.id}>{subcat.name}</option>
+                                ))}
+                            </select>
+                            :
+                            <p>У цій категорії немає підкатегорій</p>
                         }
 
 
@@ -285,8 +300,11 @@ const EditProductPage: FC<EditProductPageProps> = ({productId, user}) => {
                 </div>
                 <div className={"flex justify-center mt-5"}>
                     <button
-                        className={"font-bold text-custom border-2 border-blue-600 hover:border-yellow-300 duration-200 hover:scale-110 px-5 py-3 rounded-md"}>Save
-                        changes
+                        onClick={() => {
+                            saveChanges()
+                        }}
+                        className={"font-bold text-custom border-2 border-blue-600 hover:border-yellow-300 duration-200 hover:scale-110 px-5 py-3 rounded-md"}>
+                        Зберегти зміни
                     </button>
                 </div>
 

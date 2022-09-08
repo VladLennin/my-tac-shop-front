@@ -23,14 +23,13 @@ const SubcategoryCard:FC<SubcategoryCardProps> = ({subcategory}) => {
 
     useEffect(()=>{
         getImage(subcategory.id);
-    },[])
+    },[subcategory.id])
 
     return (
         <Link
             to={"/catalog/" + subcategory.id}>
             <div key={subcategory.id}
                  className={"grid justify-items-center text-center hover:scale-110 hover:border-gray-700 rounded border p-2 hover:shadow-lg duration-300"}>
-
                 <img className={""} src={picture?.content} alt=""/>
                 <h3>{subcategory.name}</h3>
             </div>

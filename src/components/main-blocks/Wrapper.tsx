@@ -37,8 +37,7 @@ const Wrapper: FC<WrapperProps> = ({children,user}) => {
         new IContact("Світлана", "+380678038677"),
     ]
     return (
-        <div >
-
+        <div>
             <Header/>
             <Main user={user} links={linksAside}>
                 {children}

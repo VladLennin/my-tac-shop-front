@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import './styles/main-blocks.css'
 import './styles/modal.css'
 import './index.css'
@@ -20,9 +20,10 @@ function App() {
 
     const [user, setUser] = useState<IUser>(new IUser(
             "Vladlen", Roles.ADMIN, "Marchenko", "Pr.Peremogy,20",
-            "380985165190", "markelovwtf7@gmail.com",""
+            "380985165190", "markelovwtf7@gmail.com", ""
         )
     )
+
 
     const changeUser = (user: IUser) => {
         setUser(user);
@@ -38,7 +39,7 @@ function App() {
         return <ProductPageV2 user={user} productId={Number(id)}/>
     }
 
-    function GetProductEditId(){
+    function GetProductEditId() {
         let {id} = useParams();
         return <EditProductPage user={user} productId={Number(id)}/>
     }

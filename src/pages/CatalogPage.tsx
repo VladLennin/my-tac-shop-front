@@ -2,10 +2,8 @@ import React, {FC, useEffect, useState} from 'react';
 import Wrapper from "../components/main-blocks/Wrapper";
 import {Link} from "react-router-dom";
 import {IProduct, IUser} from "../models/Models";
-import CostBuyBtn from "../components/ProductPageBlocks/CostBuyBtn";
 import API from "../api";
-import ProductSlider from "../components/ProductPageBlocks/ProductSlider";
-import {serialize} from "v8";
+import ProductCard from "../components/ProductCard";
 
 interface SubcategoryPageProps {
     subcategoryId?: string;
@@ -93,13 +91,7 @@ const CatalogPage: FC<SubcategoryPageProps> = ({subcategoryId, user}) => {
                 {products?.length !== 0
                     ?
                     (products.map(product =>
-                        <div className={"border text-center rounded hover:shadow-xl hover:scale-110 duration-300 "}>
-                            <ProductSlider isCatalog={true} product={product} indicators={false}/>
-                            <Link key={product.id} to={`/catalog/product/${product.id}`}>
-                                <h3 className={"text-custom my-2"}>{product.name}</h3>
-                                <CostBuyBtn product={product} inline={false}/>
-                            </Link>
-                        </div>
+                        <ProductCard product={product} />
                     ))
                     :
                     ""
