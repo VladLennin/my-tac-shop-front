@@ -21,7 +21,8 @@ export class IContact {
 }
 
 export enum Roles {
-    "ADMIN", "USER"
+    "ADMIN",
+    "USER"
 }
 
 export class IUser {
@@ -44,9 +45,7 @@ export class IUser {
     }
 
 
-    get isAdmin(): boolean {
-        return this.role === Roles.ADMIN;
-    }
+
 }
 
 export class ICategory {

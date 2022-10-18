@@ -8,16 +8,19 @@ import CostBuyBtn from "../components/ProductPageBlocks/CostBuyBtn";
 import API from "../api"
 import ProductSlider from "../components/ProductPageBlocks/ProductSlider";
 import {Spinner} from "flowbite-react";
+import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
 
 interface ProductPageProps {
     productId: number;
-    user: IUser;
 }
 
-const ProductPageV2: FC<ProductPageProps> = ({productId, user}) => {
+const ProductPageV2: FC<ProductPageProps> = ({productId}) => {
 
     const [product, setProduct] = useState<IProduct>(
     );
+    const user = useAppSelector((state) => state.user.value)
+    const dispatch = useAppDispatch()
+
 
     useEffect(() => {
         API.get("/product/" + productId)
@@ -30,7 +33,7 @@ const ProductPageV2: FC<ProductPageProps> = ({productId, user}) => {
     }, [productId])
 
     return (
-        <Wrapper user={user}>
+       <>
             <div className={"grid xl:grid-cols-2 grid-cols-1 gap-10"}>
                 {
                     product !== undefined
@@ -79,7 +82,7 @@ const ProductPageV2: FC<ProductPageProps> = ({productId, user}) => {
                 }
 
             </div>
-        </Wrapper>
+       </>
 
     );
 };

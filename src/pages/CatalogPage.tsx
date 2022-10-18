@@ -4,17 +4,18 @@ import {Link} from "react-router-dom";
 import {IProduct, IUser} from "../models/Models";
 import API from "../api";
 import ProductCard from "../components/ProductCard";
+import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
 
 interface SubcategoryPageProps {
     subcategoryId?: string;
-    user: IUser;
 }
 
-const CatalogPage: FC<SubcategoryPageProps> = ({subcategoryId, user}) => {
+const CatalogPage: FC<SubcategoryPageProps> = ({subcategoryId}) => {
 
     const [products, setProducts] = useState<IProduct[]>([]);
     const [search, setSearch] = useState({searchText: "", searchActive: false});
-
+    const user = useAppSelector((state) => state.user.value)
+    const dispatch = useAppDispatch()
 
 
 
@@ -31,7 +32,7 @@ const CatalogPage: FC<SubcategoryPageProps> = ({subcategoryId, user}) => {
         getProducts()
     }, [])
     return (
-        <Wrapper user={user}>
+        <>
             <div className={"w-full border-2 border-gray-700 rounded-lg mb-5 grid grid-cols-3 gap-12 pr-5"}>
                 <div className={"grid grid-cols-2"}>
                     <button className={"hover:scale-110 duration-300 text-gray-400 text-sm font-light"}>Дешевше</button>
@@ -97,7 +98,7 @@ const CatalogPage: FC<SubcategoryPageProps> = ({subcategoryId, user}) => {
                     ""
                 }
             </div>
-        </Wrapper>
+        </>
     );
 };
 

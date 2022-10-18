@@ -4,16 +4,17 @@ import {IProduct, IUser} from "../models/Models";
 import Api from "../api";
 import ModalEditProduct from "./EditProductPage";
 import {Link} from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
 
 interface EditProductsProps {
-    user: IUser;
 }
 
-const AllProductsPage: FC<EditProductsProps> = ({user}) => {
+const AllProductsPage: FC<EditProductsProps> = () => {
 
     const [products, setProducts] = useState<IProduct[]>([])
     const [sortFlags, setSortFlags] = useState([false, false, false, false, false, false])
-
+    const user = useAppSelector((state) => state.user.value)
+    const dispatch = useAppDispatch()
 
     function getProducts() {
         Api.get("/product").then(res => {
@@ -28,7 +29,7 @@ const AllProductsPage: FC<EditProductsProps> = ({user}) => {
         getProducts()
     }, [])
     return (
-        <Wrapper user={user}>
+        <>
             <div className={"grid grid-cols-6"}>
                 <div className={"text-center"}>
                     <button onClick={() => {
@@ -138,7 +139,7 @@ const AllProductsPage: FC<EditProductsProps> = ({user}) => {
             <hr className={"my-2"}/>
             {products.map((product, index) => (
                 <>
-                    <Link to={"/edit-products/"+product.id}>
+                    <Link to={"/edit-products/" + product.id}>
                         <div key={index} className={"grid grid-cols-6 gap-6 text-custom mt-2"}>
 
                             <div className={"text-left"}>
@@ -163,7 +164,7 @@ const AllProductsPage: FC<EditProductsProps> = ({user}) => {
                     </Link>
                 </>
             ))}
-        </Wrapper>
+        </>
     );
 };
 

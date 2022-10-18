@@ -18,9 +18,9 @@ const LogRegPage: FC<LoginPageProps> = ({}) => {
 
 
     return (
-        <div className={"h-[94vh] bg-white"}>
+
             <div
-                className={"flex flex-col justify-center items-center w-[96vw] h-[90vh] rounded-3xl mx-auto my-[4vh] shadow-2xl border-2 border-gray-400"}
+                className={"flex flex-col justify-center h-[90vh] items-center rounded-3xl mx-auto shadow-2xl border-2 border-gray-400"}
                 style={{backgroundImage: `url(${backMultiCam})`, backgroundSize: "cover"}}>
                 <div
                     className={(isRegistration ? "  " : "mt-[9vh] ") + "absolute duration-1000 border-2 border-gray-500 text-center text-3xl mb-[25vh] bg-white shadow-2xl rounded-2xl p-5 text-custom"}>
@@ -142,13 +142,13 @@ const LogRegPage: FC<LoginPageProps> = ({}) => {
                 </div>
 
 
-                <div className={"mt-[75%] xl:mt-[25%]"}>
-                    <Link to={"/"}>
-                        <img className={"h-[15vh] xl:h-[25vh]"} src={logo} alt=""/>
-                    </Link>
-                </div>
+                {/*<div className={"mt-[75%] xl:mt-[25%]"}>*/}
+                {/*    <Link to={"/"}>*/}
+                {/*        <img className={"h-[15vh] xl:h-[25vh]"} src={logo} alt=""/>*/}
+                {/*    </Link>*/}
+                {/*</div>*/}
             </div>
-        </div>
+
 
     );
 };

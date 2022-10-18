@@ -11,13 +11,14 @@ import {
 import API from "../api";
 import Wrapper from "../components/main-blocks/Wrapper";
 import Api from "../api";
+import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
+import {log} from "util";
 
 interface EditProductPageProps {
     productId: number;
-    user: IUser;
 }
 
-const EditProductPage: FC<EditProductPageProps> = ({productId, user}) => {
+const EditProductPage: FC<EditProductPageProps> = ({productId}) => {
 
         const [categories, setCategories] = useState<ICategory[]>([]);
         const [characteristicName, setCharacteristicName] = useState<string>("");
@@ -30,15 +31,17 @@ const EditProductPage: FC<EditProductPageProps> = ({productId, user}) => {
                 [], 0, [], [],
                 "", "", 0, 0, 0
             ));
+        const user = useAppSelector((state) => state.user.value)
+        const dispatch = useAppDispatch()
 
-        // function getProduct() {
-        //     Api.get("/product/" + productId).then(res => {
-        //         const prod: IProduct = res.data;
-        //         setProduct(prod);
-        //     }).catch(err => {
-        //         console.log(err)
-        //     })
-        // }
+        function getProduct() {
+            Api.get("/product/" + productId).then(res => {
+                const prod: IProduct = res.data;
+                setProduct(prod);
+            }).catch(err => {
+                console.log(err)
+            })
+        }
 
         function getCategories() {
             API.get("/category").then(res => {
@@ -58,14 +61,20 @@ const EditProductPage: FC<EditProductPageProps> = ({productId, user}) => {
             }).catch(err => {
                 console.log(err)
             })
+            console.log(pictures+"asdasd")
         }
 
+        useEffect(() => {
+            getProduct()
+            getCategories()
+            getImages(productId);
+        }, [])
+
         function saveChanges() {
-            console.log(product)
-            pictures.map(img => {
-                product.images.push(img)
-            })
-            if (product.images.length !== 0 &&
+            // pictures?.map(img => {
+            //     product.images.push(img)
+            // })
+            if (
                 product.cost !== 0 &&
                 product.currentCount !== 0 &&
                 product.description !== "" &&
@@ -75,9 +84,7 @@ const EditProductPage: FC<EditProductPageProps> = ({productId, user}) => {
                 product.subcategoryId !== 0
             ) {
                 Api.put("/product", product).then(res => {
-                    pictures.map(img => {
-                        product.images.push(img)
-                    })
+
                     console.log(res)
                 }).catch(err => {
                     console.log(err)
@@ -88,11 +95,6 @@ const EditProductPage: FC<EditProductPageProps> = ({productId, user}) => {
 
         }
 
-        useEffect(() => {
-
-            getCategories()
-            getImages(productId);
-        }, [])
 
         useEffect(() => {
             setCurrentCategory(categories.filter(x => x.id === product.categoryId)[0])
@@ -123,7 +125,7 @@ const EditProductPage: FC<EditProductPageProps> = ({productId, user}) => {
 
 
         return (
-            <Wrapper user={user}>
+            <>
                 <div className="space-y-6">
                     <div className={"grid grid-cols-2"}>
                         <h3>Назва:</h3>
@@ -308,7 +310,7 @@ const EditProductPage: FC<EditProductPageProps> = ({productId, user}) => {
                     </button>
                 </div>
 
-            </Wrapper>
+            </>
         );
     }
 ;

@@ -16,7 +16,7 @@ const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal, toasts, setToa
         const [characteristics, setCharacteristics] = useState<ICharacteristic[]>([])
         const [characteristicName, setCharacteristicName] = useState<string>("");
         const [characteristicValue, setCharacteristicValue] = useState<string>("");
-        const [images, setImages] = useState<IBase64file[]>([]);
+        const [images, setImages] = useState<Picture[]>([]);
 
         const [product, setProduct] = useState<IProduct>(
             new IProduct(
@@ -44,7 +44,7 @@ const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal, toasts, setToa
         function createProduct() {
             product.characteristics = characteristics;
             images.map(img => {
-                product.images.push(new Picture(img.base64URL))
+                product.images.push(new Picture(img.content))
             })
             if (product.images.length !== 0 &&
                 product.cost !== 0 &&
@@ -88,9 +88,10 @@ const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal, toasts, setToa
         }
 
         function handleFileInputChange(e: any) {
+
             getBase64(e.target.files[0])
                 .then(result => {
-                    setImages([...images, new IBase64file(e.target.files[0], String(result))]);
+                    setImages([...images, new Picture(String(result))]);
                     e.target.files = [];
                 })
                 .catch(err => {
@@ -185,7 +186,7 @@ const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal, toasts, setToa
                                                     <i className="bi bi-trash3"></i>
                                                 </button>
                                             </div>
-                                            <img key={index} src={file.base64URL}
+                                            <img key={index} src={file.content}
                                                  alt=""/>
                                         </div>
                                     ))}

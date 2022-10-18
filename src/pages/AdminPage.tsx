@@ -7,15 +7,16 @@ import ModalAddCategory from "../components/Modals/ModalAddCategory";
 import ModalAddSubcategory from "../components/Modals/ModalAddSubcategory";
 import API from "../api"
 import {Link} from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
 
 interface AdminPageProps {
-    user: IUser;
-
 }
 
-const AdminPage: FC<AdminPageProps> = ({user}) => {
+const AdminPage: FC<AdminPageProps> = () => {
 
     const [modalProduct, setModalProduct] = useState<boolean>(false);
+    const user = useAppSelector((state) => state.user.value)
+    const dispatch = useAppDispatch()
 
     function openModalProduct() {
         setModalProduct(true);
@@ -77,47 +78,46 @@ const AdminPage: FC<AdminPageProps> = ({user}) => {
                     </div>
                 ))}
             </div>
-            <Wrapper user={user}>
-                <div className={"grid xl:grid-cols-2 grid-cols-1 gap-6 "}>
-                    <div
-                        onClick={openModalProduct}
-                        className={"border-2 border-gray-700  rounded-lg p-4 hover:shadow-2xl hover:scale-105 duration-300 text-center cursor-pointer"}>
-                        Додати новий товар
-                    </div>
-                    <ModalAddProduct categories={categories} toasts={toasts} setToasts={setToasts} modal={modalProduct}
-                                     closeModal={closeModalProduct}/>
 
-                    <div
-                        className={"border-2 border-gray-700  rounded-lg p-4 hover:shadow-2xl hover:scale-105 duration-300 text-center cursor-pointer p-4"}>
-                        Замовлення
-                    </div>
-
-                    <div
-                        onClick={openModalCategory}
-                        className={"border-2 border-gray-700  rounded-lg p-4 hover:shadow-2xl hover:scale-105 duration-300 text-center cursor-pointer"}>
-                        <h3>Додати нову категорію</h3>
-                    </div>
-                    <ModalAddCategory getCategories={getCategories} modal={modalCategory}
-                                      closeModal={closeModalCategory} toasts={toasts}
-                                      setToasts={setToasts}/>
-
-                    <div
-                        onClick={openModalSubcategory}
-                        className={"border-2 border-gray-700  rounded-lg p-4 hover:shadow-2xl hover:scale-105 duration-300 text-center cursor-pointer"}>
-                        Додати нову підкатегорію
-                    </div>
-                    <ModalAddSubcategory categories={categories} getCategories={getCategories} toasts={toasts}
-                                         setToasts={setToasts}
-                                         modal={modalSubcategory}
-                                         closeModal={closeModalSubcategory}/>
-                    <Link to={"/edit-products"}>
-                        <div
-                            className={"border-2 border-gray-700  rounded-lg p-4 hover:shadow-2xl hover:scale-105 duration-300 text-center cursor-pointer"}>
-                            <h3>Редагування товарів</h3>
-                        </div>
-                    </Link>
+            <div className={"grid xl:grid-cols-2 grid-cols-1 gap-6 "}>
+                <div
+                    onClick={openModalProduct}
+                    className={"border-2 border-gray-700  rounded-lg p-4 hover:shadow-2xl hover:scale-105 duration-300 text-center cursor-pointer"}>
+                    Додати новий товар
                 </div>
-            </Wrapper>
+                <ModalAddProduct categories={categories} toasts={toasts} setToasts={setToasts} modal={modalProduct}
+                                 closeModal={closeModalProduct}/>
+
+                <div
+                    className={"border-2 border-gray-700  rounded-lg p-4 hover:shadow-2xl hover:scale-105 duration-300 text-center cursor-pointer p-4"}>
+                    Замовлення
+                </div>
+
+                <div
+                    onClick={openModalCategory}
+                    className={"border-2 border-gray-700  rounded-lg p-4 hover:shadow-2xl hover:scale-105 duration-300 text-center cursor-pointer"}>
+                    <h3>Додати нову категорію</h3>
+                </div>
+                <ModalAddCategory getCategories={getCategories} modal={modalCategory}
+                                  closeModal={closeModalCategory} toasts={toasts}
+                                  setToasts={setToasts}/>
+
+                <div
+                    onClick={openModalSubcategory}
+                    className={"border-2 border-gray-700  rounded-lg p-4 hover:shadow-2xl hover:scale-105 duration-300 text-center cursor-pointer"}>
+                    Додати нову підкатегорію
+                </div>
+                <ModalAddSubcategory categories={categories} getCategories={getCategories} toasts={toasts}
+                                     setToasts={setToasts}
+                                     modal={modalSubcategory}
+                                     closeModal={closeModalSubcategory}/>
+                <Link to={"/edit-products"}>
+                    <div
+                        className={"border-2 border-gray-700  rounded-lg p-4 hover:shadow-2xl hover:scale-105 duration-300 text-center cursor-pointer"}>
+                        <h3>Редагування товарів</h3>
+                    </div>
+                </Link>
+            </div>
         </>
     );
 };

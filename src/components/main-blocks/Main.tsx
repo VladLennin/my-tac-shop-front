@@ -1,21 +1,19 @@
-import React, {FC, useState} from 'react';
-import {ILink, IUser} from "../../models/Models";
+import React, {FC} from 'react';
+import {ILink, IUser, Roles} from "../../models/Models";
 import {Link} from "react-router-dom";
-import {useAppSelector, useAppDispatch} from "../../store/hooks/hooks";
+import {useAppDispatch, useAppSelector} from "../../store/hooks/hooks";
 import {changeMenu1, changeMenu2} from "../../store/menuSlice";
 
 interface MainProps {
     children: React.ReactNode;
     links: ILink[];
-    user: IUser;
-
 }
 
-const Main: FC<MainProps> = ({children, links, user}) => {
+const Main: FC<MainProps> = ({children, links}) => {
 
     const flag1 = useAppSelector((state) => state.menu.value1)
     const flag2 = useAppSelector((state) => state.menu.value2)
-
+    const user = useAppSelector((state)=>state.user.value)
     const dispatch = useAppDispatch()
 
     return (
@@ -45,7 +43,7 @@ const Main: FC<MainProps> = ({children, links, user}) => {
 
                             </Link>
                         )}
-                        {user.isAdmin ?
+                        {user.role === Roles.ADMIN ?
                             <Link key={links[links.length - 1].href} to={links[links.length - 1].href}>
                                 <div
                                     className={(flag1 ? " justify-between" : "justify-center") + " hover:bg-gray-500 hover:text-white  duration-300 flex  align-middle  p-[1vh] rounded-lg mt-[1vh] mb-[1vh] "}>

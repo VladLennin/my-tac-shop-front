@@ -5,31 +5,30 @@ import BlockTemplate from "../components/BlockTemplate";
 import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
 
 interface BasketPageProps {
-    user: IUser;
 }
 
-const BasketPage: FC<BasketPageProps> = ({user}) => {
+const BasketPage: FC<BasketPageProps> = () => {
     const basket = useAppSelector((state) => state.basket.value)
+    const user = useAppSelector((state) => state.user.value)
     const dispatch = useAppDispatch()
 
     return (
-        <div>
-            <Wrapper user={user}>
-                <div className={" grid gap-4"}>
-                    <BlockTemplate>
-                        <div>
-                            {basket.map((product,index) =>
-                                <div>
-                                    {index+1}.{product.name}
-                                </div>
-                            )}
-                        </div>
-                    </BlockTemplate>
+        <>
+            <div className={" grid gap-4"}>
+                <BlockTemplate>
+                    <div>
+                        {basket.map((product, index) =>
+                            <div>
+                                {index + 1}.{product.name}
+                            </div>
+                        )}
+                    </div>
+                </BlockTemplate>
 
-                </div>
-            </Wrapper>
-        </div>
-    );
+            </div>
+        </>
+    )
+        ;
 };
 
 export default BasketPage;

@@ -5,17 +5,17 @@ import API from "../api"
 import {Spinner} from "flowbite-react";
 import CategoryCard from "../components/SmallComponents/CategoryCard";
 import SubcategoryCard from "../components/SmallComponents/SubcategoryCard";
+import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
 
 interface CatalogProps {
-    user: IUser;
 }
 
-const CategoriesPage: FC<CatalogProps> = ({user}) => {
+const CategoriesPage: FC<CatalogProps> = () => {
 
     const [currentCategory, setCurrentCategory] = useState<ICategory>();
-
     const [categories, setCategories] = useState<ICategory[]>([]);
-
+    const user = useAppSelector((state) => state.user.value)
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         getCategories()
@@ -31,7 +31,7 @@ const CategoriesPage: FC<CatalogProps> = ({user}) => {
     }
 
     return (
-        <Wrapper user={user}>
+       <>
             <div className={"text-center"}>
                 <h3 className={" text-custom text-3xl xl:text-5xl xl:mb-5 mb-3"}>Каталог</h3>
                 <div className={"grid grid-col-1 xl:grid-cols-2 gap-4 "}>
@@ -81,7 +81,7 @@ const CategoriesPage: FC<CatalogProps> = ({user}) => {
                     </div>
                 </div>
             </div>
-        </Wrapper>
+       </>
     );
 };
 
