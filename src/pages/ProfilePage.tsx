@@ -3,6 +3,8 @@ import Wrapper from "../components/main-blocks/Wrapper";
 import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
 import {changeUser} from "../store/userSlice";
 import {IUser} from "../models/Models";
+import ModalAddCategory from "../components/Modals/ModalAddCategory";
+import ModalChangePassword from "../components/Modals/ModalChangePassword";
 
 interface ProfilePageProps {
 }
@@ -15,6 +17,14 @@ const ProfilePage: FC<ProfilePageProps> = () => {
     const [flagAddress, setFlagAddress] = useState(false);
     const [flagPhone, setFlagPhone] = useState(false);
     const [flagMail, setFlagMail] = useState(false);
+
+    const [modalChangePassword, setModalChangePassword] = useState<boolean>(false);
+    function openModalChangePassword() {
+        setModalChangePassword(true);
+    }
+    function closeModalChangePassword() {
+        setModalChangePassword(false);
+    }
 
     const user = useAppSelector((state) => state.user.value)
     const [userT, setUserT] = useState<IUser>(user)
@@ -182,6 +192,15 @@ const ProfilePage: FC<ProfilePageProps> = () => {
                                         </button>
                                     </div>
                                 }
+                            </div>
+                            <div className={"text-custom text-gray-600 text-xl mb-2 flex justify-between px-20"}>
+                                <h4>Змінити пароль</h4>
+                                <button onClick={() => {
+                                    openModalChangePassword()
+                                }}>
+                                    <i className="bi bi-pencil-square"></i>
+                                </button>
+                                <ModalChangePassword closeModal={closeModalChangePassword} modal={modalChangePassword} />
                             </div>
                         </div>
 

@@ -2,13 +2,10 @@ import React, {FC} from 'react';
 import {Link} from "react-router-dom";
 import {useAuth} from "../../router/PrivateRouter";
 
-
 interface HeaderProps {
 }
 
 const Header: FC<HeaderProps> = () => {
-
-
     return (
         <div className={"bg-[#495057] pt-[2vh] h-[12vh] "}>
             <div className={"shadow-2xl header text-[1.75vh] mx-[1vw]"}>

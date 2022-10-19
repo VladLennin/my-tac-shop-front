@@ -1,5 +1,5 @@
 import React from 'react';
-import {Outlet, Route, Routes, useParams} from "react-router-dom";
+import {Route, Routes, useParams} from "react-router-dom";
 import LogRegPage from "../pages/LogRegPage";
 import MainPage from "../pages/MainPage";
 import ProfilePage from "../pages/ProfilePage";
@@ -64,11 +64,11 @@ const AppRouter = () => {
                         <GetProductEditId/>
                     }
                     />
-                    <Route path={"/login"} element={
-                        <LogRegPage/>
-                    }
-                    />
                 </Route>
+                <Route path={"/login"} element={
+                    <LogRegPage/>
+                }
+                />
             </Routes>
     );
 };

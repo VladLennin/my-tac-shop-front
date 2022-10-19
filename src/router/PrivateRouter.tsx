@@ -1,6 +1,6 @@
 import React from 'react';
-import {Outlet} from "react-router-dom";
-import LogRegPage from "../pages/LogRegPage";
+import {Navigate, Outlet} from "react-router-dom";
+import {RoutesName} from "./index";
 
 export const useAuth = () => {
     const user = {loggedIn: true}
@@ -9,7 +9,7 @@ export const useAuth = () => {
 
 const PrivateRouter = () => {
     const isAuth = useAuth();
-    return isAuth ? <Outlet/> :<LogRegPage/>;
+    return isAuth ? <Outlet/> :<Navigate to={RoutesName.LOGIN}/>;
 };
 
 export default PrivateRouter;

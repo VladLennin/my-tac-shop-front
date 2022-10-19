@@ -13,6 +13,8 @@ import Wrapper from "../components/main-blocks/Wrapper";
 import Api from "../api";
 import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
 import {log} from "util";
+import {Link, Navigate, useNavigate} from "react-router-dom";
+import {RoutesName} from "../router";
 
 interface EditProductPageProps {
     productId: number;
@@ -20,7 +22,10 @@ interface EditProductPageProps {
 
 const EditProductPage: FC<EditProductPageProps> = ({productId}) => {
 
+        const navigate = useNavigate();
+
         const [categories, setCategories] = useState<ICategory[]>([]);
+
         const [characteristicName, setCharacteristicName] = useState<string>("");
         const [characteristicValue, setCharacteristicValue] = useState<string>("");
         const [currentCategory, setCurrentCategory] = useState<ICategory>();
@@ -51,17 +56,15 @@ const EditProductPage: FC<EditProductPageProps> = ({productId}) => {
             }).catch(err => {
                 console.log(err)
             })
-            console.log(categories)
         }
 
         function getImages(parentId?: number) {
             API.get("/product/" + parentId + "/images").then(res => {
                 const tempPictures: Picture[] = res.data;
-                setPictures(tempPictures);
+                setPictures(tempPictures)
             }).catch(err => {
                 console.log(err)
             })
-            console.log(pictures+"asdasd")
         }
 
         useEffect(() => {
@@ -71,9 +74,7 @@ const EditProductPage: FC<EditProductPageProps> = ({productId}) => {
         }, [])
 
         function saveChanges() {
-            // pictures?.map(img => {
-            //     product.images.push(img)
-            // })
+            product.images = pictures
             if (
                 product.cost !== 0 &&
                 product.currentCount !== 0 &&
@@ -83,9 +84,10 @@ const EditProductPage: FC<EditProductPageProps> = ({productId}) => {
                 product.characteristics.length !== 0 &&
                 product.subcategoryId !== 0
             ) {
+                console.log(product)
                 Api.put("/product", product).then(res => {
-
                     console.log(res)
+                    navigate("/edit-products")
                 }).catch(err => {
                     console.log(err)
                 })
@@ -115,7 +117,9 @@ const EditProductPage: FC<EditProductPageProps> = ({productId}) => {
         function handleFileInputChange(e: any) {
             getBase64(e.target.files[0])
                 .then(result => {
-                    setPictures([...pictures, new Picture(String(result))]);
+                    if (pictures.filter(img => img.content === String(result)).length === 0) {
+                        setPictures([...pictures, new Picture(String(result))]);
+                    }
                     e.target.files = [];
                 })
                 .catch(err => {
@@ -251,7 +255,7 @@ const EditProductPage: FC<EditProductPageProps> = ({productId}) => {
                         <h3>Категорія:</h3>
                         {
                             categories.length !== 0 ?
-                                <select value={product.categoryId}
+                                <select value={currentCategory?.id}
                                         className={"rounded"}
                                         onChange={(e) => {
                                             setCurrentCategory((categories.filter(cat => cat.id === Number(e.target.value)))[0]);
@@ -279,13 +283,12 @@ const EditProductPage: FC<EditProductPageProps> = ({productId}) => {
 
                     <div className={"grid grid-cols-2 "}>
                         <h3>Підкатегорія:</h3>
-                        {currentCategory?.subcategories.length !== 0 && product.subcategoryId !== 0 ?
+                        {currentCategory?.subcategories.length !== 0 ?
                             <select value={product.subcategoryId}
                                     className={"rounded"}
                                     name="" id=""
                                     onChange={(e) => {
                                         setProduct({...product, subcategoryId: Number(e.target.value)})
-                                        alert(JSON.stringify(product.categoryId + " " + product.subcategoryId))
                                     }
                                     }>
                                 <option disabled={true} value={0}>Виберіть виберіть підкатегорію</option>
@@ -301,6 +304,7 @@ const EditProductPage: FC<EditProductPageProps> = ({productId}) => {
                     </div>
                 </div>
                 <div className={"flex justify-center mt-5"}>
+
                     <button
                         onClick={() => {
                             saveChanges()

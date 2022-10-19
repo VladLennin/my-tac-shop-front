@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import Main from "./Main";
-import {IContact, ILink, IUser} from "../../models/Models";
+import {IContact, ILink} from "../../models/Models";
 import Footer from "./footer";
 import Header from "./header";
 
