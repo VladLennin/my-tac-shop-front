@@ -1,12 +1,11 @@
 import React, {FC, useEffect, useState} from 'react';
-import Wrapper from "../components/main-blocks/Wrapper";
-import {IProduct, IUser} from "../models/Models";
+import {IProduct} from "../models/Models";
 import Api from "../api";
-import ModalEditProduct from "./EditProductPage";
 import {Link} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
 
 interface EditProductsProps {
+
 }
 
 const AllProductsPage: FC<EditProductsProps> = () => {
@@ -15,6 +14,7 @@ const AllProductsPage: FC<EditProductsProps> = () => {
     const [sortFlags, setSortFlags] = useState([false, false, false, false, false, false])
     const user = useAppSelector((state) => state.user.value)
     const dispatch = useAppDispatch()
+
 
     function getProducts() {
         Api.get("/product").then(res => {
@@ -138,31 +138,30 @@ const AllProductsPage: FC<EditProductsProps> = () => {
             </div>
             <hr className={"my-2"}/>
             {products.map((product, index) => (
-                <>
-                    <Link to={"/edit-products/" + product.id}>
-                        <div key={index} className={"grid grid-cols-6 gap-6 text-custom mt-2"}>
+                <Link key={index} to={"/edit-products/" + product.id}>
+                    <div className={"grid grid-cols-6 gap-6 text-custom mt-2"}>
 
-                            <div className={"text-left"}>
-                                {index + 1}. {product.name}
-                            </div>
-                            <div className={"text-center"}>
-                                {product.cost}
-                            </div>
-                            <div className={"text-center"}>
-                                {product.categoryId}
-                            </div>
-                            <div className={"text-center"}>
-                                {product.subcategoryId}
-                            </div>
-                            <div className={"text-center"}>
-                                {product.currentCount}
-                            </div>
-                            <div className={"text-center"}>
-                                {product.id}
-                            </div>
+                        <div className={"text-left"}>
+                            {index + 1}. {product.name}
                         </div>
-                    </Link>
-                </>
+                        <div className={"text-center"}>
+                            {product.cost}
+                        </div>
+                        <div className={"text-center"}>
+                            {product.categoryId}
+                        </div>
+                        <div className={"text-center"}>
+                            {product.subcategoryId}
+                        </div>
+                        <div className={"text-center"}>
+                            {product.currentCount}
+                        </div>
+                        <div className={"text-center"}>
+                            {product.id}
+                        </div>
+                    </div>
+                </Link>
+
             ))}
         </>
     );

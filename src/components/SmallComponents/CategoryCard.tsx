@@ -1,6 +1,6 @@
-import React, {FC, useEffect, useState} from 'react';
-import {ICategory, Picture} from "../../models/Models";
-import API from "../../api";
+import React, {FC} from 'react';
+import {ICategory} from "../../models/Models";
+import ImageComponent from "../ImageComponent";
 
 interface CategoryCardProps {
     category: ICategory;
@@ -10,25 +10,10 @@ interface CategoryCardProps {
 
 const CategoryCard: FC<CategoryCardProps> = ({category, setCurrentCategory, currentCategory}) => {
 
-    const [picture, setPicture] = useState<Picture>();
-
-    function getImage(parentId?: number) {
-        API.get("image-parent/" + parentId).then(res => {
-            const img: Picture = res.data[0];
-            setPicture(img);
-        }).catch(err => {
-            console.log(err)
-        })
-    }
-
-    useEffect(()=>{
-        getImage(category.id)
-    },[])
-
     return (
         <div key={category.id} onClick={() => setCurrentCategory(category)}
              className={(currentCategory === category ? "scale-110   shadow-lg bg-gray-300" : "") + " grid justify-items-center hover:scale-110 hover:border-gray-700 rounded border p-2 hover:shadow-lg duration-300 cursor-pointer"}>
-            <img src={picture?.content} alt=""/>
+            <ImageComponent parentId={category.id}/>
             <h3 className={" text-custom"}>{category.name}</h3>
         </div>
     );

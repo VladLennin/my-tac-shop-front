@@ -124,11 +124,11 @@ const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal, toasts, setToa
                             <h3>Характеристики:</h3>
                             <div className={"border border-gray-700 rounded p-3 "}>
                                 {characteristics.map((characteristic, index) =>
-                                    <div className={"flex justify-between mb-3 p-3 border rounded border-b-gray-500"}>
+                                    <div key={index} className={"flex justify-between mb-3 p-3 border rounded border-b-gray-500"}>
                                         <h3>{index + 1}.{characteristic.name}</h3>
                                         <div>
                                             {characteristic.values.map(value =>
-                                                <div className={"text-end"}>{value}</div>
+                                                <div key={index} className={"text-end"}>{value}</div>
                                             )}
                                         </div>
                                         <button className={"hover:scale-150 duration-200  hover:text-red-700"}
@@ -178,7 +178,7 @@ const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal, toasts, setToa
                                        className={"rounded"} type="file"/>
                                 <div className={"grid grid-cols-2 mt-3"}>
                                     {images.map((file, index) => (
-                                        <div className={"border rounded ml-2 border-gray-700 mb-2 "}>
+                                        <div key={index} className={"border rounded ml-2 border-gray-700 mb-2 "}>
                                             <div className={"flex justify-end mb-3"}>
                                                 <button
                                                     className={"absolute hover:text-2xl text-xl hover:text-red-700 duration-300 m-2"}
@@ -229,7 +229,7 @@ const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal, toasts, setToa
                                             onChange={(e) => setCurrentCategory((categories.filter(cat => cat.id === Number(e.target.value)))[0])}>
                                         <option disabled={true} value={0}>Виберіть категорію</option>
                                         {categories.map(category => (
-                                            <option value={category.id}>{category.name}</option>
+                                            <option key={category.id} value={category.id}>{category.name}</option>
                                         ))}
                                     </select>
                                     :
@@ -255,7 +255,7 @@ const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal, toasts, setToa
                                         })}>
                                     <option disabled={true} value={0}>Виберіть підкатегорію</option>
                                     {currentCategory?.subcategories.map(subcategory => (
-                                        <option value={subcategory.id}>{subcategory.name}</option>
+                                        <option key={subcategory.id} value={subcategory.id}>{subcategory.name}</option>
                                     ))}
                                 </select>
                                 :

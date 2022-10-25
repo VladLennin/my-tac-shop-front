@@ -90,7 +90,7 @@ const ModalAddSubcategory: FC<ModalAddPSubcategory> = ({
                                             name="" id="" className={"border border-gray-700 rounded"}>
                                         <option disabled={true} value={0}>Виберіть категорію</option>
                                         {categories.map(category =>
-                                            <option value={category.id}>{category.name}</option>
+                                            <option key={category.id} value={category.id}>{category.name}</option>
                                         )}
                                     </select>
                                 </div>

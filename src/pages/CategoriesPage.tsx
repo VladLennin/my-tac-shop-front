@@ -1,11 +1,10 @@
 import React, {FC, useEffect, useState} from 'react';
-import Wrapper from "../components/main-blocks/Wrapper";
-import {ICategory, IUser} from "../models/Models";
+import {ICategory} from "../models/Models";
 import API from "../api"
 import {Spinner} from "flowbite-react";
 import CategoryCard from "../components/SmallComponents/CategoryCard";
 import SubcategoryCard from "../components/SmallComponents/SubcategoryCard";
-import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
+// import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
 
 interface CatalogProps {
 }
@@ -14,8 +13,8 @@ const CategoriesPage: FC<CatalogProps> = () => {
 
     const [currentCategory, setCurrentCategory] = useState<ICategory>();
     const [categories, setCategories] = useState<ICategory[]>([]);
-    const user = useAppSelector((state) => state.user.value)
-    const dispatch = useAppDispatch()
+    // const user = useAppSelector((state) => state.user.value)
+    // const dispatch = useAppDispatch()
 
     useEffect(() => {
         getCategories()
@@ -42,7 +41,7 @@ const CategoriesPage: FC<CatalogProps> = () => {
                             {categories?.length !== 0
                                 ?
                                 (categories?.map(category =>
-                                    <CategoryCard category={category} setCurrentCategory={setCurrentCategory}
+                                    <CategoryCard key={category.id} category={category} setCurrentCategory={setCurrentCategory}
                                                   currentCategory={currentCategory}/>
                                 ))
                                 :
@@ -66,7 +65,7 @@ const CategoriesPage: FC<CatalogProps> = () => {
                                         <div className={"text-custom text-xl text-gray-400 "}>Виберіть категорію</div>
                                         :
                                         (currentCategory?.subcategories.map(subcategory =>
-                                            <SubcategoryCard subcategory={subcategory}/>
+                                            <SubcategoryCard key={subcategory.id} subcategory={subcategory}/>
                                         ))
                                     }
 

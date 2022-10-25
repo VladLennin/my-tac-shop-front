@@ -32,44 +32,45 @@ const AppRouter = () => {
     }
 
     return (
-            <Routes>
-                <Route element={<PrivateRouter/>}>
-                    <Route path="/" element={
-                        <MainPage/>
-                    }/>
-                    <Route path="/profile" element={
-                        <ProfilePage/>
-                    }/>
-                    <Route path="/basket" element={
-                        <BasketPage/>
-                    }/>
-                    <Route path="/catalog" element={
-                        <CategoriesPage/>
-                    }/>
-                    <Route path="/catalog/:id" element={
-                        <GetCategoryId/>
-                    }/>
-                    <Route path="/admin" element={
-                        <AdminPage/>
-                    }/>
-                    <Route path="/catalog/product/:id" element={
-                        <GetProductId/>
-                    }/>
+        <Routes>
+            <Route element={<PrivateRouter/>}>
+                <Route path="/" element={
+                    <MainPage/>
+                }/>
+                <Route path="/profile" element={
+                    <ProfilePage/>
+                }/>
+                <Route path="/basket" element={
+                    <BasketPage/>
+                }/>
 
-                    <Route path={"/edit-products"} element={
-                        <AllProductsPage/>
-                    }
-                    />
-                    <Route path={"/edit-products/:id"} element={
-                        <GetProductEditId/>
-                    }
-                    />
-                </Route>
-                <Route path={"/login"} element={
-                    <LogRegPage/>
+                <Route path="/admin" element={
+                    <AdminPage/>
+                }/>
+
+                <Route path={"/edit-products"} element={
+                    <AllProductsPage/>
                 }
                 />
-            </Routes>
+                <Route path={"/edit-products/:id"} element={
+                    <GetProductEditId/>
+                }
+                />
+            </Route>
+            <Route path={"/login"} element={
+                <LogRegPage/>
+            }
+            />
+            <Route path="/catalog" element={
+                <CategoriesPage/>
+            }/>
+            <Route path="/catalog/:id" element={
+                <GetCategoryId/>
+            }/>
+            <Route path="/catalog/product/:id" element={
+                <GetProductId/>
+            }/>
+        </Routes>
     );
 };
 

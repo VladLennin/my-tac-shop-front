@@ -20,8 +20,8 @@ const Feedback: FC<FeedbackProps> = ({feedback}) => {
             </div>
             <div className={"my-2 text-xl flex justify-around"}>
                 <div>
-                    {[...Array(feedback.mark)].map((item, index) => <i className="mr-1 bi bi-star-fill"></i>)}
-                    {[...Array(5 - feedback.mark)].map((item, index) => <i className="mr-1 bi bi-star"></i>)}
+                    {[...Array(feedback.mark)].map((item, index) => <i key={index} className="mr-1 bi bi-star-fill"></i>)}
+                    {[...Array(5 - feedback.mark)].map((item, index) => <i key={index} className="mr-1 bi bi-star"></i>)}
                 </div>
 
                 <div>

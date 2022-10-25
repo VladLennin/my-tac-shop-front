@@ -1,6 +1,4 @@
 import React, {FC} from 'react';
-import Wrapper from "../components/main-blocks/Wrapper";
-import {IUser} from "../models/Models";
 import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
 
 const MainPage: FC = () => {

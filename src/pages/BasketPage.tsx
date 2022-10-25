@@ -18,7 +18,7 @@ const BasketPage: FC<BasketPageProps> = () => {
                 <BlockTemplate>
                     <div>
                         {basket.map((product, index) =>
-                            <div>
+                            <div key={index}>
                                 {index + 1}.{product.name}
                             </div>
                         )}

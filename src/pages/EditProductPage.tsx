@@ -1,20 +1,15 @@
 import {Spinner} from 'flowbite-react';
 import React, {FC, useEffect, useState} from 'react';
 import {
-    IBase64file,
     ICategory,
     ICharacteristic,
     IProduct,
-    IUser,
     Picture
 } from "../models/Models";
 import API from "../api";
-import Wrapper from "../components/main-blocks/Wrapper";
 import Api from "../api";
 import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
-import {log} from "util";
-import {Link, Navigate, useNavigate} from "react-router-dom";
-import {RoutesName} from "../router";
+import {useNavigate} from "react-router-dom";
 
 interface EditProductPageProps {
     productId: number;

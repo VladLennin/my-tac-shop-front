@@ -1,7 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "./store";
-import {IProduct, IUser, Roles} from "../models/Models"
-import axios from "axios";
+import {IUser, Roles} from "../models/Models"
 
 interface UserState {
     value: IUser
@@ -13,7 +12,6 @@ const initialState: UserState = {
         "", "", ""
     )
 }
-
 
 export const userSlice = createSlice({
     name: 'user',
@@ -28,7 +26,7 @@ export const userSlice = createSlice({
 
     }
 })
-export const {changeUser,changeName} = userSlice.actions
+export const {changeUser, changeName} = userSlice.actions
 
 export const selectUser = (state: RootState) => state.user
 

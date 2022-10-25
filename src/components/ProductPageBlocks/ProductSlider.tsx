@@ -4,16 +4,16 @@ import {Carousel, Spinner} from "flowbite-react";
 import API from "../../api"
 
 interface ProductSliderProps {
-    product?: IProduct;
+    product: IProduct;
     indicators: boolean;
     isCatalog: boolean;
 }
 
-const ProductSlider: FC<ProductSliderProps> = ({product, indicators, isCatalog}) => {
+const ProductSlider: FC<ProductSliderProps> = ({product, isCatalog}) => {
 
     const [pictures, setPictures] = useState<Picture[]>([]);
 
-    function getImages(parentId?: number) {
+    function getImages(parentId: number) {
         API.get("/product/" + parentId + "/images").then(res => {
             const tempPictures:Picture[] = res.data;
             setPictures(tempPictures);
@@ -40,8 +40,9 @@ const ProductSlider: FC<ProductSliderProps> = ({product, indicators, isCatalog})
                         </div>
                         :
                             pictures.map(img =>
-                                <img className={(isCatalog ? "" : "p-10")} src={img.content} alt="..."/>
+                                <img key={img.parentId} className={(isCatalog ? "" : "p-10")} src={img.content} alt="..."/>
                             )
+
                 }
 
             </Carousel>

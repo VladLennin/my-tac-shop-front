@@ -3,7 +3,6 @@ import React, {FC, useState} from 'react';
 import logo from "./../assets/header-logo.png"
 // @ts-ignore
 import backMultiCam from "./../assets/multicam.jpg"
-import {Link} from "react-router-dom";
 
 interface LoginPageProps {
 

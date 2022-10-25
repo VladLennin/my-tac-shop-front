@@ -1,14 +1,13 @@
 import React, {FC, useEffect, useState} from 'react';
-import {IProduct, IUser} from "../models/Models";
+import {IProduct} from "../models/Models";
 import CharacteristicsBlock from "../components/ProductPageBlocks/CharacteristicsBlock";
 import DescriptionBlock from "../components/ProductPageBlocks/DescriptionBlock";
 import FeedbacksBlock from "../components/ProductPageBlocks/FeedbacksBlock";
-import Wrapper from "../components/main-blocks/Wrapper";
 import CostBuyBtn from "../components/ProductPageBlocks/CostBuyBtn";
 import API from "../api"
 import ProductSlider from "../components/ProductPageBlocks/ProductSlider";
 import {Spinner} from "flowbite-react";
-import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
+// import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
 
 interface ProductPageProps {
     productId: number;
@@ -18,8 +17,8 @@ const ProductPageV2: FC<ProductPageProps> = ({productId}) => {
 
     const [product, setProduct] = useState<IProduct>(
     );
-    const user = useAppSelector((state) => state.user.value)
-    const dispatch = useAppDispatch()
+    // const user = useAppSelector((state) => state.user.value)
+    // const dispatch = useAppDispatch()
 
 
     useEffect(() => {

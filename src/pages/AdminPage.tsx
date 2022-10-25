@@ -1,13 +1,12 @@
 import {Toast} from 'flowbite-react';
 import React, {FC, useEffect, useState} from 'react';
-import Wrapper from "../components/main-blocks/Wrapper";
-import {ICategory, IToast, IUser} from "../models/Models";
+import {ICategory, IToast} from "../models/Models";
 import ModalAddProduct from "../components/Modals/ModalAddProduct";
 import ModalAddCategory from "../components/Modals/ModalAddCategory";
 import ModalAddSubcategory from "../components/Modals/ModalAddSubcategory";
 import API from "../api"
 import {Link} from "react-router-dom";
-import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
+// import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
 
 interface AdminPageProps {
 }
@@ -15,8 +14,8 @@ interface AdminPageProps {
 const AdminPage: FC<AdminPageProps> = () => {
 
     const [modalProduct, setModalProduct] = useState<boolean>(false);
-    const user = useAppSelector((state) => state.user.value)
-    const dispatch = useAppDispatch()
+    // const user = useAppSelector((state) => state.user.value)
+    // const dispatch = useAppDispatch()
 
     function openModalProduct() {
         setModalProduct(true);
