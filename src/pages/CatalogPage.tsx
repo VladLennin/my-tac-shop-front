@@ -1,19 +1,21 @@
 import React, {FC, useEffect, useState} from 'react';
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {IProduct} from "../models/Models";
 import API from "../api";
-import ProductCard from "../components/ProductCard";
+import ProductCard from "../components/SmallComponents/ProductCard";
 // import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
 import ImageComponent from "../components/ImageComponent";
+import SearchBar from "../components/SearchBar";
+import {useAppSelector} from "../store/hooks/hooks";
 
 interface SubcategoryPageProps {
-    subcategoryId?: string;
 }
 
-const CatalogPage: FC<SubcategoryPageProps> = ({subcategoryId}) => {
+const CatalogPage: FC<SubcategoryPageProps> = ({}) => {
 
     const [products, setProducts] = useState<IProduct[]>([]);
-    const [search, setSearch] = useState({searchText: "", searchActive: false});
+    const subcategoryId:Number = Number(useParams().id);
+    const flag1 = useAppSelector((state) => state.menu.value1)
     // const user = useAppSelector((state) => state.user.value)
     // const dispatch = useAppDispatch()
 
@@ -22,7 +24,8 @@ const CatalogPage: FC<SubcategoryPageProps> = ({subcategoryId}) => {
         API.get("/product/subcategory/" + subcategoryId)
             .then((res: any) => {
                 let products: IProduct[] = res.data.content;
-                setProducts(products.filter(product => product.name.toLowerCase().includes(search.searchText.toLowerCase())))
+                setProducts(products)
+                // products.filter(product => product.name.toLowerCase().includes(search.searchText.toLowerCase()))
             })
     }
 
@@ -50,53 +53,10 @@ const CatalogPage: FC<SubcategoryPageProps> = ({subcategoryId}) => {
 
                     </select>
                 </div>
-                <div className={"flex ml-5 "}>
-                    <div className={"relative w-full "}>
-                        <input
-                            onBlur={() => {
-                                setTimeout(() => {
-                                    setSearch({...search, searchActive: false})
-                                }, 100)
-                            }}
-                            onFocus={() => {
-                                setSearch({...search, searchActive: true})
-                            }}
-
-                            onChange={(e) => {
-                                setTimeout(() => setSearch({...search, searchText: e.target.value}), 1000)
-                            }}
-                            placeholder={"Пошук..."} type="text" className={"w-full  my-2 rounded"}
-                        />
-                        {search.searchActive ?
-                            <div
-                                className={"z-50 absolute bg-white rounded border "}>
-                                {products.filter(product => (product.name.toLowerCase().includes(search.searchText.toLowerCase()) && search.searchText.length >= 2) || product.id === Number(search.searchText)).map(product => (
-                                    <Link key={product.id} to={`/catalog/product/${product.id}`}>
-                                        <div className={"grid grid-cols-8 p-2 text-sm hover:bg-gray-300 duration-100"}>
-                                            <>
-                                                <div className={"col-span-2 flex justify-center items-center"}>
-                                                    <ImageComponent parentId={product.id}/>
-                                                </div>
-                                                <div className={"col-span-6  flex justify-center items-center"}>
-                                                    <h4>{product.name} - {product.cost}грн</h4>
-                                                </div>
-                                            </>
-                                        </div>
-                                    </Link>
-                                ))}
-                            </div> : ""}
-                    </div>
-                    <button
-                        onClick={() => {
-                            getProducts()
-                        }}
-                        className={"text-3xl p-2 hover:scale-110 duration-300"}>
-                        <i className="bi bi-search"></i>
-                    </button>
-                </div>
+                <SearchBar products={products}/>
             </div>
 
-            <div className={"grid xl:grid-cols-6 grid-cols-2 gap-4"}>
+            <div className={"grid   gap-4" + (flag1 ? " grid-cols-5" : " grid-cols-6")}>
                 {products?.length !== 0
                     ?
                     (products.map(product =>

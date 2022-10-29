@@ -116,6 +116,9 @@ const AdminPage: FC<AdminPageProps> = () => {
                         <h3>Редагування товарів</h3>
                     </div>
                 </Link>
+                <button onClick={()=>{
+                    console.log(categories)
+                }}>asdasdasd</button>
             </div>
         </>
     );

@@ -16,20 +16,7 @@ import PrivateRouter from "./PrivateRouter";
 const AppRouter = () => {
 
 
-    function GetCategoryId() {
-        let {id} = useParams();
-        return <CatalogPage subcategoryId={id}/>;
-    }
-
-    function GetProductId() {
-        let {id} = useParams();
-        return <ProductPageV2 productId={Number(id)}/>
-    }
-
-    function GetProductEditId() {
-        let {id} = useParams();
-        return <EditProductPage productId={Number(id)}/>
-    }
+    const params = useParams();
 
     return (
         <Routes>
@@ -53,7 +40,7 @@ const AppRouter = () => {
                 }
                 />
                 <Route path={"/edit-products/:id"} element={
-                    <GetProductEditId/>
+                    <EditProductPage />
                 }
                 />
             </Route>
@@ -65,10 +52,10 @@ const AppRouter = () => {
                 <CategoriesPage/>
             }/>
             <Route path="/catalog/:id" element={
-                <GetCategoryId/>
+                <CatalogPage />
             }/>
             <Route path="/catalog/product/:id" element={
-                <GetProductId/>
+                <ProductPageV2/>
             }/>
         </Routes>
     );

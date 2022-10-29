@@ -36,7 +36,7 @@ const Wrapper: FC<WrapperProps> = ({children}) => {
         new IContact("Світлана", "+380678038677"),
     ]
     return (
-        <div>
+        <div className={"App bg-[#495057]"}>
             <Header/>
             <Main links={linksAside}>
                 {children}

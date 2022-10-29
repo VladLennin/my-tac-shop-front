@@ -222,7 +222,7 @@ const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal, toasts, setToa
                         <div className={"grid grid-cols-2"}>
                             <h3>Категорія:</h3>
                             {
-                                categories.length !== 0 ?
+                                categories ?
                                     <select value={product.categoryId}
                                             className={"rounded"}
                                             name="" id=""
@@ -273,6 +273,7 @@ const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal, toasts, setToa
                         onClick={() => createProduct()}>
                         Додати
                     </button>
+
                 </Modal.Footer>
             </Modal>
         );

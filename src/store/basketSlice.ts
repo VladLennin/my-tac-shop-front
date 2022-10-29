@@ -25,6 +25,6 @@ export const basketSlice = createSlice({
 })
 export const {addProduct, delProduct} = basketSlice.actions
 
-export const selectBasket = (state: RootState) => state.basket
+export const selectBasket = (state: RootState) => state.basket.value
 
 export default basketSlice.reducer

@@ -7,7 +7,7 @@ export const store = configureStore({
     reducer: {
         menu: menuSlice.reducer,
         basket:basketSlice.reducer,
-        user:userSlice.reducer
+        user:userSlice.reducer,
     },
 })
 

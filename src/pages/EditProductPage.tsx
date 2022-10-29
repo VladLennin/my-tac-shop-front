@@ -3,27 +3,29 @@ import React, {FC, useEffect, useState} from 'react';
 import {
     ICategory,
     ICharacteristic,
-    IProduct,
+    IProduct, ISubcategory,
     Picture
 } from "../models/Models";
 import API from "../api";
 import Api from "../api";
 import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 interface EditProductPageProps {
-    productId: number;
 }
 
-const EditProductPage: FC<EditProductPageProps> = ({productId}) => {
+const EditProductPage: FC<EditProductPageProps> = ({}) => {
 
         const navigate = useNavigate();
-
+        const productId: number = Number(useParams().id);
         const [categories, setCategories] = useState<ICategory[]>([]);
 
         const [characteristicName, setCharacteristicName] = useState<string>("");
         const [characteristicValue, setCharacteristicValue] = useState<string>("");
+
         const [currentCategory, setCurrentCategory] = useState<ICategory>();
+        const [currentSubcategory, setCurrentSubcategory] = useState<ISubcategory>();
+
         const [pictures, setPictures] = useState<Picture[]>([]);
         const [product, setProduct] = useState<IProduct>(
             new IProduct(
@@ -47,11 +49,11 @@ const EditProductPage: FC<EditProductPageProps> = ({productId}) => {
             API.get("/category").then(res => {
                 const tempCategories: ICategory[] = res.data;
                 setCategories(tempCategories)
-                setCurrentCategory(categories.filter(x => x.id === product.categoryId)[0])
             }).catch(err => {
                 console.log(err)
             })
         }
+
 
         function getImages(parentId?: number) {
             API.get("/product/" + parentId + "/images").then(res => {
@@ -66,7 +68,15 @@ const EditProductPage: FC<EditProductPageProps> = ({productId}) => {
             getProduct()
             getCategories()
             getImages(productId);
+
         }, [])
+
+        useEffect(() => {
+            if (categories && product) {
+                setCurrentCategory(categories.filter(category => category.id === product.categoryId)[0])
+                setCurrentSubcategory(currentCategory?.subcategories.filter(sub => sub.id === product.subcategoryId)[0])
+            }
+        }, [categories, product])
 
         function saveChanges() {
             product.images = pictures
@@ -77,9 +87,12 @@ const EditProductPage: FC<EditProductPageProps> = ({productId}) => {
                 product.linkYoutube !== "" &&
                 product.name !== "" &&
                 product.characteristics.length !== 0 &&
-                product.subcategoryId !== 0
+                product.subcategoryId !== 0 &&
+                product.categoryId !== 0
             ) {
-                console.log(product)
+                console.log(product, "qweqweqweqweqwe")
+                product.categoryId = Number(currentCategory?.id)
+                product.subcategoryId = Number(currentSubcategory?.id)
                 Api.put("/product", product).then(res => {
                     console.log(res)
                     navigate("/edit-products")
@@ -92,10 +105,6 @@ const EditProductPage: FC<EditProductPageProps> = ({productId}) => {
 
         }
 
-
-        useEffect(() => {
-            setCurrentCategory(categories.filter(x => x.id === product.categoryId)[0])
-        }, [categories])
 
         function getBase64(file: File) {
             return new Promise(async resolve => {
@@ -247,43 +256,42 @@ const EditProductPage: FC<EditProductPageProps> = ({productId}) => {
                     </div>
 
                     <div className={"grid grid-cols-2"}>
-                        <h3>Категорія:</h3>
-                        {
-                            categories.length !== 0 ?
-                                <select value={currentCategory?.id}
-                                        className={"rounded"}
-                                        onChange={(e) => {
-                                            setCurrentCategory((categories.filter(cat => cat.id === Number(e.target.value)))[0]);
-                                            setProduct({...product, categoryId: Number(e.target.value)})
-                                            setProduct({
-                                                ...product,
-                                                subcategoryId: 0
-                                            })
-                                        }
-                                        }>
-                                    <option disabled={true} value={0}>Виберіть категорію</option>
-                                    {categories.map((category, index) => (
-                                        <option key={category.id} value={category.id}>{category.name}</option>
-                                    ))}
-                                </select>
-                                :
-                                <Spinner className={"m-auto"}
-                                         aria-label="Extra large spinner example"
-                                         size="xl"
-                                />
-                        }
-
+                        <>
+                            <h3>Категорія:</h3>
+                            {
+                                currentCategory !== undefined ?
+                                    <select value={currentCategory?.id}
+                                            className={"rounded"}
+                                            onChange={(e) => {
+                                                setCurrentCategory((categories.filter(cat => cat.id === Number(e.target.value)))[0]);
+                                                setCurrentSubcategory(new ISubcategory(0, 0, "", new Picture("")))
+                                            }
+                                            }>
+                                        <option disabled={true} value={0}>Виберіть категорію</option>
+                                        <option selected={true} value={currentCategory?.id}>{currentCategory?.name}</option>
+                                        {categories.map((category, index) => (
+                                            category.id !== currentCategory.id ?
+                                                <option key={category.id} value={category.id}>{category.name}</option> : ""
+                                        ))}
+                                    </select>
+                                    :
+                                    <Spinner className={"m-auto"}
+                                             aria-label="Extra large spinner example"
+                                             size="xl"
+                                    />
+                            }
+                        </>
                     </div>
 
 
                     <div className={"grid grid-cols-2 "}>
                         <h3>Підкатегорія:</h3>
                         {currentCategory?.subcategories.length !== 0 ?
-                            <select value={product.subcategoryId}
+                            <select value={currentSubcategory?.id}
                                     className={"rounded"}
                                     name="" id=""
                                     onChange={(e) => {
-                                        setProduct({...product, subcategoryId: Number(e.target.value)})
+                                        setCurrentSubcategory(currentCategory?.subcategories.filter(sub => sub.id === Number(e.target.value))[0])
                                     }
                                     }>
                                 <option disabled={true} value={0}>Виберіть виберіть підкатегорію</option>
@@ -308,7 +316,6 @@ const EditProductPage: FC<EditProductPageProps> = ({productId}) => {
                         Зберегти зміни
                     </button>
                 </div>
-
             </>
         );
     }

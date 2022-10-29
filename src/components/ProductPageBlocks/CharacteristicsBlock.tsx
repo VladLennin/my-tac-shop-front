@@ -9,6 +9,7 @@ interface CharacteristicProps {
 const CharacteristicsBlock: FC<CharacteristicProps> = ({product}) => {
 
     return (
+
         <BlockTemplate>
             <h1 className={"text-center  text-custom text-[4vh]"}>{product?.name}</h1>
             <hr className={"border-gray-700 mx-2"}/>

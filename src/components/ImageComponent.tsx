@@ -34,7 +34,7 @@ const ImageComponent: FC<ImageProps> = ({parentId, className, index}) => {
                 <Spinner size={"xl"}/>
             </div>
             :
-            <img src={pictures[0].content} className={className} alt=""/>
+            <img src={pictures[0].content} className={className+" h-full w-full"} alt=""/>
     );
 
 

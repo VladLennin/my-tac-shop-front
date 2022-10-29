@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './styles/main-blocks.css'
 import './styles/modal.css'
 import './index.css'
@@ -7,12 +7,14 @@ import AppRouter from "./router/AppRouter";
 import Wrapper from "./components/main-blocks/Wrapper";
 
 function App() {
+
     return (
-        <div className="App bg-[#495057]">
-            <Wrapper>
-                <AppRouter/>
-            </Wrapper>
-        </div>
+
+                <Wrapper>
+                    <AppRouter/>
+                </Wrapper>
+
     );
 }
+
 export default App;

@@ -2,6 +2,8 @@ import React, {FC, useEffect, useState} from 'react';
 import {IProduct, Picture} from "../../models/Models";
 import {Carousel, Spinner} from "flowbite-react";
 import API from "../../api"
+import RightArrowSlider from "./RightArrowSlider";
+import LeftArrowSlider from "./LeftArrowSlider";
 
 interface ProductSliderProps {
     product: IProduct;
@@ -15,7 +17,7 @@ const ProductSlider: FC<ProductSliderProps> = ({product, isCatalog}) => {
 
     function getImages(parentId: number) {
         API.get("/product/" + parentId + "/images").then(res => {
-            const tempPictures:Picture[] = res.data;
+            const tempPictures: Picture[] = res.data;
             setPictures(tempPictures);
         }).catch(err => {
             console.log(err)
@@ -27,8 +29,10 @@ const ProductSlider: FC<ProductSliderProps> = ({product, isCatalog}) => {
     }, [])
 
     return (
-        <div className={(isCatalog ? "h-40" : "h-96 ")}>
-            <Carousel slide={false}>
+        <div className={(isCatalog ? "h-56 p-6" : "h-[80vh] p-10")}>
+            <Carousel leftControl={<LeftArrowSlider isCatalog={isCatalog}/>}
+                      rightControl={<RightArrowSlider isCatalog={isCatalog}/>}
+                      slide={false}>
                 {
                     pictures.length === 0
                         ?
@@ -39,9 +43,9 @@ const ProductSlider: FC<ProductSliderProps> = ({product, isCatalog}) => {
                             />
                         </div>
                         :
-                            pictures.map(img =>
-                                <img key={img.parentId} className={(isCatalog ? "" : "p-10")} src={img.content} alt="..."/>
-                            )
+                        pictures.map(img =>
+                            <img key={img.parentId} className={(isCatalog ? "" : "")} src={img.content} alt="..."/>
+                        )
 
                 }
 
