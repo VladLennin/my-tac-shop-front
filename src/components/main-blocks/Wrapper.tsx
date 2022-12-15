@@ -30,11 +30,11 @@ const Wrapper: FC<WrapperProps> = ({children}) => {
         new ILink("/", "bi bi-youtube", "wild.tac.ua"),
     ]
 
-
     const contacts: IContact[] = [
         new IContact("Владлен", "+380985165190"),
         new IContact("Світлана", "+380678038677"),
     ]
+
     return (
         <div className={"App bg-[#495057]"}>
             <Header/>

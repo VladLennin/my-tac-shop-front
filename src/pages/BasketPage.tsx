@@ -1,6 +1,4 @@
-import React, {FC, useState} from 'react';
-import Wrapper from "../components/main-blocks/Wrapper";
-import {IProduct, IUser} from "../models/Models";
+import React, {FC} from 'react';
 import BlockTemplate from "../components/BlockTemplate";
 import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
 
@@ -14,7 +12,7 @@ const BasketPage: FC<BasketPageProps> = () => {
 
     return (
         <>
-            <div className={" grid gap-4"}>
+            <div className={"grid gap-4"}>
                 <BlockTemplate>
                     <div>
                         {basket.map((product, index) =>

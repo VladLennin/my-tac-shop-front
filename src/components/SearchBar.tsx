@@ -5,11 +5,13 @@ import {IProduct} from "../models/Models";
 
 interface SearchBarProps {
     products: IProduct[];
+    setProducts: (state:any) => void;
 }
 
-const SearchBar: FC<SearchBarProps> = ({products}) => {
+const SearchBar: FC<SearchBarProps> = ({products, setProducts}) => {
 
     const [search, setSearch] = useState({searchText: "", searchActive: false});
+
 
     return (
         <div className={"flex ml-5 "}>
@@ -23,7 +25,6 @@ const SearchBar: FC<SearchBarProps> = ({products}) => {
                     onFocus={() => {
                         setSearch({...search, searchActive: true})
                     }}
-
                     onChange={(e) => {
                         setTimeout(() => setSearch({...search, searchText: e.target.value}), 1000)
                     }}
@@ -34,9 +35,10 @@ const SearchBar: FC<SearchBarProps> = ({products}) => {
                         className={"z-50 absolute "}>
                         {products?.filter(product => (product.name.toLowerCase().includes(search.searchText.toLowerCase()) && search.searchText.length >= 2) || product.id === Number(search.searchText)).map(product => (
                             <Link key={product.id} to={`/catalog/product/${product.id}`}>
-                                <div className={"grid grid-cols-8 p-2 text-sm hover:bg-gray-300 bg-white border border-gray-500 rounded-xl mt-2 duration-100"}>
+                                <div
+                                    className={"grid grid-cols-8 p-2 text-sm hover:bg-gray-300 bg-white border border-gray-500 rounded-xl mt-2 duration-100"}>
                                     <>
-                                        <div className={"col-span-2 flex justify-center items-center"}>
+                                        <div className={" col-span-2 flex justify-center items-center"}>
                                             <ImageComponent parentId={product.id}/>
                                         </div>
                                         <div className={"col-span-6  flex justify-center items-center"}>
@@ -50,7 +52,7 @@ const SearchBar: FC<SearchBarProps> = ({products}) => {
             </div>
             <button
                 onClick={() => {
-
+                    setProducts(products.filter(product => product.name.toLowerCase().includes(search.searchText.toLowerCase())))
                 }}
                 className={"text-3xl p-2 hover:scale-110 duration-300"}>
                 <i className="bi bi-search"></i>

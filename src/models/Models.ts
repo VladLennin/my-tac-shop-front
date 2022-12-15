@@ -25,16 +25,34 @@ export enum Roles {
     "USER"
 }
 
+export class Like{
+    owner:number;
+
+    constructor(owner:number) {
+        this.owner = owner
+    }
+}
+
+export class Dislike{
+    owner:number;
+
+    constructor(owner:number) {
+        this.owner = owner
+    }
+}
+
 export class IUser {
+    id: number;
     name: string;
     surname: string;
     address: string;
     phoneNumber: string;
     mail: string;
     role: Roles;
-    password:string;
+    password: string;
 
-    constructor(name: string, role: Roles, surname: string, defaultAddress: string, number: string, mail: string,password:string) {
+    constructor(id: number, name: string, role: Roles, surname: string, defaultAddress: string, number: string, mail: string, password: string) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.address = defaultAddress;
@@ -43,7 +61,6 @@ export class IUser {
         this.role = role;
         this.password = password;
     }
-
 
 
 }
@@ -63,12 +80,12 @@ export class ICategory {
 }
 
 export class ISubcategory {
-    categoryId:number;
+    categoryId: number;
     name: string;
     image: Picture;
     id: number;
 
-    constructor(id: number,categoryId:number, name: string, img: Picture) {
+    constructor(id: number, categoryId: number, name: string, img: Picture) {
         this.name = name;
         this.image = img;
         this.id = id;
@@ -93,7 +110,6 @@ export class IProduct {
     characteristics: ICharacteristic[];
     created?: string;
     discount: number;
-    feedbacks: IFeedback[];
     images: Picture[];
     linkYoutube: string;
     description: string;
@@ -104,14 +120,12 @@ export class IProduct {
     subcategoryId: number
 
     constructor(subcategoryId: number, categoryId: number, name: string, cost: number, characteristics: ICharacteristic[],
-                discount: number, feedbacks: IFeedback[],
-                images: Picture[], linkYoutube: string, description: string,
-                currentCount: number, saleCount: number,id:number) {
+                discount: number, images: Picture[], linkYoutube: string, description: string,
+                currentCount: number, saleCount: number, id: number) {
         this.name = name;
         this.cost = cost;
         this.characteristics = characteristics;
         this.discount = discount;
-        this.feedbacks = feedbacks;
         this.images = images;
         this.linkYoutube = linkYoutube;
         this.description = description;
@@ -121,7 +135,6 @@ export class IProduct {
         this.categoryId = categoryId;
         this.id = id;
     }
-
 
 }
 
@@ -136,14 +149,16 @@ export class ICharacteristic {
 }
 
 export class IFeedback {
+    id: number;
     author: IUser;
     content: string;
     mark: number;
     created: string;
-    likes: number;
-    dislikes: number;
+    likes: Like[];
+    dislikes: Dislike[];
 
-    constructor(author: IUser, content: string, mark: number, data: string, likes: number, dislikes: number) {
+    constructor(id: number, author: IUser, content: string, mark: number, data: string, likes: Like[], dislikes: Dislike[]) {
+        this.id = id;
         this.author = author;
         this.content = content;
         this.mark = mark;

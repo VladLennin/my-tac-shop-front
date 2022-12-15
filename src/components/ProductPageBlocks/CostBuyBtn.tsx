@@ -1,7 +1,5 @@
 import React, {FC, useEffect, useState} from 'react';
 import {IProduct} from "../../models/Models";
-import {useAppDispatch, useAppSelector} from "../../store/hooks/hooks";
-import {addProduct} from "../../store/basketSlice";
 
 interface CostBuyProps {
     product: IProduct;
@@ -9,22 +7,22 @@ interface CostBuyProps {
 }
 
 const CostBuyBtn: FC<CostBuyProps> = ({product, inline}) => {
-    const [ch, setCh] = useState(0);
-    const [includeInBasket, setIncludeInBasket] = useState<boolean>();
-
-    const basket = useAppSelector((state) => state.basket.value)
-    const dispatch = useAppDispatch()
+    const [ch, setCh] = useState(1);
+    const [basket, setBasket] = useState<string[]>([])
+    const [includeInBasket, setIncludeBasket] = useState(false);
 
     useEffect(() => {
-        console.log("basket " + JSON.stringify(basket))
-        console.log(product.id)
-        console.log(basket)
-        if (basket.filter(x => x.id === product.id).length === 0) {
-            setIncludeInBasket(false)
-        } else {
-            setIncludeInBasket(true)
+        const temp = localStorage.getItem("basket");
+        if (temp != undefined) {
+            // @ts-ignore
+            const basketTemp: string[] = temp.split("\n");
+            setBasket(basketTemp)
         }
-        console.log(basket.filter(x => x.id === product.id).length + " length")
+
+        if (basket.filter(item => item === String(product.id)).length !== 0 ) {
+            setIncludeBasket(true)
+        }
+
     }, [])
     return (
         <div
@@ -40,17 +38,17 @@ const CostBuyBtn: FC<CostBuyProps> = ({product, inline}) => {
             <div>
                 <button
                     onClick={() => {
-                        if (!includeInBasket) {
-                            setIncludeInBasket(true)
-                            dispatch(addProduct(product))
-                        }
+                        localStorage.setItem("basket", (localStorage.getItem("basket") !== null ? localStorage.getItem("basket") + "\n" : "") + String(product.id))
                     }}
                     disabled={includeInBasket}
-                    className={(includeInBasket ? "bg-gray-300"  : "") + " border-2 border-gray-700 rounded-lg bg-gray-700 text-stone-50 px-10 py-3 text-custom duration-200  hover:bg-gray-400 "}>
+                    className={(includeInBasket ? "bg-gray-300" : "") + " border-2 border-gray-700 rounded-lg bg-gray-700 text-stone-50 px-10 py-3 text-custom duration-200  hover:bg-gray-400 "}>
                     {includeInBasket ? <p className={"mx-5"}>У кошику</p> : <p>Купити</p>}
                 </button>
             </div>
             <h3 className={"mt-3 text-custom text-[4vh]"}>{product?.cost} грн</h3>
+            <button onClick={() => console.log(basket)}>
+                ...
+            </button>
         </div>
     );
 };

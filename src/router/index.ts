@@ -6,4 +6,6 @@ export enum RoutesName{
     ADMIN="/admin",
     LOGIN="/login",
     EDIT_PRODUCTS="/edit-products",
+    PRODUCT_PAGE="/catalog/product",
+    ERROR="/error"
 }

@@ -4,7 +4,6 @@ import {IProduct} from "../models/Models";
 import API from "../api";
 import ProductCard from "../components/SmallComponents/ProductCard";
 // import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
-import ImageComponent from "../components/ImageComponent";
 import SearchBar from "../components/SearchBar";
 import {useAppSelector} from "../store/hooks/hooks";
 
@@ -53,7 +52,7 @@ const CatalogPage: FC<SubcategoryPageProps> = ({}) => {
 
                     </select>
                 </div>
-                <SearchBar products={products}/>
+                <SearchBar setProducts={setProducts} products={products}/>
             </div>
 
             <div className={"grid   gap-4" + (flag1 ? " grid-cols-5" : " grid-cols-6")}>

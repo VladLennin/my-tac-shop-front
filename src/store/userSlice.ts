@@ -7,8 +7,8 @@ interface UserState {
 }
 
 const initialState: UserState = {
-    value: new IUser(
-        "", Roles.ADMIN, "", "",
+    value: new IUser(0,
+        "Vladlen", Roles.ADMIN, "Marchenko", "",
         "", "", ""
     )
 }

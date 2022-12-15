@@ -30,7 +30,7 @@ const EditProductPage: FC<EditProductPageProps> = ({}) => {
         const [product, setProduct] = useState<IProduct>(
             new IProduct(
                 0, 0, "", 0,
-                [], 0, [], [],
+                [], 0, [],
                 "", "", 0, 0, 0
             ));
         const user = useAppSelector((state) => state.user.value)

@@ -4,6 +4,7 @@ import API from "../api"
 import {Spinner} from "flowbite-react";
 import CategoryCard from "../components/SmallComponents/CategoryCard";
 import SubcategoryCard from "../components/SmallComponents/SubcategoryCard";
+
 // import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
 
 interface CatalogProps {
@@ -24,13 +25,14 @@ const CategoriesPage: FC<CatalogProps> = () => {
     function getCategories() {
         API.get("/category").then(res => {
             setCategories(res.data);
+            console.log(res)
         }).catch(err => {
             console.log(err)
         })
     }
 
     return (
-       <>
+        <>
             <div className={"text-center"}>
                 <h3 className={" text-custom text-3xl xl:text-5xl xl:mb-5 mb-3"}>Каталог</h3>
                 <div className={"grid grid-col-1 xl:grid-cols-2 gap-4 "}>
@@ -41,7 +43,8 @@ const CategoriesPage: FC<CatalogProps> = () => {
                             {categories?.length !== 0
                                 ?
                                 (categories?.map(category =>
-                                    <CategoryCard key={category.id} category={category} setCurrentCategory={setCurrentCategory}
+                                    <CategoryCard key={category.id} category={category}
+                                                  setCurrentCategory={setCurrentCategory}
                                                   currentCategory={currentCategory}/>
                                 ))
                                 :
@@ -80,7 +83,7 @@ const CategoriesPage: FC<CatalogProps> = () => {
                     </div>
                 </div>
             </div>
-       </>
+        </>
     );
 };
 

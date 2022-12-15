@@ -8,6 +8,8 @@ import API from "../api"
 import ProductSlider from "../components/ProductPageBlocks/ProductSlider";
 import {Spinner} from "flowbite-react";
 import {useParams} from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
+
 // import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
 
 interface ProductPageProps {
@@ -15,11 +17,10 @@ interface ProductPageProps {
 
 const ProductPageV2: FC<ProductPageProps> = ({}) => {
 
-    const [product, setProduct] = useState<IProduct>(
-    );
-    const productId:Number = Number(useParams().id);
-    // const user = useAppSelector((state) => state.user.value)
-    // const dispatch = useAppDispatch()
+    const [product, setProduct] = useState<IProduct>();
+    const productId: Number = Number(useParams().id);
+    const user = useAppSelector((state) => state.user.value)
+    const dispatch = useAppDispatch()
 
 
     useEffect(() => {
@@ -34,7 +35,7 @@ const ProductPageV2: FC<ProductPageProps> = ({}) => {
     }, [productId])
 
     return (
-       <>
+        <>
             <div className={"grid xl:grid-cols-2 grid-cols-1 gap-10"}>
                 <div className={"grid grid-cols-1 gap-5"}>
                     {
@@ -51,8 +52,8 @@ const ProductPageV2: FC<ProductPageProps> = ({}) => {
                         product !== undefined
                             ?
                             <div>
-                                <CostBuyBtn   product={product} inline={true}/>
-                                <FeedbacksBlock product={product}/>
+                                <CostBuyBtn product={product} inline={true}/>
+                                <FeedbacksBlock product={product} user={user}/>
                             </div>
                             :
                             <Spinner className={"m-auto"}
@@ -85,14 +86,8 @@ const ProductPageV2: FC<ProductPageProps> = ({}) => {
                     }
                 </div>
 
-
-
-
-
-
-
             </div>
-       </>
+        </>
 
     );
 };

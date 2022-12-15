@@ -4,7 +4,7 @@ import {RoutesName} from "./index";
 
 export const useAuth = () => {
     const user = {loggedIn: true}
-    return user && user.loggedIn;
+    return  user.loggedIn;
 };
 
 const PrivateRouter = () => {

@@ -21,7 +21,7 @@ const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal, toasts, setToa
         const [product, setProduct] = useState<IProduct>(
             new IProduct(
                 0, 0, "", 0,
-                [], 0, [], [],
+                [], 0, [],
                 "", "", 0, 0, 0
             ));
 
@@ -34,7 +34,7 @@ const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal, toasts, setToa
             setImages([])
             setProduct(new IProduct(
                 0, 0, "", 0,
-                [], 0, [], [],
+                [], 0, [],
                 "", "", 0, 0, 0
             ))
             setCurrentCategory(undefined)
@@ -124,7 +124,8 @@ const ModalAddProduct: FC<ModalAddProduct> = ({modal, closeModal, toasts, setToa
                             <h3>Характеристики:</h3>
                             <div className={"border border-gray-700 rounded p-3 "}>
                                 {characteristics.map((characteristic, index) =>
-                                    <div key={index} className={"flex justify-between mb-3 p-3 border rounded border-b-gray-500"}>
+                                    <div key={index}
+                                         className={"flex justify-between mb-3 p-3 border rounded border-b-gray-500"}>
                                         <h3>{index + 1}.{characteristic.name}</h3>
                                         <div>
                                             {characteristic.values.map(value =>

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import './styles/main-blocks.css'
 import './styles/modal.css'
 import './index.css'
@@ -9,11 +9,9 @@ import Wrapper from "./components/main-blocks/Wrapper";
 function App() {
 
     return (
-
-                <Wrapper>
-                    <AppRouter/>
-                </Wrapper>
-
+        <Wrapper>
+            <AppRouter/>
+        </Wrapper>
     );
 }
 

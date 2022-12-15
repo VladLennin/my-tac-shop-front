@@ -12,7 +12,7 @@ const SubcategoryCard: FC<SubcategoryCardProps> = ({subcategory}) => {
         <Link
             to={"/catalog/" + subcategory.id}>
             <div key={subcategory.id}
-                 className={"grid justify-items-center text-center hover:scale-110 hover:border-gray-700 rounded border p-2 hover:shadow-lg duration-300"}>
+                 className={"grid justify-items-center text-center hover:scale-110 hover:border-gray-700 h-full rounded border p-2 hover:shadow-lg duration-300"}>
                 <ImageComponent parentId={subcategory.id}/>
                 <h3>{subcategory.name}</h3>
             </div>
