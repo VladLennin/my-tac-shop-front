@@ -1,17 +1,17 @@
 import React, {FC} from 'react';
 import Main from "./Main";
 import {IContact, ILink} from "../../models/Models";
-import Footer from "./footer";
-import Header from "./header";
+import Footer from "./Footer";
+import Header from "./Header";
 
 interface WrapperProps {
-    children: React.ReactNode;
+    children: React.ReactNode
 }
 
 const Wrapper: FC<WrapperProps> = ({children}) => {
 
     const linksAside: ILink[] = [
-        new ILink("/", "bi bi-house-fill", "Головна"),
+        new ILink("/main", "bi bi-house-fill", "Головна"),
         new ILink("/catalog", "bi bi-bag-check-fill", "Каталог"),
         new ILink("/basket", "bi bi-basket-fill", "Кошик"),
         new ILink("/admin", "bi bi-tools", "Адмін")

@@ -1,11 +1,12 @@
 import React, {FC, useState} from 'react';
 import Feedback from "../SmallComponents/Feedback";
-import {IFeedback, IProduct, IUser} from "../../models/Models";
+import {IFeedback, IProduct} from "../../models/Models";
 import BlockTemplate from "../BlockTemplate";
+import {User} from "../../models/User";
 
 interface FeedbackProps {
     product?: IProduct;
-    user: IUser;
+    user: User;
 }
 
 const FeedbacksBlock: FC<FeedbackProps> = ({product, user}) => {

@@ -1,59 +1,49 @@
 import React from 'react';
 import {Route, Routes} from "react-router-dom";
-import LogRegPage from "../pages/LogRegPage";
-import MainPage from "../pages/MainPage";
-import ProfilePage from "../pages/ProfilePage";
-import BasketPage from "../pages/BasketPage";
-import CategoriesPage from "../pages/CategoriesPage";
-import AdminPage from "../pages/AdminPage";
-import AllProductsPage from "../pages/AllProductsPage";
-import CatalogPage from "../pages/CatalogPage";
-import ProductPageV2 from "../pages/ProductPageV2";
-import EditProductPage from "../pages/EditProductPage";
-import PrivateRouter from "./PrivateRouter";
-import {RoutesName} from "./index";
-import ErrorPage from "../pages/ErrorPage";
-
+import {RoutesName} from "./RoutesName";
+import LogRegPage from "../pages/PublicPages/LogRegPage";
+import MainPage from "../pages/PublicPages/MainPage";
+import CatalogPage from "../pages/PublicPages/CatalogPage";
+import EditProductPage from "../pages/PrivatePages/EditProductPage";
+import CategoriesPage from "../pages/PublicPages/CategoriesPage";
+import ProfilePage from "../pages/PrivatePages/ProfilePage";
+import BasketPage from "../pages/PrivatePages/BasketPage";
+import AdminPage from "../pages/PrivatePages/AdminPage";
+import AllProductsPage from "../pages/PrivatePages/AllProductsPage";
+import NotFoundPage from "../pages/PublicPages/NotFoundPage";
+import RequireAuth from "./RequireAuth";
+import {Roles} from "../models/Models";
+import RequireRole from "./RequireRole";
+import Unauthorized from "../pages/PublicPages/Unauthorized";
+import ProductPageV2 from "../pages/PublicPages/ProductPageV2";
 
 const AppRouter = () => {
     return (
-        <Routes>
-            <Route element={<PrivateRouter/>}>
-                <Route path={RoutesName.MAIN} element={
-                    <MainPage/>
-                }/>
-                <Route path={RoutesName.PROFILE} element={
-                    <ProfilePage/>
-                }/>
-                <Route path={RoutesName.BASKET} element={
-                    <BasketPage/>
-                }/>
 
-                <Route path={RoutesName.ADMIN} element={
-                    <AdminPage/>
-                }/>
-                <Route path={RoutesName.EDIT_PRODUCTS} element={
-                    <AllProductsPage/>
-                }
-                />
-                <Route path={RoutesName.EDIT_PRODUCTS + "/:id"} element={
-                    <EditProductPage/>
-                }
-                />
+        <Routes>
+            {/* public routes */}
+            <Route path={RoutesName.LOGIN} element={<LogRegPage/>}/>
+            <Route path={RoutesName.MAIN} element={<MainPage/>}/>
+            <Route path={RoutesName.CATALOG + "/:id"} element={<CatalogPage/>}/>
+            <Route path={RoutesName.CATALOG} element={<CategoriesPage/>}/>
+            <Route path={RoutesName.PRODUCT_PAGE + "/:id"} element={<ProductPageV2/>}/>
+
+            <Route element={<RequireAuth/>}>
+                <Route path={RoutesName.PROFILE} element={<ProfilePage/>}/>
+                <Route path={RoutesName.BASKET} element={<BasketPage/>}/>
             </Route>
-            <Route path={RoutesName.LOGIN} element={
-                <LogRegPage/>
-            }
-            />
-            <Route path={RoutesName.CATALOG} element={
-                <CategoriesPage/>
-            }/>
-            <Route path={RoutesName.CATALOG + "/:id"} element={
-                <CatalogPage/>
-            }/>
-            <Route path={RoutesName.PRODUCT_PAGE + "/:id"} element={
-                <ProductPageV2/>
-            }/>
+
+            <Route element={<RequireRole allowedRole={Roles.ADMIN}/>}>
+                <Route path={RoutesName.ADMIN} element={<AdminPage/>}/>
+                <Route path={RoutesName.EDIT_PRODUCTS} element={<AllProductsPage/>}/>
+                <Route path={RoutesName.EDIT_PRODUCTS + "/:id"} element={<EditProductPage/>}/>
+            </Route>
+
+            <Route path={RoutesName.UNAUTHORIZED} element={<Unauthorized/>}/>
+
+            {/* catch all */}
+            <Route path="*" element={<NotFoundPage/>}/>
+
         </Routes>
     );
 };

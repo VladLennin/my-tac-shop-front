@@ -1,15 +1,15 @@
 import {Spinner} from 'flowbite-react';
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useContext, useEffect, useState} from 'react';
 import {
     ICategory,
     ICharacteristic,
     IProduct, ISubcategory,
     Picture
-} from "../models/Models";
-import API from "../api";
-import Api from "../api";
-import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
+} from "../../models/Models";
+import API from "../../http";
+import Api from "../../http";
 import {useNavigate, useParams} from "react-router-dom";
+import {Context} from "../../index";
 
 interface EditProductPageProps {
 }
@@ -33,11 +33,14 @@ const EditProductPage: FC<EditProductPageProps> = ({}) => {
                 [], 0, [],
                 "", "", 0, 0, 0
             ));
-        const user = useAppSelector((state) => state.user.value)
-        const dispatch = useAppDispatch()
+        const {authStore} = useContext(Context)
 
         function getProduct() {
-            Api.get("/product/" + productId).then(res => {
+            Api.get("/product/" + productId, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("token")
+                }
+            }).then(res => {
                 const prod: IProduct = res.data;
                 setProduct(prod);
             }).catch(err => {

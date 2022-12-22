@@ -1,6 +1,6 @@
 import React, {FC, useEffect, useState} from 'react';
 import {Picture} from "../models/Models";
-import API from "../api";
+import API from "../http";
 import {Spinner} from "flowbite-react";
 
 interface ImageProps {

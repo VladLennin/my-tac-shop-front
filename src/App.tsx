@@ -1,17 +1,23 @@
-import React from 'react';
-import './styles/main-blocks.css'
-import './styles/modal.css'
-import './index.css'
-import 'bootstrap-icons/font/bootstrap-icons.css';
-import AppRouter from "./router/AppRouter";
+import React, {FC, useContext, useEffect} from 'react';
 import Wrapper from "./components/main-blocks/Wrapper";
+import {Context} from "./index";
+import AppRouter from "./router/AppRouter";
 
-function App() {
+const App: FC = () => {
+    const {authStore} = useContext(Context)
+
+    useEffect(()=>{
+        if(localStorage.getItem('token')){
+            authStore.checkAuth()
+        }
+        // authStore.getUser()
+
+    },[])
 
     return (
-        <Wrapper>
-            <AppRouter/>
-        </Wrapper>
+       <Wrapper>
+           <AppRouter/>
+       </Wrapper>
     );
 }
 

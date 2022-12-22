@@ -1,12 +1,11 @@
 import {Toast} from 'flowbite-react';
 import React, {FC, useEffect, useState} from 'react';
-import {ICategory, IToast} from "../models/Models";
-import ModalAddProduct from "../components/Modals/ModalAddProduct";
-import ModalAddCategory from "../components/Modals/ModalAddCategory";
-import ModalAddSubcategory from "../components/Modals/ModalAddSubcategory";
-import API from "../api"
+import {ICategory, IToast} from "../../models/Models";
+import ModalAddProduct from "../../components/Modals/ModalAddProduct";
+import ModalAddCategory from "../../components/Modals/ModalAddCategory";
+import ModalAddSubcategory from "../../components/Modals/ModalAddSubcategory";
+import API from "../../http"
 import {Link} from "react-router-dom";
-// import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
 
 interface AdminPageProps {
 }
@@ -51,7 +50,11 @@ const AdminPage: FC<AdminPageProps> = () => {
     const [categories, setCategories] = useState<ICategory[]>([]);
 
     function getCategories() {
-        API.get("/category").then(res => {
+        API.get("/category",{
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem("token")
+            }
+        }).then(res => {
             setCategories(res.data)
         }).catch(err => {
             console.log(err)

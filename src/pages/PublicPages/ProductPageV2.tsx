@@ -1,31 +1,34 @@
-import React, {FC, useEffect, useState} from 'react';
-import {IProduct} from "../models/Models";
-import CharacteristicsBlock from "../components/ProductPageBlocks/CharacteristicsBlock";
-import DescriptionBlock from "../components/ProductPageBlocks/DescriptionBlock";
-import FeedbacksBlock from "../components/ProductPageBlocks/FeedbacksBlock";
-import CostBuyBtn from "../components/ProductPageBlocks/CostBuyBtn";
-import API from "../api"
-import ProductSlider from "../components/ProductPageBlocks/ProductSlider";
+import React, {FC, useContext, useEffect, useState} from 'react';
+import {IProduct} from "../../models/Models";
+import CharacteristicsBlock from "../../components/ProductPageBlocks/CharacteristicsBlock";
+import DescriptionBlock from "../../components/ProductPageBlocks/DescriptionBlock";
+import FeedbacksBlock from "../../components/ProductPageBlocks/FeedbacksBlock";
+import CostBuyBtn from "../../components/ProductPageBlocks/CostBuyBtn";
+import API from "../../http"
+import ProductSlider from "../../components/ProductPageBlocks/ProductSlider";
 import {Spinner} from "flowbite-react";
 import {useParams} from "react-router-dom";
-import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
-
-// import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
+import {Context} from "../../index";
 
 interface ProductPageProps {
+
 }
 
 const ProductPageV2: FC<ProductPageProps> = ({}) => {
 
     const [product, setProduct] = useState<IProduct>();
     const productId: Number = Number(useParams().id);
-    const user = useAppSelector((state) => state.user.value)
-    const dispatch = useAppDispatch()
+
+    const {authStore} = useContext(Context)
 
 
     useEffect(() => {
         console.log(productId)
-        API.get("/product/" + productId)
+        API.get("/product/" + productId,{
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem("token")
+            }
+        })
             .then((res: any) => {
                 let product: IProduct = res.data;
                 console.log(product)
@@ -53,7 +56,7 @@ const ProductPageV2: FC<ProductPageProps> = ({}) => {
                             ?
                             <div>
                                 <CostBuyBtn product={product} inline={true}/>
-                                <FeedbacksBlock product={product} user={user}/>
+                                <FeedbacksBlock product={product} user={authStore.user}/>
                             </div>
                             :
                             <Spinner className={"m-auto"}

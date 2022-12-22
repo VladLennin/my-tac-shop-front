@@ -1,11 +1,11 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useContext, useEffect, useState} from 'react';
 import {Link, useParams} from "react-router-dom";
-import {IProduct} from "../models/Models";
-import API from "../api";
-import ProductCard from "../components/SmallComponents/ProductCard";
-// import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
-import SearchBar from "../components/SearchBar";
-import {useAppSelector} from "../store/hooks/hooks";
+import {IProduct} from "../../models/Models";
+import API from "../../http";
+import ProductCard from "../../components/SmallComponents/ProductCard";
+import SearchBar from "../../components/SearchBar";
+import {Context} from "../../index";
+import {observer} from "mobx-react-lite";
 
 interface SubcategoryPageProps {
 }
@@ -14,13 +14,14 @@ const CatalogPage: FC<SubcategoryPageProps> = ({}) => {
 
     const [products, setProducts] = useState<IProduct[]>([]);
     const subcategoryId:Number = Number(useParams().id);
-    const flag1 = useAppSelector((state) => state.menu.value1)
-    // const user = useAppSelector((state) => state.user.value)
-    // const dispatch = useAppDispatch()
-
+    const {menuStore} = useContext(Context)
 
     function getProducts() {
-        API.get("/product/subcategory/" + subcategoryId)
+        API.get("/product/subcategory/" + subcategoryId,{
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem("token")
+            }
+        })
             .then((res: any) => {
                 let products: IProduct[] = res.data.content;
                 setProducts(products)
@@ -55,7 +56,7 @@ const CatalogPage: FC<SubcategoryPageProps> = ({}) => {
                 <SearchBar setProducts={setProducts} products={products}/>
             </div>
 
-            <div className={"grid   gap-4" + (flag1 ? " grid-cols-5" : " grid-cols-6")}>
+            <div className={"grid   gap-4" + (menuStore.flag1 ? " grid-cols-5" : " grid-cols-6")}>
                 {products?.length !== 0
                     ?
                     (products.map(product =>
@@ -69,4 +70,4 @@ const CatalogPage: FC<SubcategoryPageProps> = ({}) => {
     );
 };
 
-export default CatalogPage;
+export default observer(CatalogPage);

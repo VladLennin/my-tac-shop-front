@@ -1,7 +1,7 @@
 import {Button, Modal, Spinner, Toast} from 'flowbite-react';
 import React, {FC, useEffect, useState} from 'react';
 import {IBase64file, ICategory, ICharacteristic, IProduct, ISubcategory, IToast, Picture} from "../../models/Models";
-import API from "../../api";
+import API from "../../http";
 
 interface ModalAddProduct {
     modal: boolean;

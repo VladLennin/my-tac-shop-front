@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
 import {IProduct, Picture} from "../../models/Models";
 import {Carousel, Spinner} from "flowbite-react";
-import API from "../../api"
+import API from "../../http"
 import RightArrowSlider from "./RightArrowSlider";
 import LeftArrowSlider from "./LeftArrowSlider";
 

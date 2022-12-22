@@ -1,9 +1,9 @@
 import React, {FC, useEffect, useState} from 'react';
-import {ICategory} from "../models/Models";
-import API from "../api"
+import {ICategory} from "../../models/Models";
+import API from "../../http"
 import {Spinner} from "flowbite-react";
-import CategoryCard from "../components/SmallComponents/CategoryCard";
-import SubcategoryCard from "../components/SmallComponents/SubcategoryCard";
+import CategoryCard from "../../components/SmallComponents/CategoryCard";
+import SubcategoryCard from "../../components/SmallComponents/SubcategoryCard";
 
 // import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
 
@@ -23,7 +23,11 @@ const CategoriesPage: FC<CatalogProps> = () => {
 
 
     function getCategories() {
-        API.get("/category").then(res => {
+        API.get("/category",{
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem("token")
+            }
+        }).then(res => {
             setCategories(res.data);
             console.log(res)
         }).catch(err => {

@@ -1,9 +1,10 @@
 import React, {FC, useState} from 'react';
-import {Dislike, IFeedback, IUser, Like} from "../../models/Models";
+import {IFeedback, Like} from "../../models/Models";
+import {User} from "../../models/User";
 
 interface FeedbackProps {
     _feedback: IFeedback;
-    user: IUser;
+    user: User;
 }
 
 const Feedback: FC<FeedbackProps> = ({_feedback, user}) => {

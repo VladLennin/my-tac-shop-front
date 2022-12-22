@@ -1,9 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
-import {IProduct} from "../models/Models";
-import Api from "../api";
+import {IProduct} from "../../models/Models";
+import Api from "../../http";
 import {Link} from "react-router-dom";
-import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
-
 interface EditProductsProps {
 
 }
@@ -12,12 +10,14 @@ const AllProductsPage: FC<EditProductsProps> = () => {
 
     const [products, setProducts] = useState<IProduct[]>([])
     const [sortFlags, setSortFlags] = useState([false, false, false, false, false, false])
-    const user = useAppSelector((state) => state.user.value)
-    const dispatch = useAppDispatch()
 
 
     function getProducts() {
-        Api.get("/product").then(res => {
+        Api.get("/product",{
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem("token")
+            }
+        }).then(res => {
             const prod: IProduct[] = res.data;
             setProducts(prod)
         }).catch(err => {

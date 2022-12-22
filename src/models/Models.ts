@@ -1,3 +1,5 @@
+import {User} from "./User";
+
 export class ILink {
     href: string;
     icon: string;
@@ -22,7 +24,8 @@ export class IContact {
 
 export enum Roles {
     "ADMIN",
-    "USER"
+    "USER",
+    "EDITOR",
 }
 
 export class Like{
@@ -41,29 +44,7 @@ export class Dislike{
     }
 }
 
-export class IUser {
-    id: number;
-    name: string;
-    surname: string;
-    address: string;
-    phoneNumber: string;
-    mail: string;
-    role: Roles;
-    password: string;
 
-    constructor(id: number, name: string, role: Roles, surname: string, defaultAddress: string, number: string, mail: string, password: string) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.address = defaultAddress;
-        this.phoneNumber = number;
-        this.mail = mail;
-        this.role = role;
-        this.password = password;
-    }
-
-
-}
 
 export class ICategory {
     name: string;
@@ -150,14 +131,14 @@ export class ICharacteristic {
 
 export class IFeedback {
     id: number;
-    author: IUser;
+    author: User;
     content: string;
     mark: number;
     created: string;
     likes: Like[];
     dislikes: Dislike[];
 
-    constructor(id: number, author: IUser, content: string, mark: number, data: string, likes: Like[], dislikes: Dislike[]) {
+    constructor(id: number, author: User, content: string, mark: number, data: string, likes: Like[], dislikes: Dislike[]) {
         this.id = id;
         this.author = author;
         this.content = content;

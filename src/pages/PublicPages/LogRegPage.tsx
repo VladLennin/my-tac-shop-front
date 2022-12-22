@@ -1,9 +1,12 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useContext, useState} from 'react';
 // @ts-ignore
-import logo from "./../assets/header-logo.png"
+import logo from "../../assets/header-logo.png"
 // @ts-ignore
-import backMultiCam from "./../assets/multicam.jpg"
-import Api from "../api";
+import backMultiCam from "../../assets/multicam.jpg"
+import {Context} from "../../index";
+import {observer} from "mobx-react-lite";
+import {Spinner} from "flowbite-react";
+import {Link, Navigate, useLocation, useNavigate} from "react-router-dom";
 
 interface LoginPageProps {
 
@@ -13,18 +16,25 @@ const LogRegPage: FC<LoginPageProps> = ({}) => {
 
     const [isRegistration, setIsRegistration] = useState<boolean>(true);
     const [isPhone, setIsPhone] = useState<boolean>(false);
-    const [logUser, setLogUser] = useState({phoneNumber: "", mail: "", password: ""})
-    const [regUser, setRegUser] = useState({phoneNumber: "", mail: "", password1: "", password2: ""});
 
-    function Registration(){
-        Api.post("/au")
-    }
+    const [logUser, setLogUser] = useState({phoneNumber: "", email: "", password: ""})
+    const [regUser, setRegUser] = useState({phoneNumber: "", email: "", password: "", password2: ""});
+
+    const {authStore} = useContext(Context)
+    const location = useLocation()
 
     return (
-
         <div
             className={"flex flex-col justify-center h-[90vh] items-center rounded-3xl mx-auto shadow-2xl border-2 border-gray-400"}
             style={{backgroundImage: `url(${backMultiCam})`, backgroundSize: "cover"}}>
+
+            {
+                authStore.isLoading &&
+                <div className={"absolute bottom-0"}>
+                    <Spinner size={"xl"}/>
+                </div>
+            }
+
             <div
                 className={(isRegistration ? "  " : "mt-[9vh] ") + "absolute duration-1000 border-2 border-gray-500 text-center text-3xl mb-[25vh] bg-white shadow-2xl rounded-2xl p-5 text-custom"}>
                 <p>Увійдіть у свій профіль</p>
@@ -48,7 +58,7 @@ const LogRegPage: FC<LoginPageProps> = ({}) => {
                         className={(isPhone ? " " : " hidden") + " duration-300 rounded ml-5"} type="text"/>
                     <input
                         onChange={(e) =>
-                            setLogUser({...logUser, mail: e.target.value})
+                            setLogUser({...logUser, email: e.target.value})
                         }
                         placeholder={"Введіть пошту"}
                         className={(isPhone ? " hidden " : "") + " duration-300 rounded ml-5"} type="email"/>
@@ -65,7 +75,7 @@ const LogRegPage: FC<LoginPageProps> = ({}) => {
                 <hr/>
                 <button
                     onClick={() => {
-                        console.log(logUser)
+                        authStore.login(logUser.email, logUser.phoneNumber, logUser.password);
                     }}
                     className={" mt-3 border-[3px] text-2xl hover:scale-110 hover:border-yellow-300 duration-200 rounded border-blue-600 px-6 py-2"}>
                     Увійти
@@ -104,7 +114,7 @@ const LogRegPage: FC<LoginPageProps> = ({}) => {
                         className={(isPhone ? " " : " hidden") + " duration-300 rounded ml-5"} type="text"/>
                     <input
                         onChange={(e) =>
-                            setRegUser({...regUser, mail: e.target.value})
+                            setRegUser({...regUser, email: e.target.value})
                         }
                         placeholder={"Введіть пошту"}
                         className={(isPhone ? " hidden " : "") + " duration-300 rounded ml-5"} type="email"/>
@@ -114,7 +124,7 @@ const LogRegPage: FC<LoginPageProps> = ({}) => {
                     <label htmlFor="">Пароль</label>
                     <input
                         onChange={(e) =>
-                            setRegUser({...regUser, password1: e.target.value})
+                            setRegUser({...regUser, password: e.target.value})
                         }
                         placeholder={"Введіть пароль"} className={"rounded ml-5"} type="password"/>
                 </div>
@@ -130,7 +140,9 @@ const LogRegPage: FC<LoginPageProps> = ({}) => {
                 <hr/>
                 <button
                     onClick={() => {
-                        console.log(regUser)
+                            authStore.registration(regUser.email, regUser.phoneNumber, regUser.password)
+
+
                     }}
                     className={" mt-3 border-[3px] text-2xl hover:scale-110 hover:border-yellow-300 duration-200 rounded border-blue-600 px-6 py-2"}>
                     Зареєструватися
@@ -143,10 +155,11 @@ const LogRegPage: FC<LoginPageProps> = ({}) => {
                     </button>
                 </div>
             </div>
+
         </div>
 
 
     );
 };
 
-export default LogRegPage;
+export default observer(LogRegPage);

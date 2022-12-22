@@ -1,6 +1,6 @@
 import {Modal} from 'flowbite-react';
 import React, {FC, useState} from 'react';
-import API from "../../api";
+import API from "../../http";
 import {ICategory, IToast, Picture} from "../../models/Models";
 
 
