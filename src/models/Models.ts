@@ -23,27 +23,26 @@ export class IContact {
 }
 
 export enum Roles {
-    "ADMIN",
-    "USER",
-    "EDITOR",
+    ADMIN = "ADMIN",
+    USER = "USER",
+    EDITOR = "EDITOR",
 }
 
-export class Like{
-    owner:number;
+export class Like {
+    owner: number;
 
-    constructor(owner:number) {
+    constructor(owner: number) {
         this.owner = owner
     }
 }
 
-export class Dislike{
-    owner:number;
+export class Dislike {
+    owner: number;
 
-    constructor(owner:number) {
+    constructor(owner: number) {
         this.owner = owner
     }
 }
-
 
 
 export class ICategory {

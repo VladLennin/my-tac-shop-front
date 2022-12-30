@@ -170,9 +170,9 @@ const ProfilePage: FC<ProfilePageProps> = () => {
                             {flagMail
                                 ?
                                 <div>
-                                    <input value={userT.mail}
+                                    <input value={userT.email}
                                            onChange={(e) =>
-                                               setUserT({...userT, mail: e.target.value})
+                                               setUserT({...userT, email: e.target.value})
                                            }
                                            className={"h-3/4 border-2 rounded-lg border-gray-700 "} type="text"/>
                                     <button onClick={() => {
@@ -184,7 +184,7 @@ const ProfilePage: FC<ProfilePageProps> = () => {
                                 </div>
                                 :
                                 <div className={"flex gap-2"}>
-                                    <h4>{authStore.user.mail}</h4>
+                                    <h4>{authStore.user.email}</h4>
                                     <button onClick={() => {
                                         setFlagMail(true);
                                     }}>

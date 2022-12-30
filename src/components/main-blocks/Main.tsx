@@ -40,7 +40,7 @@ const Main: FC<MainProps> = ({children, links}) => {
 
                             </Link>
                         )}
-                        {authStore.user?.role === Roles.ADMIN ?
+                        {authStore.user?.role == Roles.ADMIN ?
                             <Link key={links[links.length - 1].href} to={links[links.length - 1].href}>
                                 <div
                                     className={(menuStore.flag1 ? " justify-between" : "justify-center") + " hover:bg-gray-500 hover:text-white  duration-300 flex  align-middle  p-[1vh] rounded-lg mt-[1vh] mb-[1vh] "}>

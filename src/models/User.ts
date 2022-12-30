@@ -6,17 +6,17 @@ export class User {
     surname: string;
     address: string;
     phoneNumber: string;
-    mail: string;
+    email: string;
     password: string;
     role: Roles;
 
-    constructor(id: number, name: string, role: Roles, surname: string, defaultAddress: string, number: string, mail: string, password: string) {
+    constructor(id: number, name: string, role: Roles, surname: string, defaultAddress: string, number: string, email: string, password: string) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.address = defaultAddress;
         this.phoneNumber = number;
-        this.mail = mail;
+        this.email = email;
         this.password = password;
         this.role = role
     }

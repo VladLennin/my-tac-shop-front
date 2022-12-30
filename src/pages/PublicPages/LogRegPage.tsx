@@ -1,4 +1,4 @@
-import React, {FC, useContext, useState} from 'react';
+import React, {FC, useContext, useEffect, useState} from 'react';
 // @ts-ignore
 import logo from "../../assets/header-logo.png"
 // @ts-ignore
@@ -6,7 +6,9 @@ import backMultiCam from "../../assets/multicam.jpg"
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
 import {Spinner} from "flowbite-react";
-import {Link, Navigate, useLocation, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import {RoutesName} from "../../router/RoutesName";
+import ErrorModal from "../../components/Modals/ErrorModal";
 
 interface LoginPageProps {
 
@@ -21,7 +23,29 @@ const LogRegPage: FC<LoginPageProps> = ({}) => {
     const [regUser, setRegUser] = useState({phoneNumber: "", email: "", password: "", password2: ""});
 
     const {authStore} = useContext(Context)
-    const location = useLocation()
+    const navigate = useNavigate();
+
+    const [modalError, setModalError] = useState<boolean>(false)
+    const [errorRegText, setErrorRegText] = useState<string>("")
+    const [errorLogText, setErrorLogText] = useState<string>("")
+
+    useEffect(() => {
+        setErrorLogText("")
+    }, [logUser])
+
+    function openModalError() {
+        setModalError(true);
+    }
+
+    function closeModalError() {
+        setModalError(false);
+    }
+
+    useEffect(() => {
+        if (errorRegText !== "") {
+            setModalError(true)
+        }
+    }, [errorRegText])
 
     return (
         <div
@@ -34,6 +58,10 @@ const LogRegPage: FC<LoginPageProps> = ({}) => {
                     <Spinner size={"xl"}/>
                 </div>
             }
+            <ErrorModal modal={modalError}
+                        closeModal={closeModalError}
+                        errorText={errorRegText}
+            />
 
             <div
                 className={(isRegistration ? "  " : "mt-[9vh] ") + "absolute duration-1000 border-2 border-gray-500 text-center text-3xl mb-[25vh] bg-white shadow-2xl rounded-2xl p-5 text-custom"}>
@@ -73,9 +101,20 @@ const LogRegPage: FC<LoginPageProps> = ({}) => {
                         placeholder={"Введіть пароль"} className={"rounded ml-5"} type="password"/>
                 </div>
                 <hr/>
+
+                <div className={"text-red-700 text-[2vh] mt-2"}>
+                    <p>{errorLogText}</p>
+                </div>
+
                 <button
                     onClick={() => {
-                        authStore.login(logUser.email, logUser.phoneNumber, logUser.password);
+                        authStore.login(logUser.email, logUser.phoneNumber, logUser.password).then(res => {
+                            if (res === "200") {
+                                navigate(RoutesName.MAIN)
+                            } else {
+                                setErrorLogText(res)
+                            }
+                        })
                     }}
                     className={" mt-3 border-[3px] text-2xl hover:scale-110 hover:border-yellow-300 duration-200 rounded border-blue-600 px-6 py-2"}>
                     Увійти
@@ -140,9 +179,13 @@ const LogRegPage: FC<LoginPageProps> = ({}) => {
                 <hr/>
                 <button
                     onClick={() => {
-                            authStore.registration(regUser.email, regUser.phoneNumber, regUser.password)
-
-
+                        authStore.registration(regUser.email, regUser.phoneNumber, regUser.password).then(res => {
+                            if (res === "200") {
+                                setIsRegistration(true)
+                            } else {
+                                setErrorRegText(res)
+                            }
+                        })
                     }}
                     className={" mt-3 border-[3px] text-2xl hover:scale-110 hover:border-yellow-300 duration-200 rounded border-blue-600 px-6 py-2"}>
                     Зареєструватися

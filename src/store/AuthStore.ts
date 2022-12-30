@@ -36,8 +36,10 @@ export default class AuthStore {
             localStorage.setItem("token", response.data.accessToken);
             this.setAuth(true)
             this.setUser(response.data.user)
+            return "200"
         } catch (e: any) {
             console.log(e.response)
+            return "При авторизацаії щось пішло не так"
         }
     }
 
@@ -45,11 +47,10 @@ export default class AuthStore {
         try {
             const response = await AuthService.registration(email, phone_number, password)
             console.log(response)
-            // localStorage.setItem("token", response.data.accessToken);
-            // this.setAuth(true)
-            // this.setUser(response.data.user)
+            return "200"
         } catch (e: any) {
             console.log(e.response)
+            return e.response.data.message
         }
     }
 

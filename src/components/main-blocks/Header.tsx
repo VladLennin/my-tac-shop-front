@@ -1,5 +1,5 @@
 import React, {FC, useContext} from 'react';
-import {Link, Navigate} from "react-router-dom";
+import {Link, Navigate, useLocation, useNavigate} from "react-router-dom";
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
 import {RoutesName} from "../../router/RoutesName";
@@ -10,13 +10,14 @@ interface HeaderProps {
 const Header: FC<HeaderProps> = () => {
 
     const {authStore} = useContext(Context)
+    const navigate = useNavigate();
 
     return (
         <div className={"bg-[#495057] pt-[2vh] h-[12vh] "}>
             <div className={"shadow-2xl header text-[1.75vh] mx-[1vw]"}>
 
                 <div className={"  bg-opacity-50 bg-gray-700 rounded-2xl m-[1vw]  logo-div "}>
-                    <Link to="/">
+                    <Link to={RoutesName.MAIN}>
                         <div className={"shop-logo rounded-2xl"}/>
                     </Link>
                 </div>
@@ -56,7 +57,7 @@ const Header: FC<HeaderProps> = () => {
                         <button className={"hover:text-white duration-100 text-xl"}
                                 onClick={() => {
                                     authStore.logout();
-
+                                    navigate(RoutesName.LOGIN);
                                 }}>
                             <i className="bi bi-box-arrow-right"></i>
                         </button>

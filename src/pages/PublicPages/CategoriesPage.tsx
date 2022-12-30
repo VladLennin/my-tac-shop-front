@@ -4,6 +4,7 @@ import API from "../../http"
 import {Spinner} from "flowbite-react";
 import CategoryCard from "../../components/SmallComponents/CategoryCard";
 import SubcategoryCard from "../../components/SmallComponents/SubcategoryCard";
+import $api from "../../http";
 
 // import {useAppDispatch, useAppSelector} from "../store/hooks/hooks";
 
@@ -14,8 +15,6 @@ const CategoriesPage: FC<CatalogProps> = () => {
 
     const [currentCategory, setCurrentCategory] = useState<ICategory>();
     const [categories, setCategories] = useState<ICategory[]>([]);
-    // const user = useAppSelector((state) => state.user.value)
-    // const dispatch = useAppDispatch()
 
     useEffect(() => {
         getCategories()
@@ -23,11 +22,7 @@ const CategoriesPage: FC<CatalogProps> = () => {
 
 
     function getCategories() {
-        API.get("/category",{
-            headers: {
-                Authorization: 'Bearer ' + localStorage.getItem("token")
-            }
-        }).then(res => {
+        $api.get("/category").then(res => {
             setCategories(res.data);
             console.log(res)
         }).catch(err => {

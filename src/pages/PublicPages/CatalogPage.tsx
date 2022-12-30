@@ -13,15 +13,11 @@ interface SubcategoryPageProps {
 const CatalogPage: FC<SubcategoryPageProps> = ({}) => {
 
     const [products, setProducts] = useState<IProduct[]>([]);
-    const subcategoryId:Number = Number(useParams().id);
+    const subcategoryId: Number = Number(useParams().id);
     const {menuStore} = useContext(Context)
 
     function getProducts() {
-        API.get("/product/subcategory/" + subcategoryId,{
-            headers: {
-                Authorization: 'Bearer ' + localStorage.getItem("token")
-            }
-        })
+        API.get("/product/subcategory/" + subcategoryId)
             .then((res: any) => {
                 let products: IProduct[] = res.data.content;
                 setProducts(products)
